@@ -81,6 +81,8 @@
 
             @auth
             <ul>
+                <li><a href="{{route('makeUpSession')}}">Book Make Up</a></li>
+                <li><a href='/learn-make-up'>Learn make up</a></li>
                 <li>
                     <form action="{{route('logout')}}" method="post">
                         @csrf

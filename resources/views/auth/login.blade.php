@@ -12,6 +12,8 @@
         <p><span class="ti-key"></span> Log In to {{config('app.name')}} account</p>
 
         <x-auth-errors/>
+        <em class="text-danger">{{session('loginFailed')}}</em>
+        <em class="text-success">{{session('PasswordResetSuccess')}}</em>
         
         <form method="post" action="{{route('login')}}">
             @csrf
@@ -37,7 +39,7 @@
                 </div>
 
                 <div class="form-group align-right">
-                    &nbsp;&nbsp; Forgot Password? <a href=""> Reset </a>
+                    &nbsp;&nbsp; Forgot Password? <a href="{{route('forgot-password')}}"> Reset </a>
                 </div>
             </div>
         </form>

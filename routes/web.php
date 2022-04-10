@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -23,12 +25,18 @@ Route::get('/', function () {
     return view('main.index');
 });
 
+//auth routes
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
+//reset password routes
+Route::get('/forgot-password', [ResetPasswordController::class, 'index'])->name('forgot-password');
+Route::post('/forgot-password', [ResetPasswordController::class, 'sendPasswordResetLink']);
+Route::get('/reset-password/{passwordToken}/user/{email}', [ResetPasswordController::class, 'resetPassword'])->name('reset-password');
+Route::put('/reset-password/{passwordToken}/user/{email}', [ResetPasswordController::class, 'updateNewPass']);
 
 //email verification
 Route::get('/email/verify', function () {
@@ -48,4 +56,10 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::middleware(['verified', 'auth'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/learn-make-up', function(){ 
+        return view('learning.index');
+    });
+
+    Route::get('/make-up-session', [BookingController::class, 'index'])->name('makeUpSession');
 });

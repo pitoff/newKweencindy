@@ -20,8 +20,10 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        if(auth()->attempt($request->only('email', 'password'))){
-            return redirect(route('dashboard'));
+        if(!auth()->attempt($request->only('email', 'password'))){
+            return back()->with('loginFailed', 'Whoops! Incorrect login details');
         }
+        return redirect(route('dashboard'));
+
     }
 }
