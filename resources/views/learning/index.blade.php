@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 text-right mt-5"> <a class="underline-text" href="{{route('dashboard')}}"> Dashboard <i class="ti-arrow-right"></i></a> </div>
+            <div class="col-md-12 text-right mt-5"> <a class="underline-text" href="{{route('users.dashboard')}}"> Dashboard <i class="ti-arrow-right"></i></a> </div>
         </div>
     </div>
 </section>
