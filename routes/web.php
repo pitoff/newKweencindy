@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Booking\BookingController;
+use App\Http\Controllers\Booking\CategoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -56,6 +57,8 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::group(['middleware' => ['verified', 'auth']], function(){
 
+    Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+
     Route::group(['prefix' => 'users', 'name' => 'users.'], function(){
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('users.dashboard');
@@ -65,7 +68,7 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     });
 
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'isAdmin'], function(){
-        Route::get('/make-up-session', [BookingController::class, 'index'])->name('users.makeUpSession');
+        Route::resource('categories', CategoryController::class);
     });
 
 });

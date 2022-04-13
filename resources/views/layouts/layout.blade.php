@@ -82,8 +82,7 @@
             @auth
             @if (auth()->user()->is_admin)
             <ul>
-                <li><a href="#">Bookings</a></li>
-                <li><a href="#">Category</a></li>
+                <li><a href="{{route('booking')}}">Bookings</a></li>
                 <li><a href="#">Gallery</a></li>
                 <li><a href="#">MakeUp Class</a></li>
                 <li>
@@ -95,7 +94,7 @@
             </ul>
             @else
             <ul>
-                <li><a href="{{route('users.makeUpSession')}}">Book Make Up</a></li>
+                <li><a href="{{route('booking')}}">Book Make Up</a></li>
                 <li><a href="{{route('users.learn-make-up')}}">Learn make up</a></li>
                 <li>
                     <form action="{{route('logout')}}" method="post">

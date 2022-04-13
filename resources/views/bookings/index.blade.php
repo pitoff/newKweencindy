@@ -48,11 +48,26 @@
                     <div class="col-sm-6 mt-2">
                         <div class="card">
                             <div class="card-body">
+                                <h5 class="card-title">Category</h5>
+                                <p class="card-text">Create make up categories and their respective price tags</p>
+                                <a href="{{route('categories.index')}}" class="btn">Click to Create</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 mt-2">
+                    <div class="card">
+                            <div class="card-body">
                                 <h5 class="card-title">Price Tags</h5>
                                 <p class="card-text">View Price tags for each type of make up session you book.</p>
                                 <a href="#" class="btn">Click to preview</a>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-6 mt-2">
+                        
                     </div>
                 </div>
             </div>
