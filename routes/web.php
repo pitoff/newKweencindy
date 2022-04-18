@@ -57,16 +57,23 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Route::group(['middleware' => ['verified', 'auth']], function(){
 
-    Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+    //general dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    //bookings home page
+    Route::get('/booking-dashboard', [BookingController::class, 'index'])->name('booking');
+    Route::get('/bookings/create', [BookingController::class, 'create'])->name('create_booking');
+
+    //users route
     Route::group(['prefix' => 'users', 'name' => 'users.'], function(){
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('users.dashboard');
         Route::get('learn-make-up', function(){ 
             return view('learning.index');
         })->name('users.learn-make-up');
+
     });
 
+    //admin routes
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'isAdmin'], function(){
         Route::resource('categories', CategoryController::class);
     });

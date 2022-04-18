@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Book A Session</h5>
                                 <p class="card-text">Click below to proceed to book and secure a make up session.</p>
-                                <a href="#" class="btn">Book</a>
+                                <a href="{{route('create_booking')}}" class="btn">Book</a>
                             </div>
                         </div>
                     </div>
@@ -55,25 +55,10 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-sm-6 mt-2">
-                    <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Price Tags</h5>
-                                <p class="card-text">View Price tags for each type of make up session you book.</p>
-                                <a href="#" class="btn">Click to preview</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mt-2">
-                        
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 text-right mt-5"> <a class="underline-text" href="{{route('users.dashboard')}}"> Dashboard <i class="ti-arrow-right"></i></a> </div>
+            <div class="col-md-12 text-right mt-5"> <a class="underline-text" href="{{route('dashboard')}}"> Dashboard <i class="ti-arrow-right"></i></a> </div>
         </div>
     </div>
 </section>
