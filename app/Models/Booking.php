@@ -22,4 +22,9 @@ class Booking extends Model
         'book_status',
         'book_date'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

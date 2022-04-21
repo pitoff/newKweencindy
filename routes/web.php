@@ -55,6 +55,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent! Please check email your address');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+//dashboard routes
 Route::group(['middleware' => ['verified', 'auth']], function(){
 
     //general dashboard
@@ -62,7 +63,11 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
 
     //bookings home page
     Route::get('/booking-dashboard', [BookingController::class, 'index'])->name('booking');
-    Route::get('/bookings/create', [BookingController::class, 'create'])->name('create_booking');
+    Route::get('/booking/create', [BookingController::class, 'create'])->name('create_booking');
+    Route::get('/booking/edit/{id}', [BookingController::class, 'edit'])->name('edit_booking');
+    Route::post('/booking/create', [BookingController::class, 'store']);
+    Route::put('/booking/edit/{id}', [BopkingController::class, 'update']);
+    Route::get('/booking-categories/{id}', [BookingController::class, 'categoryDetails']);
 
     //users route
     Route::group(['prefix' => 'users', 'name' => 'users.'], function(){
@@ -79,13 +84,3 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     });
 
 });
-
-// Route::middleware(['verified', 'auth'])->group(function(){
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Route::get('/learn-make-up', function(){ 
-    //     return view('learning.index');
-    // });
-
-    // Route::get('/make-up-session', [BookingController::class, 'index'])->name('makeUpSession');
-// });

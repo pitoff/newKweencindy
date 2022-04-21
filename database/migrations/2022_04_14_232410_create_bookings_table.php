@@ -16,11 +16,11 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id');
-            $table->string('location');
-            $table->string('state');
-            $table->string('town');
-            $table->string('address');
+            $table->foreignId('category_id')->constrained();
+            $table->string('location')->nullable();
+            $table->string('state')->nullable();
+            $table->string('town')->nullable();
+            $table->string('address')->nullable();
             $table->boolean('payment_status')->default(false)->nullable();
             $table->boolean('book_status')->default(false)->nullable();
             $table->string('book_date');
