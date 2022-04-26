@@ -57,11 +57,12 @@ class BookingController extends Controller
         return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
     }
 
-    public function myBooking(Booking $booking, $id)
+    public function myBooking()
     {
-        $booked = $booking->where('user_id', $id)->get();
-        dd($booked);
-        return view('bookings.mybooking');
+        $booked = auth()->user()->booking()->get();
+        return view('bookings.mybooking', [
+            'booked' => $booked
+        ]);
     }
 
     public function categoryDetails($id)
