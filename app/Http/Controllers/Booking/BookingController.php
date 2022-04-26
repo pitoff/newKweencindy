@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Booking;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
     public function index()
     {
-        if(!auth()->user()->is_admin){
-            return view('bookings.users.index');
-        }
-        return view('bookings.admin.index');
+        return view('bookings.index');
     }
 
     public function create()
@@ -52,9 +51,17 @@ class BookingController extends Controller
             'book_status' => false,
             'book_date' => $request->book_date
         ]);
-        if($createBooking){
-            dd('good');
+        if(!$createBooking){
+            return back()->with('error', 'An error occured while processing booking');
         }
+        return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
+    }
+
+    public function myBooking(Booking $booking, $id)
+    {
+        $booked = $booking->where('user_id', $id)->get();
+        dd($booked);
+        return view('bookings.mybooking');
     }
 
     public function categoryDetails($id)

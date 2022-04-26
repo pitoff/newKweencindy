@@ -64,9 +64,11 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     //bookings home page
     Route::get('/booking-dashboard', [BookingController::class, 'index'])->name('booking');
     Route::get('/booking/create', [BookingController::class, 'create'])->name('create_booking');
+    Route::get('/already-booked', [BookingController::class, 'alreadyBooked'])->name('already_booked');
+    Route::get('/my-booking/{id}', [BookingController::class, 'myBooking'])->name('my_booking');
     Route::get('/booking/edit/{id}', [BookingController::class, 'edit'])->name('edit_booking');
     Route::post('/booking/create', [BookingController::class, 'store']);
-    Route::put('/booking/edit/{id}', [BopkingController::class, 'update']);
+    Route::put('/booking/edit/{id}', [BookingController::class, 'update']);
     Route::get('/booking-categories/{id}', [BookingController::class, 'categoryDetails']);
 
     //users route

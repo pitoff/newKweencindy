@@ -24,6 +24,7 @@ class CreateBookingsTable extends Migration
             $table->boolean('payment_status')->default(false)->nullable();
             $table->boolean('book_status')->default(false)->nullable();
             $table->string('book_date');
+            $table->string('book_time');
             $table->timestamp('created_at');
         });
     }
