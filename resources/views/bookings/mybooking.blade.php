@@ -10,7 +10,7 @@
                     <hr class="line line-hr-secondary">
                 </div>
                 @if (Session::has('success'))
-                    <div class="alert-alert-success"><em>{{session('success')}}</em></div>
+                <div class="alert-alert-success"><em>{{session('success')}}</em></div>
                 @endif
             </div>
         </div>
@@ -28,28 +28,43 @@
                                 <th scope="col">State</th>
                                 <th scope="col">Town</th>
                                 <th scope="col">Address</th>
+                                <th scope="col">Payment</th>
+                                <th scope="col">Book Status</th>
                                 <th scope="col" colspan="2" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($booked as $key => $book)
-                                <tr>
-                                    <td>{{$key + 1}}</td>
-                                    <td>{{$book->category->category}}</td>
-                                    <td>#{{number_format($book->category->price, 2)}}</td>
-                                    @if ($book->location === 'personal')
-                                        <td>{{$book->state}}</td>
-                                        <td>{{$book->town}}</td>
-                                        <td>{{$book->address}}</td>
-                                    @endif
-                                    @if ($book->location === 'office')
-                                        <td colspan="3" class="text-center">Office location</td>
-                                    @endif
-                                </tr>
+                            <tr>
+                                <td>{{$key + 1}}</td>
+                                <td>{{$book->category->category}}</td>
+                                <td>#{{number_format($book->category->price, 2)}}</td>
+                                @if ($book->location === 'personal')
+                                <td>{{$book->state}}</td>
+                                <td>{{$book->town}}</td>
+                                <td>{{$book->address}}</td>
+                                @endif
+                                @if ($book->location === 'office')
+                                <td colspan="3" class="text-center">Office location</td>
+                                @endif
+                                <td>
+                                    <a href=""><button type="button" class="btn-sm btn-success"><span class="ti-">Paid</span></button></a>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <a href=""><button type="button" class="btn-sm btn-warning"><span class="ti-pencil">Edit</span></button></a>
+                                </td>
+                                <td>
+                                    <form action="" method="post">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn-sm btn-danger"> <span class="ti-trash"></span> </button>
+                                    </form>
+                                </td>
+                            </tr>
                             @empty
-                                
+
                             @endforelse
-                           
+
                         </tbody>
                     </table>
                 </div>
