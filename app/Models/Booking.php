@@ -9,8 +9,6 @@ class Booking extends Model
 {
     use HasFactory;
 
-    protected $updated_at = false;
-
     public $fillable = [
         'user_id',
         'category_id',
@@ -31,5 +29,10 @@ class Booking extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getBookDateAttribute($bookDate)
+    {
+        return date('d-M-Y', strtotime($bookDate));
     }
 }

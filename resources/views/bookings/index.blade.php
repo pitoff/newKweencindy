@@ -22,7 +22,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Already Booked</h5>
                                 <p class="card-text">View already booked and accepted make up dates.</p>
-                                <a href="#" class="btn"> <span class="ti-eye"></span> See all</a>
+                                <a href="{{route('already_booked')}}" class="btn"> <span class="ti-eye"></span> See all</a>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Already Booked</h5>
                                 <p class="card-text">View already booked and accepted make up dates.</p>
-                                <a href="#" class="btn"> <span class="ti-eye"></span> See all</a>
+                                <a href="{{route('already_booked')}}" class="btn"> <span class="ti-eye"></span> See all</a>
                             </div>
                         </div>
                     </div>

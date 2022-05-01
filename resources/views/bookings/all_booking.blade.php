@@ -6,17 +6,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title mb-30"> <span>bookings</span>
-                    <h4>My Booked</h4>
+                    <h4>All Bookings</h4>
                     <hr class="line line-hr-secondary">
                 </div>
-                @if (Session::has('success'))
-                <div class="alert-alert-success"><em>{{session('success')}}</em></div>
-                @endif
             </div>
         </div>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <h5>Dates you have booked</h5>
+                <h5>All booked and accepted</h5>
 
                 @if (auth()->user()->is_admin)
                 <div class="categories-table table-responsive">
@@ -36,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($booked as $key => $book)
+                            @forelse ($bookings as $key => $book)
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$book->category->category}}</td>
@@ -79,7 +76,7 @@
                     </table>
                 </div>
                 @else
-
+                
                 <div class="categories-table table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -90,15 +87,14 @@
                                 <th scope="col">State</th>
                                 <th scope="col">Town</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">Payment</th>
-                                <th scope="col">Book Status</th>
-                                <th scope="col" colspan="2" class="text-center">Actions</th>
+                                <th scope="col">Date Booked</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($booked as $key => $book)
+                            @forelse ($bookings as $key => $book)
+                            @if ($book->book_status == 1)
                             <tr>
-                                <td>{{$key + 1}}</td>
+                                <td>{{$key ++}}</td>
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 @if ($book->location === 'personal location')
@@ -110,23 +106,11 @@
                                 <td colspan="3" class="text-center">Office location</td>
                                 @endif
                                 <td>
-                                    <a href=""><button type="button" class="btn-sm btn-success"><span class="ti-">Paid</span></button></a>
+                                   {{$book->book_date}}
                                 </td>
-                                <td>
-                                    @if ($book->book_status == 1)
-                                        <span class="badge badge-primary">Date Accepted</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href=""><button type="button" class="btn-sm btn-warning"><span class="ti-pencil">Edit</span></button></a>
-                                </td>
-                                <td>
-                                    <form action="" method="post">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn-sm btn-danger"> <span class="ti-trash"></span> </button>
-                                    </form>
-                                </td>
+                                
                             </tr>
+                            @endif
                             @empty
 
                             @endforelse
@@ -137,7 +121,7 @@
 
                 @endif                
                 
-                <a href="{{route('already_booked')}}" class="btn fl-btn" type="submit">Already Booked</a>
+                <a href="{{route('my_booking', auth()->user()->id)}}" class="btn fl-btn" type="submit">GoTo My Bookings</a>
             </div>
         </div>
 

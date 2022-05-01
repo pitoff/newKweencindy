@@ -69,6 +69,7 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     Route::get('/booking/edit/{id}', [BookingController::class, 'edit'])->name('edit_booking');
     Route::post('/booking/create', [BookingController::class, 'store']);
     Route::put('/booking/edit/{id}', [BookingController::class, 'update']);
+    Route::delete('/booking/remove/{id}', [BookingController::class, 'delete'])->name('delete_booking');
     Route::get('/booking-categories/{id}', [BookingController::class, 'categoryDetails']);
 
     //users route
@@ -83,6 +84,8 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     //admin routes
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'isAdmin'], function(){
         Route::resource('categories', CategoryController::class);
+        Route::put('/accept-booking/{id}', [BookingController::class, 'accept'])->name('acceptBooking');
+        Route::put('/decline-booking/{id}', [BookingController::class, 'decline'])->name('declineBooking');
     });
 
 });

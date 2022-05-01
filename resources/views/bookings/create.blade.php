@@ -48,7 +48,7 @@
 
         $('#location').change(function(){
             let location = $(this).val()
-            if(location == 'personal'){
+            if(location == 'personal location'){
                 $('#locationInfo').show()
             }else if(location == 'office'){
                 $('#locationInfo').hide()
