@@ -57,6 +57,18 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-6 mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Payment Method</h5>
+                                <p class="card-text">Add payment method {{config('app.name')}}.</p>
+                                <a href="{{route('payment.index')}}" class="btn">Add/Update method</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

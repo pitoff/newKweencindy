@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Booking\CategoryController;
+use App\Http\Controllers\Booking\PaymentMethodController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -69,8 +70,10 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     Route::get('/booking/edit/{id}', [BookingController::class, 'edit'])->name('edit_booking');
     Route::post('/booking/create', [BookingController::class, 'store']);
     Route::put('/booking/edit/{id}', [BookingController::class, 'update']);
+    Route::put('/mark-booking-as-paid/{id}', [BookingController::class, 'markPaid'])->name('userMarkPaid');
     Route::delete('/booking/remove/{id}', [BookingController::class, 'delete'])->name('delete_booking');
     Route::get('/booking-categories/{id}', [BookingController::class, 'categoryDetails']);
+    Route::get('payment-details', [PaymentMethodController::class, 'showPaymentDetails'])->name('payment_details');
 
     //users route
     Route::group(['prefix' => 'users', 'name' => 'users.'], function(){
@@ -84,8 +87,12 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     //admin routes
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'isAdmin'], function(){
         Route::resource('categories', CategoryController::class);
+        Route::resource('payment', PaymentMethodController::class);
+        Route::put('payment-activate/{id}', [PaymentMethodController::class, 'activate'])->name('paymentActivate');
+        Route::put('payment-deactivate/{id}', [PaymentMethodController::class, 'deactivate'])->name('paymentDeactivate');
         Route::put('/accept-booking/{id}', [BookingController::class, 'accept'])->name('acceptBooking');
         Route::put('/decline-booking/{id}', [BookingController::class, 'decline'])->name('declineBooking');
+        Route::put('/mark-booking-as-received/{id}', [BookingController::class, 'markReceived'])->name('adminMarkReceived');
     });
 
 });

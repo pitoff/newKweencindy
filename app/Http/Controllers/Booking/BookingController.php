@@ -60,7 +60,7 @@ class BookingController extends Controller
 
     public function myBooking()
     {
-        $booked = auth()->user()->booking()->orderByDesc('id')->get();
+        $booked = auth()->user()->booking()->orderBy('created_at', 'DESC')->get();
         return view('bookings.mybooking', [
             'booked' => $booked
         ]);
@@ -116,7 +116,7 @@ class BookingController extends Controller
 
         $updateBooked = Booking::where('id', $id)->update([
             'category_id' => $request->category,
-            'location' => $request->location ?? '',
+            'location' => $request->location ?? $book->location,
             'state' => $request->state ?? '',
             'town' => $request->town ?? '',
             'address' => $request->address ?? '',
@@ -126,7 +126,10 @@ class BookingController extends Controller
         ]);
 
         if($updateBooked){
-            return redirect(route('my_booking'))->with('success', 'You have Updated your booking');
+            if(!auth()->user()->is_admin){
+                return redirect(route('my_booking', $book->id))->with('success', 'You have Updated your booking');
+            }
+            return redirect(route('already_booked'))->with('success', 'You just updated booking');
         }
     }
 
@@ -174,11 +177,30 @@ class BookingController extends Controller
         ]);
     }
 
-    public function alreadyBooked()
+    public function alreadyBooked(Booking $booked)
     {
-        $booking = Booking::all();
+        $booking = $booked->orderBy('created_at', 'DESC')->get();
         return view('bookings.all_booking', [
             'bookings' => $booking
         ]);
     }
+
+    public function markPaid($id)
+    {
+        $book = Booking::find($id);
+        $book->update([
+            'payment_status' => 1
+        ]);
+        return back();
+    }
+
+    public function markReceived($id)
+    {
+        $book = Booking::find($id);
+        $book->update([
+            'payment_status' => 2
+        ]);
+        return back();
+    }
+
 }

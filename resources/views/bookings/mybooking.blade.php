@@ -43,12 +43,12 @@
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
                                 @if ($book->location === 'personal location')
-                                <td>{{$book->state}}</td>
-                                <td>{{$book->town}}</td>
-                                <td>{{$book->address}}</td>
+                                    <td>{{$book->state}}</td>
+                                    <td>{{$book->town}}</td>
+                                    <td>{{$book->address}}</td>
                                 @endif
                                 @if ($book->location === 'office location')
-                                <td colspan="3" class="text-center">Office location</td>
+                                    <td colspan="3" class="text-center">Office location</td>
                                 @endif
                                 <td>
                                     <a href=""><button type="button" class="btn-sm btn-success"><span class="ti-">Paid</span></button></a>
@@ -66,9 +66,6 @@
                                 <td>
                                     <button type="button" class="btn-sm btn-danger" id="removeBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#exampleModal"> <span class="ti-trash"></span> </button>
 
-                                    <!-- <form action="{{route('delete_booking', $book->id)}}" method="post">
-                                        @csrf @method('DELETE')
-                                    </form> -->
                                 </td>
                             </tr>
                             @empty
@@ -87,11 +84,11 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Booked For</th>
                                 <th scope="col">State</th>
                                 <th scope="col">Town</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">Payment</th>
-                                <th scope="col">Book Status</th>
+                                <th scope="col" colspan="2" class="text-center">Payment</th>
                                 <th scope="col" colspan="2" class="text-center">Actions</th>
                             </tr>
                         </thead>
@@ -101,31 +98,46 @@
                                 <td>{{$key + 1}}</td>
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
+                                <td>{{$book->book_date}}</td>
                                 @if ($book->location === 'personal location')
-                                <td>{{$book->state}}</td>
-                                <td>{{$book->town}}</td>
-                                <td>{{$book->address}}</td>
+                                    <td>{{$book->state}}</td>
+                                    <td>{{$book->town}}</td>
+                                    <td>{{$book->address}}</td>
                                 @endif
                                 @if ($book->location === 'office location')
-                                <td colspan="3" class="text-center">Office location</td>
+                                    <td colspan="3" class="text-center">Office location</td>
                                 @endif
-                                <td>
-                                    <a href=""><button type="button" class="btn-sm btn-success"><span class="ti-">Paid</span></button></a>
-                                </td>
-                                <td>
-                                    @if ($book->book_status == 1)
-                                        <span class="badge badge-primary">Date Accepted</span>
+
+                                @if($book->book_status === 1)
+                                    @if ($book->payment_status === 1)
+                                        <td><em>Awaiting confirmation</em></td>
+                                    @elseif($book->payment_status === 2)
+                                        <td><em>Payment Received</em></td>
+                                    @else
+                                        <td>
+                                            <form method="post" action="{{route('userMarkPaid', $book->id)}}">
+                                                @csrf @method('PUT')
+                                                <button type="submit" class="btn-sm btn-success"><span class="ti-">Mark as Paid</span></button>
+                                            </form>
+                                        </td>
                                     @endif
-                                </td>
-                                <td>
-                                    <a href=""><button type="button" class="btn-sm btn-warning"><span class="ti-pencil">Edit</span></button></a>
-                                </td>
-                                <td>
-                                    <form action="" method="post">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn-sm btn-danger"> <span class="ti-trash"></span> </button>
-                                    </form>
-                                </td>
+                                    <td>
+                                        <a href="{{route('payment_details')}}"><button type="button" class="btn-sm btn-info"><span class="ti-">Make Payment</span></button></a>
+                                    </td>
+                                @else
+                                    <td colspan="2">Not yet accepted</td>
+                                @endif
+                                
+                                @if($book->book_status === 0)
+                                    <td>
+                                        <a href="{{route('edit_booking', $book->id)}}"><button type="button" class="btn-sm btn-warning"><span class="ti-pencil">Edit</span></button></a>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn-sm btn-danger" id="removeBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#exampleModal"> <span class="ti-trash"></span> </button>
+                                    </td>
+                                @elseif($book->book_status === 1)
+                                    <td colspan="2"></td>
+                                @endif
                             </tr>
                             @empty
 

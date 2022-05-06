@@ -1,6 +1,17 @@
 @extends('layouts.layout')
 @section('pageContent')
 
+<style>
+    .blink {
+        animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+</style>
 <section id="services" class="section-padding bg-grey" data-scroll-index="2">
     <div class="container">
         <div class="row">
@@ -13,7 +24,11 @@
         </div>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <h5>All booked and accepted</h5>
+                @if (auth()->user()->is_admin)
+                    <h5>All booked appointment</h5>
+                @else
+                    <h5>All booked and accepted</h5>
+                @endif
 
                 @if (auth()->user()->is_admin)
                 <div class="categories-table table-responsive">
@@ -47,9 +62,22 @@
                                 @if ($book->location === 'office location')
                                 <td colspan="3" class="text-center">Office location</td>
                                 @endif
-                                <td>
-                                    <a href=""><button type="button" class="btn-sm btn-success"><span class="ti-">Paid</span></button></a>
-                                </td>
+
+                                @if ($book->payment_status === 2)
+                                    <td><em>Received</em></td>
+                                @else
+                                    <td>
+                                        <form method="post" action="{{route('adminMarkReceived', $book->id)}}">
+                                            @csrf @method('PUT')
+                                            <button type="submit" class="btn-sm btn-info"><span class="ti-">Mark as Received</span>
+                                            @if ($book->payment_status === 1)
+                                                <div class="blink"><span class="badge badge-danger">!</span></div>
+                                            @endif
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endif
+                                
                                 <td>
                                     @if ($book->book_status == 0)
                                         <button type="button" id="acceptBtn" class="btn-sm btn-success" data-date="{{$book->book_date}}" data-id="{{$book->id}}" data-toggle="modal" data-target="#acceptModal">Accept</button>
@@ -94,7 +122,7 @@
                             @forelse ($bookings as $key => $book)
                             @if ($book->book_status == 1)
                             <tr>
-                                <td>{{$key ++}}</td>
+                                <td>{{$key + 1}}</td>
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 @if ($book->location === 'personal location')
