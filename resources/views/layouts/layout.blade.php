@@ -84,7 +84,7 @@
             @if (auth()->user()->is_admin)
             <ul>
                 <li><a href="{{route('booking')}}">Bookings</a></li>
-                <li><a href="#">Gallery</a></li>
+                <li><a href="{{route('image-gallery.index')}}">Gallery</a></li>
                 <li><a href="#">MakeUp Class</a></li>
                 <li>
                     <form action="{{route('logout')}}" method="post">

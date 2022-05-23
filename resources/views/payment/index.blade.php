@@ -51,37 +51,62 @@
                         </thead>
                         <tbody>
                             @forelse ($payment as $key => $p)
-                                <tr>
-                                    <td>{{$key + 1}}</td>
-                                    <td>{{$p->bank}}</td>
-                                    <td>{{$p->acc_number}}</td>
-                                    <td>{{$p->acc_name}}</td>
-                                    <td>{{$p->is_active}}</td>
-                                    <td>
-                                        @if ($p->is_active == 0)
-                                            <form method="POST" action="{{route('paymentActivate', $p->id)}}">
-                                                @csrf @method('PUT')
-                                                <button type="submit" class="btn-sm btn-info"><span class="">Activate</span></button>
-                                            </form>   
-                                        @else
-                                            <form method="POST" action="{{route('paymentDeactivate', $p->id)}}">
-                                                @csrf @method('PUT')
-                                                <button type="submit" class="btn-sm btn-danger"><span class="">Dectivate</span></button>
-                                            </form>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{route('payment.edit', $p->id)}}"><button type="button" class="btn-sm btn-success"><span class="ti-pencil">Edit</span></button></a>
-                                    </td>
-                                    <td>
-                                        <form action="{{route('payment.destroy', $p->id)}}" method="post">
+                            <tr>
+                                <td>{{$key + 1}}</td>
+                                <td>{{$p->bank}}</td>
+                                <td>{{$p->acc_number}}</td>
+                                <td>{{$p->acc_name}}</td>
+                                <td>{{$p->is_active}}</td>
+                                <td>
+                                    @if ($p->is_active == 0)
+                                    <form method="POST" action="{{route('paymentActivate', $p->id)}}">
+                                        @csrf @method('PUT')
+                                        <button type="submit" class="btn-sm btn-info"><span class="">Activate</span></button>
+                                    </form>
+                                    @else
+                                    <form method="POST" action="{{route('paymentDeactivate', $p->id)}}">
+                                        @csrf @method('PUT')
+                                        <button type="submit" class="btn-sm btn-danger"><span class="">Dectivate</span></button>
+                                    </form>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{route('payment.edit', $p->id)}}"><button type="button" class="btn-sm btn-success"><span class="ti-pencil">Edit</span></button></a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn-sm btn-danger" id="removeBtn" data-toggle="modal" data-target="#exampleModal{{$p->id}}"> <span class="ti-trash"></span> </button>
+
+                                    
+                                </td>
+                            </tr>
+
+                            <!--Delete Payment Modal -->
+                            <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Remove Payment Method</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p style="font-size: large;">Are you sure you want to delete this payment method?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" form="removeMethod" class="btn-danger">Delete</button>
+                                        </div>
+                                        <form action="{{route('payment.destroy', $p->id)}}" id="removeMethod" method="post">
                                             @csrf @method('DELETE')
-                                            <button type="submit" class="btn-sm btn-danger"> <span class="ti-trash"></span> </button>
                                         </form>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end Delete modal -->
+
                             @empty
-                                
+
                             @endforelse
                         </tbody>
                     </table>

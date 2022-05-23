@@ -8,6 +8,7 @@ use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Booking\CategoryController;
 use App\Http\Controllers\Booking\PaymentMethodController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Gallery\GalleryController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -68,12 +69,16 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     Route::get('/already-booked', [BookingController::class, 'alreadyBooked'])->name('already_booked');
     Route::get('/my-booking/{id}', [BookingController::class, 'myBooking'])->name('my_booking');
     Route::get('/booking/edit/{id}', [BookingController::class, 'edit'])->name('edit_booking');
+    Route::get('/booking-preview-modal/{id}', [BookingController::class, 'previewBooking'])->name('preview');
     Route::post('/booking/create', [BookingController::class, 'store']);
     Route::put('/booking/edit/{id}', [BookingController::class, 'update']);
     Route::put('/mark-booking-as-paid/{id}', [BookingController::class, 'markPaid'])->name('userMarkPaid');
     Route::delete('/booking/remove/{id}', [BookingController::class, 'delete'])->name('delete_booking');
     Route::get('/booking-categories/{id}', [BookingController::class, 'categoryDetails']);
+
     Route::get('payment-details', [PaymentMethodController::class, 'showPaymentDetails'])->name('payment_details');
+
+    Route::resource('image-gallery', GalleryController::class);
 
     //users route
     Route::group(['prefix' => 'users', 'name' => 'users.'], function(){

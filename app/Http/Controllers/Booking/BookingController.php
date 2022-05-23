@@ -203,4 +203,14 @@ class BookingController extends Controller
         return back();
     }
 
+    public function previewBooking($id)
+    {
+        $booking = Booking::with('category', 'user')->where('id',$id)->first();
+        if($booking){
+            return response()->json([
+                'data' => $booking
+            ]);
+        }
+    }
+
 }
