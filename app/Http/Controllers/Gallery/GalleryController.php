@@ -13,7 +13,10 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        return view('gallery.viewGallery');
+        $images = Gallery::paginate(3);
+        return view('gallery.viewGallery', [
+            'images' => $images
+        ]);
     }
 
     public function create()
@@ -46,22 +49,39 @@ class GalleryController extends Controller
 
     }
 
-    public function show()
+    public function show($id)
     {
-
+        return view('gallery.show');
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $image = Gallery::find($id);
+        return view('gallery.edit', compact('image'));
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $image = Gallery::where('id',$id)->first();
+        $request->validate([
+            "imageName" => "required",
+            "description" => "required",
+            "imageFile" => ""
+        ]);
 
+        // $updateImage = Gallery::where('id', $id)->update([
+        //     'imageName' => $request->imageName,
+        //     'description' => $request->description,
+        //     'imageFile' => $request->imageFile ?? $image->imageFile
+        // ]);
+
+        if(File::exists('imageGallery/'.$image->imageFile)){
+            dd(true);
+        }
     }
 
-    public function delete()
+    public function destroy($id)
     {
-
+        dd($id);
     }
 }
