@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\PaymentMethod;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        // $this->run(PaymentMethod::class);
+        $this->call(PaymentMethodSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(CategorySeeder::class);
     }
 }

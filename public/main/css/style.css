@@ -160,12 +160,14 @@ button {
 .container {
     padding-right: 60px;
     padding-left: 60px;
+    height: auto;
 }
 
 @media screen and (max-width: 768px) {
     .container {
     padding-right: 15px;
     padding-left: 15px;
+    height: auto;
 }
 }
 
@@ -237,7 +239,7 @@ button {
     vertical-align: middle
 }
 .container {
-    height: 100%
+    height: auto;
 }
 .bg-fixed {
     background-attachment: fixed;
@@ -784,6 +786,7 @@ body.offcanvas .ovon-nav-toggle {
     .container {
         padding-right: 15px;
         padding-left: 15px;
+        height: auto;
     }
 }
 
@@ -2406,6 +2409,7 @@ blockquote cite:before {
 [data-overlay-light] .container {
     position: relative;
     z-index: 2;
+    height: auto;
 }
 [data-overlay-dark]:before,
 [data-overlay-light]:before {

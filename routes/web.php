@@ -38,8 +38,8 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 //reset password routes
 Route::get('/forgot-password', [ResetPasswordController::class, 'index'])->name('forgot-password');
 Route::post('/forgot-password', [ResetPasswordController::class, 'sendPasswordResetLink']);
-Route::get('/reset-password/{passwordToken}/user/{email}', [ResetPasswordController::class, 'resetPassword'])->name('reset-password');
-Route::put('/reset-password/{passwordToken}/user/{email}', [ResetPasswordController::class, 'updateNewPass']);
+Route::get('/reset-login-credentials/{urt}', [ResetPasswordController::class, 'resetPassword'])->name('reset-password');
+Route::post('/reset-login-credentials', [ResetPasswordController::class, 'updateNewPass'])->name('updateCredentials');
 
 //email verification
 Route::get('/email/verify', function () {
@@ -98,6 +98,8 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
         Route::put('/accept-booking/{id}', [BookingController::class, 'accept'])->name('acceptBooking');
         Route::put('/decline-booking/{id}', [BookingController::class, 'decline'])->name('declineBooking');
         Route::put('/mark-booking-as-received/{id}', [BookingController::class, 'markReceived'])->name('adminMarkReceived');
+        Route::put('/mark-booking-not-received/{id}', [BookingController::class, 'markNotReceived'])->name('adminMarkNotReceived');
+
     });
 
 });

@@ -9,9 +9,9 @@
                     <h4>My Booked</h4>
                     <hr class="line line-hr-secondary">
                 </div>
-                @if (Session::has('success'))
-                <div class="alert-alert-success"><em>{{session('success')}}</em></div>
-                @endif
+                <div class="col-md-8">
+                    @include('includes.sessionMsg')
+                </div>
             </div>
         </div>
         <div class="row">
@@ -46,8 +46,8 @@
                                     <td>{{$book->state}}</td>
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>
-                                @endif
-                                @if ($book->location === 'office location')
+                                @else
+                                {{-- ($book->location === 'office location') --}}
                                     <td colspan="3" class="text-center">Office location</td>
                                 @endif
                                 <td>
@@ -69,12 +69,13 @@
                                 </td>
                             </tr>
                             @empty
-
+                                <div class="alert alert-warning">No booked dates found</div>
                             @endforelse
 
                         </tbody>
                     </table>
                 </div>
+                
                 @else
 
                 <div class="categories-table table-responsive">
@@ -103,8 +104,8 @@
                                     <td>{{$book->state}}</td>
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>
-                                @endif
-                                @if ($book->location === 'office location')
+                                @else
+                                {{-- @if ($book->location === 'office') --}}
                                     <td colspan="3" class="text-center">Office location</td>
                                 @endif
 
@@ -140,7 +141,9 @@
                                 @endif
                             </tr>
                             @empty
-
+                                
+                                <div class="alert alert-warning">No booked dates found</div>
+                                
                             @endforelse
 
                         </tbody>
@@ -148,7 +151,9 @@
                 </div>
 
                 @endif                
-                
+                <div class="col-md-4 mt-2">
+                    {{$booked->links()}}
+                </div>
                 <a href="{{route('already_booked')}}" class="btn fl-btn" type="submit">Already Booked</a>
             </div>
         </div>

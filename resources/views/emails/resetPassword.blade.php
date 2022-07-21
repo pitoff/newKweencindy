@@ -3,7 +3,7 @@
 
 Please, Click on the link provided below to reset password. <br>Link expires in 5 minutes.
 
-@component('mail::button', ['url' => "http://newkweencindy.test/reset-password/$passwordToken/user/$email"])
+@component('mail::button', ['url' => route('reset-password', $passwordToken)])
 Click here
 @endcomponent
 

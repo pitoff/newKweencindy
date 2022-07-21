@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+    /*
+        initial payment status = 0
+        when user marks booking as paid, payment_status = 1
+        when admin marks booking as received payment_status = 2
+        when admin marks booking as not received payment_status = 0
+
+    */
     public function index()
     {
         return view('bookings.index');
@@ -53,14 +60,14 @@ class BookingController extends Controller
             'book_date' => $request->book_date
         ]);
         if(!$createBooking){
-            return back()->with('error', 'An error occured while processing booking');
+            return back()->with('err', 'An error occured while processing booking');
         }
         return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
     }
 
     public function myBooking()
     {
-        $booked = auth()->user()->booking()->orderBy('created_at', 'DESC')->get();
+        $booked = auth()->user()->booking()->orderBy('created_at', 'DESC')->paginate(15);
         return view('bookings.mybooking', [
             'booked' => $booked
         ]);
@@ -179,7 +186,7 @@ class BookingController extends Controller
 
     public function alreadyBooked(Booking $booked)
     {
-        $booking = $booked->orderBy('created_at', 'DESC')->get();
+        $booking = $booked->orderBy('created_at', 'DESC')->paginate(15);
         return view('bookings.all_booking', [
             'bookings' => $booking
         ]);
@@ -200,7 +207,16 @@ class BookingController extends Controller
         $book->update([
             'payment_status' => 2
         ]);
-        return back();
+        return back()->with('success', 'You marked payment as received');
+    }
+
+    public function markNotReceived($id)
+    {
+        $book = Booking::find($id);
+        $book->update([
+            'payment_status' => 0
+        ]);
+        return back()->with('success', 'You marked payment as not received');
     }
 
     public function previewBooking($id)

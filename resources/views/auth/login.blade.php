@@ -12,8 +12,9 @@
         <p><span class="ti-key"></span> Log In to {{config('app.name')}} account</p>
 
         <x-auth-errors/>
-        <em class="text-danger">{{session('loginFailed')}}</em>
-        <em class="text-success">{{session('PasswordResetSuccess')}}</em>
+        <div class="col-md-8">
+            @include('includes.sessionMsg')
+        </div>
         
         <form method="post" action="{{route('login')}}">
             @csrf

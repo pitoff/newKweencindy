@@ -12,9 +12,12 @@
         <p><span class="ti-key"></span> Change {{config('app.name')}} account password</p>
 
         <x-auth-errors/>
-        <em class="text-danger">{{session('tokenDoesNotMatch')}}</em>
-        <form action="{{route('reset-password', [$passwordToken, $email])}}" method="POST">
-            @csrf @method('PUT')
+        <div class="col-md-8">
+            @include('includes.sessionMsg')
+        </div>
+        
+        <form action="{{route('updateCredentials', $passwordToken)}}" method="POST">
+            @csrf
             <div class="col-sm-8">
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="Password *">
@@ -25,6 +28,8 @@
                     <input type="password" class="form-control" name="password_confirmation" placeholder="Retype-assword *">
                 </div>
             </div>
+
+            <input type="hidden" value="{{$email}}" name="email">
 
             <div class="col-sm-8">
                 <div class="form-group">

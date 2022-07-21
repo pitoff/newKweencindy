@@ -35,7 +35,7 @@ class ResetPasswordController extends Controller
         $expire_at = date('H:i:s', strtotime('+5 minutes', strtotime($time)));
 
         if(!$getUser){
-            return back()->with('UserNotExist', 'User could not be found');
+            return back()->with('err', 'User could not be found');
         }
 
         $reset = DB::table('password_resets')->where('email', $request->email)->first();
@@ -46,29 +46,39 @@ class ResetPasswordController extends Controller
                 'expire_at' => $expire_at
             ]);
             if(!$createReset){
-                return back()->with('LinkNotSent', 'Whoops please something went wrong');
+                return back()->with('err', 'Whoops please something went wrong');
             }
             Mail::to($request->email)->send(new ResetPassword($passwordToken, $request->email));
-            return back()->with('LinkSent', 'Password reset link has been sent to your email');
+            return back()->with('success', 'Password reset link has been sent to your email');
         }else{
             $updateReset = DB::table('password_resets')->where('email', $request->email)->update([
                 'token' => $passwordToken,
                 'expire_at' => $expire_at
             ]);
             if(!$updateReset){
-                return back()->with('LinkNotSent', 'Whoops please something went wrong');
+                return back()->with('err', 'Whoops please something went wrong');
             }
             Mail::to($request->email)->send(new ResetPassword($passwordToken, $request->email));
-            return back()->with('LinkSent', 'Password reset link has been sent to your email');
+            return back()->with('success', 'Password reset link has been sent to your email');
         }
 
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword($passwordToken = null)
     {
+        $getUser = DB::table('password_resets')->where('token', $passwordToken)->first(['email', 'token', 'expire_at']);
+        if($getUser){
+            if(date('H:i:s') > $getUser->expire_at){
+                return redirect(route('forgot-password'))->with('warning', 'The password reset link has expired, please request a new reset password link');
+            }
+
+        }else{
+            return back()->with('err', 'Whoops! Token error');
+        }
+
         return view('auth.update-password', [
-            'passwordToken' => $request->passwordToken,
-            'email' => $request->email
+            'passwordToken' => $getUser->token,
+            'email' => $getUser->email
         ]);
     }
 
@@ -78,25 +88,13 @@ class ResetPasswordController extends Controller
             'password' => 'required|confirmed'
         ]);
 
-        $getUser = DB::table('password_resets')->where('email', $request->email)->first();
-        $tokenExpireTime = $getUser->expire_at;
-        $currentTime = date('H:i:s');
-
-        if ($getUser->token !== $request->passwordToken) {
-
-            return back()->with('tokenDoesNotMatch', 'token does not match');
+        $updatePass = User::where('email', $request->email)->update([
+            'password' => Hash::make($request->password)
+        ]);
+        if ($updatePass) {
+            DB::table('password_resets')->where('email', $request->email)->delete();
+            return redirect(route('login'))->with('success', 'Password has been reset');
         }
 
-        if (!($currentTime > $tokenExpireTime)) {
-            $updatePass = User::where('email', $request->email)->update([
-                'password' => Hash::make($request->password)
-            ]);
-            if ($updatePass) {
-                DB::table('password_resets')->where('email', $request->email)->delete();
-                return redirect(route('login'))->with('PasswordResetSuccess', 'Password has been reset');
-            }
-        }
-
-        return redirect(route('forgot-password'))->with('LinkExpired', 'Password reset link has expired, get a new one');
     }
 }

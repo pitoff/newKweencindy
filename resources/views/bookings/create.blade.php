@@ -15,6 +15,9 @@
             <div class="col-md-8 offset-2">
                 <h3 class="ml-1">Book session</h3>
                 <x-auth-errors />
+                <div class="col-md-8">
+                    @include('includes.sessionMsg')
+                </div>
                 <form method="post" action="{{route('create_booking')}}">
                     @include('bookings.booking_form')
                 </form>

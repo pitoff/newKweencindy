@@ -23,6 +23,9 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-8">
+                @include('includes.sessionMsg')
+            </div>
             <div class="col-md-8 offset-2">
                 @if (auth()->user()->is_admin)
                     <h5>All booked appointment</h5>
@@ -42,7 +45,7 @@
                                 <th scope="col">State</th>
                                 <th scope="col">Town</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">Payment</th>
+                                <th scope="col" colspan="2">Payment</th>
                                 <th scope="col">Accept/Decline</th>
                                 <th scope="col" colspan="3" class="text-center">Actions</th>
                             </tr>
@@ -55,18 +58,28 @@
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
                                 @if ($book->location === 'personal location')
-                                <td>{{$book->state}}</td>
-                                <td>{{$book->town}}</td>
-                                <td>{{$book->address}}</td>
-                                @endif
-                                @if ($book->location === 'office location')
-                                <td colspan="3" class="text-center">Office location</td>
+                                    <td>{{$book->state}}</td>
+                                    <td>{{$book->town}}</td>
+                                    <td>{{$book->address}}</td>
+                                @else
+                                    {{-- ($book->location === 'office') --}}
+                                    <td colspan="3" class="text-center">Office location</td>
                                 @endif
 
                                 @if ($book->payment_status === 2)
                                     <td><em>Received</em></td>
+                                    <td>
+                                
+                                        <form method="post" action="{{route('adminMarkNotReceived', $book->id)}}">
+                                            @csrf @method('PUT')
+                                            <button type="submit" class="btn-sm btn-info"><span class="ti-">Mark not Received</span>
+                                            </button>
+                                        </form>
+                                        
+                                    </td>
                                 @else
                                     <td>
+                                       
                                         <form method="post" action="{{route('adminMarkReceived', $book->id)}}">
                                             @csrf @method('PUT')
                                             <button type="submit" class="btn-sm btn-info"><span class="ti-">Mark as Received</span>
@@ -75,7 +88,19 @@
                                             @endif
                                             </button>
                                         </form>
+
                                     </td>
+
+                                    <td>
+                                
+                                        <form method="post" action="{{route('adminMarkNotReceived', $book->id)}}">
+                                            @csrf @method('PUT')
+                                            <button type="submit" class="btn-sm btn-info"><span class="ti-">Mark not Received</span>
+                                            </button>
+                                        </form>
+                                        
+                                    </td>
+                                  
                                 @endif
                                 
                                 <td>
@@ -100,7 +125,7 @@
                                 </td>
                             </tr>
                             @empty
-
+                                <div class="alert alert-warning">No booked dates found</div>
                             @endforelse
 
                         </tbody>
@@ -129,12 +154,12 @@
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 @if ($book->location === 'personal location')
-                                <td>{{$book->state}}</td>
-                                <td>{{$book->town}}</td>
-                                <td>{{$book->address}}</td>
-                                @endif
-                                @if ($book->location === 'office location')
-                                <td colspan="3" class="text-center">Office location</td>
+                                    <td>{{$book->state}}</td>
+                                    <td>{{$book->town}}</td>
+                                    <td>{{$book->address}}</td>
+                                @else
+                                    {{-- ($book->location === 'office') --}}
+                                    <td colspan="3" class="text-center">Office location</td>
                                 @endif
                                 <td>
                                    {{$book->book_date}}
@@ -143,7 +168,7 @@
                             </tr>
                             @endif
                             @empty
-
+                                <div class="alert alert-warning">No booked dates found</div>
                             @endforelse
 
                         </tbody>
@@ -151,7 +176,9 @@
                 </div>
 
                 @endif                
-                
+                <div class="col-md-4 mt-2">
+                    {{$bookings->links()}}
+                </div>
                 <a href="{{route('my_booking', auth()->user()->id)}}" class="btn fl-btn" type="submit">GoTo My Bookings</a>
             </div>
         </div>
@@ -304,7 +331,11 @@
                     url: `/admin/accept-booking/${id}`,
                     success: function (response) {
                         console.log(response.message)
+                        // jQuery('#acceptModal').modal('hide')
+
                         location.reload(true)
+                        // $('.alert-success').text(response.message)
+
                     }
                 });
             })
@@ -365,10 +396,10 @@
                     }else{
                         $('.bookStatus').text('Date not accepted');
                     }
-                    if(response.data.book_status == 1){
+                    if(response.data.payment_status == 1){
                         $('.payStatus').text('Marked as Paid');
-                    }else if(response.data.book_status == 2){
-                        $('.payStatus').text('Received');
+                    }else if(response.data.payment_status == 2){
+                        $('.payStatus').text('Marked as Received');
                     }else{
                         $('.payStatus').text('Pending');
                     }

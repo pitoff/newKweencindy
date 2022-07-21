@@ -12,7 +12,9 @@
         <p><span class="ti-pencil"></span> Create an accout with {{config('app.name')}}</p>
 
         <x-auth-errors/>
-        
+        <div class="col-md-8">
+            @include('includes.sessionMsg')
+        </div>
         <form method="post" action="{{route('register')}}">
             @csrf
             <div class="col-sm-8">

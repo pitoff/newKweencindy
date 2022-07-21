@@ -26,7 +26,7 @@ class LoginController extends Controller
         ]);
 
         if(!auth()->attempt($request->only('email', 'password'))){
-            return back()->with('loginFailed', 'Whoops! Incorrect login details');
+            return back()->with('err', 'Whoops! Incorrect login details');
         }
         return redirect(route('dashboard'));
 
