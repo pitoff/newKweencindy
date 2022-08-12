@@ -28,7 +28,8 @@ class LoginController extends Controller
         if(!auth()->attempt($request->only('email', 'password'))){
             return back()->with('err', 'Whoops! Incorrect login details');
         }
-        return redirect(route('dashboard'));
+        // return redirect(route('dashboard'));
+        return redirect()->intended($this->redirectPath());
 
     }
 }

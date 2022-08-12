@@ -145,9 +145,4 @@ class PaymentMethodController extends Controller
         return back()->with('success', 'You successfully activated payment method');
     }
 
-    public function showPaymentDetails()
-    {
-        $details = PaymentMethod::where('is_active', 1)->get();
-        return view('payment.payment_details', compact('details'));
-    }
 }

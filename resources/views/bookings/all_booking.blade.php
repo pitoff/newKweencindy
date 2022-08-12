@@ -62,43 +62,112 @@
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>
                                 @else
-                                    {{-- ($book->location === 'office') --}}
                                     <td colspan="3" class="text-center">Office location</td>
                                 @endif
 
                                 @if ($book->payment_status === 2)
                                     <td><em>Received</em></td>
                                     <td>
-                                
+                                        <button type="button" class="btn-sm btn-info" id="markNotReceivedBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markNotReceivedModal{{$book->id}}">
+                                            <span class="ti-">Mark not Received</span>
+                                            
+                                        </button>
+                                    
+                                        <!-- modal to mark as received -->
                                         <form method="post" action="{{route('adminMarkNotReceived', $book->id)}}">
-                                            @csrf @method('PUT')
-                                            <button type="submit" class="btn-sm btn-info"><span class="ti-">Mark not Received</span>
-                                            </button>
+                                        @csrf @method('PUT')
+                                        <div class="modal fade" id="markNotReceivedModal{{$book->id}}" tabindex="-1" aria-labelledby="markNotReceivedModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="markNotReceivedModal">Mark payment as not received</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p style="font-size: large;">You want to mark payment for {{$book->book_date}} as not received?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn-success">Yes <span class="ti-check"></span></button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
                                         </form>
-                                        
+                                        <!-- end modal -->
                                     </td>
+
                                 @else
+                                
                                     <td>
-                                       
-                                        <form method="post" action="{{route('adminMarkReceived', $book->id)}}">
-                                            @csrf @method('PUT')
-                                            <button type="submit" class="btn-sm btn-info"><span class="ti-">Mark as Received</span>
-                                            @if ($book->payment_status === 1)
-                                                <div class="blink"><span class="badge badge-danger">!</span></div>
-                                            @endif
+                                            <button type="button" class="btn-sm btn-info" id="markAsReceivedBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markAsReceivedModal{{$book->id}}">
+                                                <span class="ti-">Mark as Received</span>
+                                                @if ($book->payment_status === 1)
+                                                    <div class="blink"><span class="badge badge-danger">!</span></div>
+                                                @endif
                                             </button>
-                                        </form>
+                                        
+                                            <!-- modal to mark as received -->
+                                            <form method="post" action="{{route('adminMarkReceived', $book->id)}}">
+                                            @csrf @method('PUT')
+                                            <div class="modal fade" id="markAsReceivedModal{{$book->id}}" tabindex="-1" aria-labelledby="markAsReceivedModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="markAsReceivedModal">Mark payment as received</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p style="font-size: large;">You want to confirm the payment for {{$book->book_date}} as received?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn-success">Yes <span class="ti-check"></span></button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </form>
+                                            <!-- end modal -->
 
                                     </td>
 
                                     <td>
-                                
-                                        <form method="post" action="{{route('adminMarkNotReceived', $book->id)}}">
-                                            @csrf @method('PUT')
-                                            <button type="submit" class="btn-sm btn-info"><span class="ti-">Mark not Received</span>
-                                            </button>
-                                        </form>
                                         
+                                        <button type="button" class="btn-sm btn-info" id="markNotReceivedBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markNotReceivedModal{{$book->id}}">
+                                            <span class="ti-">Mark not Received</span>
+                                            
+                                        </button>
+                                    
+                                        <!-- modal to mark as received -->
+                                        <form method="post" action="{{route('adminMarkNotReceived', $book->id)}}">
+                                        @csrf @method('PUT')
+                                        <div class="modal fade" id="markNotReceivedModal{{$book->id}}" tabindex="-1" aria-labelledby="markNotReceivedModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="markNotReceivedModal">Mark payment as not received</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p style="font-size: large;">You want to mark payment for {{$book->book_date}} as not received?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn-success">Yes <span class="ti-check"></span></button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </form>
+                                        <!-- end modal -->
+
                                     </td>
                                   
                                 @endif
@@ -131,6 +200,7 @@
                         </tbody>
                     </table>
                 </div>
+                
                 @else
                 
                 <div class="categories-table table-responsive">
@@ -148,25 +218,25 @@
                         </thead>
                         <tbody>
                             @forelse ($bookings as $key => $book)
-                            @if ($book->book_status == 1)
-                            <tr>
-                                <td>{{$key + 1}}</td>
-                                <td>{{$book->category->category}}</td>
-                                <td>#{{number_format($book->category->price, 2)}}</td>
-                                @if ($book->location === 'personal location')
-                                    <td>{{$book->state}}</td>
-                                    <td>{{$book->town}}</td>
-                                    <td>{{$book->address}}</td>
-                                @else
-                                    {{-- ($book->location === 'office') --}}
-                                    <td colspan="3" class="text-center">Office location</td>
+                                @if ($book->payment_status == 2)
+                                <tr>
+                                    <td>{{$key + 1}}</td>
+                                    <td>{{$book->category->category}}</td>
+                                    <td>#{{number_format($book->category->price, 2)}}</td>
+                                    @if ($book->location === 'personal location')
+                                        <td>{{$book->state}}</td>
+                                        <td>{{$book->town}}</td>
+                                        <td>{{$book->address}}</td>
+                                    @else
+                                        {{-- ($book->location === 'office') --}}
+                                        <td colspan="3" class="text-center">Office location</td>
+                                    @endif
+                                    <td>
+                                    {{$book->book_date}}
+                                    </td>
+                                    
+                                </tr>
                                 @endif
-                                <td>
-                                   {{$book->book_date}}
-                                </td>
-                                
-                            </tr>
-                            @endif
                             @empty
                                 <div class="alert alert-warning">No booked dates found</div>
                             @endforelse

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Booking\CategoryController;
+use App\Http\Controllers\Booking\PaymentController;
 use App\Http\Controllers\Booking\PaymentMethodController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Gallery\GalleryController;
@@ -76,9 +77,13 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     Route::delete('/booking/remove/{id}', [BookingController::class, 'delete'])->name('delete_booking');
     Route::get('/booking-categories/{id}', [BookingController::class, 'categoryDetails']);
 
-    Route::get('payment-details', [PaymentMethodController::class, 'showPaymentDetails'])->name('payment_details');
+    Route::get('payment-details/{id}', [PaymentController::class, 'showPaymentDetails'])->name('payment_details');
 
     Route::resource('image-gallery', GalleryController::class);
+
+    //paystack payment routes
+    Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback'])->name('payment');
+    Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 
     //users route
     Route::group(['prefix' => 'users', 'name' => 'users.'], function(){
@@ -91,6 +96,7 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
 
     //admin routes
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'isAdmin'], function(){
+        
         Route::resource('categories', CategoryController::class);
         Route::resource('payment', PaymentMethodController::class);
         Route::put('payment-activate/{id}', [PaymentMethodController::class, 'activate'])->name('paymentActivate');

@@ -37,22 +37,25 @@
                         </thead>
                         <tbody>
                             @forelse ($booked as $key => $book)
+
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
+
                                 @if ($book->location === 'personal location')
                                     <td>{{$book->state}}</td>
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>
                                 @else
-                                {{-- ($book->location === 'office location') --}}
                                     <td colspan="3" class="text-center">Office location</td>
                                 @endif
+
                                 <td>
                                     <a href=""><button type="button" class="btn-sm btn-success"><span class="ti-">Paid</span></button></a>
                                 </td>
+
                                 <td>
                                     @if ($book->book_status == 0)
                                         <button type="button" id="acceptBtn" class="btn-sm btn-success" data-date="{{$book->book_date}}" data-id="{{$book->id}}" data-toggle="modal" data-target="#acceptModal">Accept</button>
@@ -60,14 +63,16 @@
                                         <button type="button" id="declineBtn" class="btn-sm btn-danger" data-date="{{$book->book_date}}" data-id="{{$book->id}}" data-toggle="modal" data-target="#declineModal">Decline</button>
                                     @endif
                                 </td>
+
                                 <td>
                                     <a href="{{route('edit_booking', $book->id)}}"><button type="button" class="btn-sm btn-warning"><span class="ti-pencil">Edit</span></button></a>
                                 </td>
+
                                 <td>
                                     <button type="button" class="btn-sm btn-danger" id="removeBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#exampleModal"> <span class="ti-trash"></span> </button>
-
                                 </td>
                             </tr>
+
                             @empty
                                 <div class="alert alert-warning">No booked dates found</div>
                             @endforelse
@@ -95,6 +100,7 @@
                         </thead>
                         <tbody>
                             @forelse ($booked as $key => $book)
+
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$book->category->category}}</td>
@@ -105,7 +111,6 @@
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>
                                 @else
-                                {{-- @if ($book->location === 'office') --}}
                                     <td colspan="3" class="text-center">Office location</td>
                                 @endif
 
@@ -116,14 +121,37 @@
                                         <td><em>Payment Received</em></td>
                                     @else
                                         <td>
+                                            <button type="button" class="btn-sm btn-success" id="markAsPaidBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markAsPaidModal{{$book->id}}"> <span class="ti-">Mark as Paid</span> </button>
+                                        
+                                            <!-- modal to confirm that user has made payment -->
                                             <form method="post" action="{{route('userMarkPaid', $book->id)}}">
-                                                @csrf @method('PUT')
-                                                <button type="submit" class="btn-sm btn-success"><span class="ti-">Mark as Paid</span></button>
+                                            @csrf @method('PUT')
+                                            <div class="modal fade" id="markAsPaidModal{{$book->id}}" tabindex="-1" aria-labelledby="markAsPaidModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="markAsPaidModalLabel">Payment Made</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p style="font-size: large;">You are notifying the system that you have made payment, are you sure of this {{$book->id}}?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn-success">Yes <span class="ti-check"></span></button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
                                             </form>
+                                            <!-- end modal -->
+                                        
                                         </td>
                                     @endif
                                     <td>
-                                        <a href="{{route('payment_details')}}"><button type="button" class="btn-sm btn-info"><span class="ti-">Make Payment</span></button></a>
+                                        <a href="{{route('payment_details', $book->id)}}"><button type="button" class="btn-sm btn-info"><span class="ti-">Make Payment</span></button></a>
                                     </td>
                                 @else
                                     <td colspan="2">Not yet accepted</td>
@@ -161,7 +189,7 @@
     </div>
 </section>
 
-<!-- Modal -->
+<!-- Modal to delete already booked appointment -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -183,7 +211,7 @@
 </div>
 <!-- end modal -->
 
-<!-- accept booking -->
+<!-- accept booking modal-->
 <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -205,7 +233,7 @@
 </div>
 <!-- end accept booking -->
 
-<!-- decline booking -->
+<!-- decline booking modal -->
 <div class="modal fade" id="declineModal" tabindex="-1" aria-labelledby="declineModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
