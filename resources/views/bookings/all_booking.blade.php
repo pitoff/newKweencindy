@@ -217,10 +217,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $key = 0 @endphp
                             @forelse ($bookings as $key => $book)
                                 @if ($book->payment_status == 2)
                                 <tr>
-                                    <td>{{$key + 1}}</td>
+                                    <td>{{$key ++}}</td>
                                     <td>{{$book->category->category}}</td>
                                     <td>#{{number_format($book->category->price, 2)}}</td>
                                     @if ($book->location === 'personal location')

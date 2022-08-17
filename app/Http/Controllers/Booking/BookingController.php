@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Booking;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BookingSuccessfull;
 use App\Models\Booking;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -49,20 +51,29 @@ class BookingController extends Controller
             ]);
         }
 
-        $createBooking = auth()->user()->booking()->create([
-            'category_id' => $request->category,
-            'location' => $request->location,
-            'state' => $request->state ?? '',
-            'town' => $request->town ?? '',
-            'address' => $request->address ?? '',
-            'payment_status' => false,
-            'book_status' => false,
-            'book_date' => $request->book_date
-        ]);
-        if(!$createBooking){
+        try {
+            $createBooking = auth()->user()->booking()->create([
+                'category_id' => $request->category,
+                'location' => $request->location,
+                'state' => $request->state ?? '',
+                'town' => $request->town ?? '',
+                'address' => $request->address ?? '',
+                'payment_status' => false,
+                'book_status' => false,
+                'book_date' => $request->book_date
+            ]);
+
+            if($createBooking){
+                $this->notifyAdmin("peteroffodile@gmail.com", new BookingSuccessfull($request->book_date, $request->location));
+                // $this->notifyUser();
+            }
+            return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
+
+        } catch (\Throwable $th) {
+            //throw $th;
             return back()->with('err', 'An error occured while processing booking');
         }
-        return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
+       
     }
 
     public function myBooking()

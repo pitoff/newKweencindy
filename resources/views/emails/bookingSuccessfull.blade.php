@@ -1,7 +1,7 @@
 @component('mail::message')
-# Introduction
+# Booking
 
-The body of your message.
+You have booked for {{$state}} and {{$addr}}.
 
 @component('mail::button', ['url' => ''])
 Button Text

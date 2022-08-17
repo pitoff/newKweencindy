@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Mail;
 
 class Controller extends BaseController
 {
@@ -18,5 +19,15 @@ class Controller extends BaseController
         }
 
         return property_exists($this, 'redirectTo') ? $this->redirectTo : '/dashboard';
+    }
+
+    public function notifyAdmin($receiver, $mailClass)
+    {
+        Mail::to($receiver)->send($mailClass);
+    }
+
+    public function notifyUser()
+    {
+
     }
 }

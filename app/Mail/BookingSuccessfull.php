@@ -16,9 +16,13 @@ class BookingSuccessfull extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $state;
+    public $addr;
+
+    public function __construct($state, $addr)
     {
-        //
+        $this->state = $state;
+        $this->addr = $addr;
     }
 
     /**
@@ -28,6 +32,6 @@ class BookingSuccessfull extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.bookingSuccessfull');
+        return $this->subject("Successfull Booking")->markdown('emails.bookingSuccessfull', ['state' => $this->state, 'addr' => $this->addr]);
     }
 }

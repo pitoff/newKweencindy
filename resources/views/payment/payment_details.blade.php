@@ -30,7 +30,7 @@
                     <input type="hidden" value="{{$bookingDetails->category->price * 100}}" name="amount">
                     <input type="hidden" name="metadata" value="{{ json_encode($array = ['booking_id' => $bookingDetails->id, 'item_name' => $bookingDetails->category->category])}}">
 
-                    @if($bookingDetails->payment_status === 1)
+                    @if($bookingDetails->payment_status === 1 || $bookingDetails->payment_status === 2)
                         <em><strong> <u> Payment has been made </u> <span class="ti-check"></span> </strong></em>
                     @else
                         <button class="btn fl-btn btn-sm" type="submit">Proceed</button>
