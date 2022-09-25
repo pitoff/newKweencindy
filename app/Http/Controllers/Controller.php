@@ -21,13 +21,4 @@ class Controller extends BaseController
         return property_exists($this, 'redirectTo') ? $this->redirectTo : '/dashboard';
     }
 
-    public function notifyAdmin($receiver, $mailClass)
-    {
-        Mail::to($receiver)->send($mailClass);
-    }
-
-    public function notifyUser()
-    {
-
-    }
 }

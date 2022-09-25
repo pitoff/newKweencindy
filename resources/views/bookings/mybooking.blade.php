@@ -15,9 +15,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-2">
+            <div class="col-md-10 offset-1">
                 <h5>Dates you have booked</h5>
-
+                <div class="text-right">
+                    <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                        <strong><em>Click here to Book Session</em></strong> </a>
+                </div>
+                <!-- section for admin to see dates he has booked -->
                 @if (auth()->user()->is_admin)
                 <div class="categories-table table-responsive">
                     <table class="table table-striped table-bordered">
@@ -39,7 +43,8 @@
                             @forelse ($booked as $key => $book)
 
                             <tr>
-                                <td>{{$key + 1}}</td>
+                                <td>{{ ($booked->currentpage()-1) * $booked->perpage() + (1+$key ++) }}</td>
+                                {{-- <td>{{$key + 1}}</td> --}}
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
@@ -80,7 +85,9 @@
                         </tbody>
                     </table>
                 </div>
-                
+                <!-- end section for admin to see dates he has booked -->
+
+                <!-- start section for user to see dates he has booked -->
                 @else
 
                 <div class="categories-table table-responsive">
@@ -102,7 +109,8 @@
                             @forelse ($booked as $key => $book)
 
                             <tr>
-                                <td>{{$key + 1}}</td>
+                                <td>{{ ($booked->currentpage()-1) * $booked->perpage() + (1+$key ++) }}</td>
+                                {{-- <td>{{$key + 1}}</td> --}}
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
@@ -178,7 +186,9 @@
                     </table>
                 </div>
 
-                @endif                
+                @endif
+                <!-- end start section for user to see dates he has booked -->
+
                 <div class="col-md-4 mt-2">
                     {{$booked->links()}}
                 </div>

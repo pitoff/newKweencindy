@@ -16,13 +16,16 @@ class BookingSuccessfull extends Mailable
      *
      * @return void
      */
-    public $state;
-    public $addr;
 
-    public function __construct($state, $addr)
+    public function __construct($data)
     {
-        $this->state = $state;
-        $this->addr = $addr;
+        $this->message = $data['message'];
+        $this->state = $data['state'];
+        $this->addr = $data['addr'];
+        $this->cat = $data['cat'];
+        $this->location = $data['location'];
+        $this->town = $data['town'];
+        $this->bookDate = $data['bookDate'];
     }
 
     /**
@@ -32,6 +35,15 @@ class BookingSuccessfull extends Mailable
      */
     public function build()
     {
-        return $this->subject("Successfull Booking")->markdown('emails.bookingSuccessfull', ['state' => $this->state, 'addr' => $this->addr]);
+        return $this->subject("Successfull Booking")->markdown('emails.bookingSuccessfull', [
+            'msg' => $this->message, 
+            'state' => $this->state, 
+            'addr' => $this->addr, 
+            'cat' => $this->cat, 
+            'location' => $this->location, 
+            'town' => $this->town, 
+            'date' => $this->bookDate,
+            'nil' => "---"
+        ]);
     }
 }

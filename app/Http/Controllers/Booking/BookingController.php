@@ -17,6 +17,8 @@ class BookingController extends Controller
         when user marks booking as paid, payment_status = 1
         when admin marks booking as received payment_status = 2
         when admin marks booking as not received payment_status = 0
+        when admin accepts booking, booking_status = 1
+        when admin decline booking, booking_status = 2
 
     */
     public function index()
@@ -34,7 +36,7 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        if($request->location === 'personal location'){
+        if($request->location == 'personal location'){
             $request->validate([
                 'category' => 'required',
                 'location' => 'required',
@@ -64,26 +66,58 @@ class BookingController extends Controller
             ]);
 
             if($createBooking){
-                $this->notifyAdmin("peteroffodile@gmail.com", new BookingSuccessfull($request->book_date, $request->location));
-                // $this->notifyUser();
+                $this->bookingSuccessfull(auth()->user()->email, $request->category, $request->location, $request->state, $request->town, $request->address, $request->book_date);
+                $this->notifyBookingAdmin(); 
             }
             return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
 
         } catch (\Throwable $th) {
-            //throw $th;
-            return back()->with('err', 'An error occured while processing booking');
+            throw $th;
+            // return back()->with('err', 'An error occured while processing booking');
         }
        
     }
 
+    public function bookingSuccessfull($receiver, $cat, $location, $state, $town, $addr, $bookDate)
+    {
+        $data['message'] = "Thank you for booking your make up session with Kweencindy make up services, we are glad to serve you. 
+                            Please payment link will be activated when your booking is accepted by our team";
+
+        // $data['receiver'] = $receiver;
+        $data['cat'] = $cat;
+        $data['location'] = $location;
+        $data['state'] = $state;
+        $data['town'] = $town;
+        $data['addr'] = $addr;
+        $data['bookDate'] = $bookDate;
+
+        Mail::to($receiver)->send(new BookingSuccessfull($data));
+        
+    }
+
+    public function notifyBookingAdmin()
+    {
+
+    }
+
+    //get all bookings a user has made
     public function myBooking()
     {
-        $booked = auth()->user()->booking()->orderBy('created_at', 'DESC')->paginate(15);
+        $booked = auth()->user()->booking()->orderBy('id', 'DESC')->paginate(15);
         return view('bookings.mybooking', [
             'booked' => $booked
         ]);
     }
 
+    public function alreadyBooked(Booking $booked)
+    {
+        $booking = $booked->orderBy('id', 'DESC')->paginate(15);
+        return view('bookings.all_booking', [
+            'bookings' => $booking
+        ]);
+    }
+
+    //get booking category
     public function categoryDetails($id)
     {
         $categoryDetails = Category::where('id', $id)->first();
@@ -116,7 +150,7 @@ class BookingController extends Controller
     {
         $book = Booking::find($id);
 
-        if($request->location === 'personal location'){
+        if($request->location == 'personal location'){
             $request->validate([
                 'category' => 'required',
                 'location' => 'required',
@@ -125,23 +159,34 @@ class BookingController extends Controller
                 'address' => 'required',
                 'book_date' => '' ?? $book->book_date
             ]);
+
+            $updateBooked = Booking::where('id', $id)->update([
+                'category_id' => $request->category,
+                'location' => $request->location,
+                'state' => $request->state,
+                'town' => $request->town,
+                'address' => $request->address,
+                'payment_status' => false,
+                'book_status' => false,
+                'book_date' => $request->book_date ?? $book->book_date
+            ]);
         }else{
             $request->validate([
                 'category' => 'required',
                 'book_date' => '' ?? $book->book_date
             ]);
-        }
 
-        $updateBooked = Booking::where('id', $id)->update([
-            'category_id' => $request->category,
-            'location' => $request->location ?? $book->location,
-            'state' => $request->state ?? '',
-            'town' => $request->town ?? '',
-            'address' => $request->address ?? '',
-            'payment_status' => false,
-            'book_status' => false,
-            'book_date' => $request->book_date ?? $book->book_date
-        ]);
+            $updateBooked = Booking::where('id', $id)->update([
+                'category_id' => $request->category,
+                'location' => $request->location,
+                'state' => null,
+                'town' => null,
+                'address' => null,
+                'payment_status' => false,
+                'book_status' => false,
+                'book_date' => $request->book_date ?? $book->book_date
+            ]);
+        }
 
         if($updateBooked){
             if(!auth()->user()->is_admin){
@@ -195,14 +240,6 @@ class BookingController extends Controller
         ]);
     }
 
-    public function alreadyBooked(Booking $booked)
-    {
-        $booking = $booked->orderBy('created_at', 'DESC')->paginate(15);
-        return view('bookings.all_booking', [
-            'bookings' => $booking
-        ]);
-    }
-
     public function markPaid($id)
     {
         $book = Booking::find($id);
@@ -215,8 +252,13 @@ class BookingController extends Controller
     public function markReceived($id)
     {
         $book = Booking::find($id);
+        $checkAccepted = $book->book_status === 1;
+        if(!$checkAccepted){
+            return back()->with('err', 'Please you need to accept the booking before you can mark as received');
+        }
         $book->update([
-            'payment_status' => 2
+            'payment_status' => 2,
+
         ]);
         return back()->with('success', 'You marked payment as received');
     }

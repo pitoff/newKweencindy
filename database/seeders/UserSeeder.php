@@ -25,10 +25,18 @@ class UserSeeder extends Seeder
             ],
             [
                 'is_admin' => 0,
-                'name' => 'nadia',
+                'name' => 'nadia angel',
                 'email' => 'nadia@gmail.com',
                 'phone' => '080232',
                 'address' => 'my address 2',
+                'password' => 12345,
+            ],
+            [
+                'is_admin' => 0,
+                'name' => 'steph nneoma',
+                'email' => 'steph@gmail.com',
+                'phone' => '08011178342',
+                'address' => 'address no 2 central arbor',
                 'password' => 12345,
             ],
 

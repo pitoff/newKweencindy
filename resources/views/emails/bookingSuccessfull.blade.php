@@ -1,7 +1,16 @@
 @component('mail::message')
-# Booking
+# Booking Details
 
-You have booked for {{$state}} and {{$addr}}.
+@component('mail::panel')
+{{ $msg }}
+
+@component('mail::table')
+| State              | Town               | Address            | Location           | Date               |
+| ------------------ |:------------------:|:------------------:|:------------------:| ------------------:|
+| {{$state ?? $nil}} | {{$town ?? $nil }} | {{$addr ?? $nil }} | {{$location}}      | {{$date}}          |
+@endcomponent
+
+@endcomponent
 
 @component('mail::button', ['url' => ''])
 Button Text

@@ -78,4 +78,9 @@
     <div class="form-group">
         <button class="btn fl-btn" type="submit">Save</button>
     </div>
+
+    <div class="text-right pt-4">
+        <a href="{{ route('already_booked') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+            <strong><em>view bookings</em></strong> </a>
+        </div>
 </div>
