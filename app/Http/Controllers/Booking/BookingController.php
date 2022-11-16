@@ -103,18 +103,24 @@ class BookingController extends Controller
     //get all bookings a user has made
     public function myBooking()
     {
-        $booked = auth()->user()->booking()->orderBy('id', 'DESC')->paginate(15);
-        return view('bookings.mybooking', [
-            'booked' => $booked
-        ]);
+        $data['booked'] = auth()->user()->booking()->orderBy('id', 'DESC')->paginate(15);
+
+        if (auth()->user()->is_admin){
+            return view('admin.bookings.mybooking', $data);
+        }else{
+            return view('bookings.bookings.mybooking', $data);
+        }
     }
 
     public function alreadyBooked(Booking $booked)
     {
-        $booking = $booked->orderBy('id', 'DESC')->paginate(15);
-        return view('bookings.all_booking', [
-            'bookings' => $booking
-        ]);
+        $data['booking'] = $booked->orderBy('id', 'DESC')->paginate(15);
+
+        if(auth()->user()->is_admin){
+            return view('admin.all_booking', $data);
+        }else{
+            return view('bookings.all_booking', $data);
+        }
     }
 
     //get booking category
@@ -210,6 +216,7 @@ class BookingController extends Controller
         ]);
     }
 
+    //admin accepts booking
     public function accept($id)
     {
         $acceptBooking = Booking::where('id', $id)->update([
@@ -225,6 +232,7 @@ class BookingController extends Controller
         ]);
     }
 
+    //admin declines booking
     public function decline($id)
     {
         $declineBooking = Booking::where('id', $id)->update([
@@ -240,6 +248,7 @@ class BookingController extends Controller
         ]);
     }
 
+    //mark booking as paid
     public function markPaid($id)
     {
         $book = Booking::find($id);
@@ -249,6 +258,7 @@ class BookingController extends Controller
         return back();
     }
 
+    //mark booking as payment received
     public function markReceived($id)
     {
         $book = Booking::find($id);
@@ -263,6 +273,7 @@ class BookingController extends Controller
         return back()->with('success', 'You marked payment as received');
     }
 
+    //mark booking as payment not received
     public function markNotReceived($id)
     {
         $book = Booking::find($id);

@@ -60,9 +60,8 @@
                 <li><a href='index.html#about'>About</a></li>
                 <li><a href='index.html#services'>Services</a></li>
                 <li><a href='index.html#pricing'>Pricing</a></li>
-                <li><a href='index.html#portfolio'>Portfolio</a></li>
                 <li><a href='index.html#contact'>Contact</a></li>
-                <li><a href="{{route('login')}}">Get Started</a></li>
+                <li><a href="{{route('login')}}">Login</a></li>
                 <!--
                 <li class="ovon-sub"><a href="#0">Dropmenu</a>
                     <ul>
@@ -117,7 +116,7 @@
                 <li><a href="#"><i class="ti-facebook"></i></a></li>
                 <li><a href="#"><i class="ti-pinterest"></i></a></li>
             </ul>
-            <p>&copy; 2022 OVON by DuruThemes.</p>
+            <p>&copy; {{ date('Y') }}.</p>
 
         </div>
     </aside>
@@ -187,13 +186,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="text-left">
-                                <p>© Copyright 2022. All right reserved.</p>
+                                <p>© Copyright {{ date('Y') }}. All right reserved.</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <p class="right"><a href="#">Terms &amp; Conditions</a></p>
                         </div>
-                    </div>
+                </div>
                 </div>
             </div>
         </footer>

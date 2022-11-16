@@ -16,7 +16,7 @@ class PaymentMethodController extends Controller
     public function index()
     {
         $payment = PaymentMethod::all();
-        return view('payment.index', compact('payment'));
+        return view('admin.payment.index', compact('payment'));
     }
 
     /**
@@ -26,7 +26,7 @@ class PaymentMethodController extends Controller
      */
     public function create()
     {
-        return view('payment.create');
+        return view('admin.payment.create');
     }
 
     /**
@@ -74,7 +74,7 @@ class PaymentMethodController extends Controller
     public function edit($id)
     {
         $payment = PaymentMethod::find($id);
-        return view('payment.edit', compact('payment'));
+        return view('admin.payment.edit', compact('payment'));
     }
 
     /**
