@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Booking;
 
+use App\Events\MakeupBooked;
 use App\Http\Controllers\Controller;
 use App\Mail\BookingSuccessfull;
 use App\Models\Booking;
@@ -66,10 +67,13 @@ class BookingController extends Controller
             ]);
 
             if($createBooking){
-                $this->bookingSuccessfull(auth()->user()->email, $request->category, $request->location, $request->state, $request->town, $request->address, $request->book_date);
-                $this->notifyBookingAdmin(); 
+
+                MakeupBooked::dispatch(auth()->user()->email,  $request->category, $request->location, $request->state, $request->town, $request->address, $request->book_date);
+
+                return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
+                // $this->bookingSuccessfull(auth()->user()->email, $request->category, $request->location, $request->state, $request->town, $request->address, $request->book_date);
+                // $this->notifyBookingAdmin(); 
             }
-            return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
 
         } catch (\Throwable $th) {
             throw $th;
@@ -108,7 +112,7 @@ class BookingController extends Controller
         if (auth()->user()->is_admin){
             return view('admin.bookings.mybooking', $data);
         }else{
-            return view('bookings.bookings.mybooking', $data);
+            return view('bookings.mybooking', $data);
         }
     }
 
@@ -117,7 +121,7 @@ class BookingController extends Controller
         $data['booking'] = $booked->orderBy('id', 'DESC')->paginate(15);
 
         if(auth()->user()->is_admin){
-            return view('admin.all_booking', $data);
+            return view('admin.bookings.all_booking', $data);
         }else{
             return view('bookings.all_booking', $data);
         }
