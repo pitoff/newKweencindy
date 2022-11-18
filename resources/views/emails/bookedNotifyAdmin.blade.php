@@ -1,8 +1,18 @@
 @component('mail::message')
-# Booking Details
+# New booking
 
 @component('mail::panel')
 {{ $msg }}
+
+{{-- State: **{{$state ?? $nil}}**
+
+Town: **{{$town ?? $nil }}**
+
+Address: **{{$addr ?? $nil }}**
+
+Location: **{{$location}}**
+
+Date: **{{$date}}** --}}
 
 @component('mail::table')
 | Details  |   Values               |
@@ -17,7 +27,7 @@
 @endcomponent
 
 @component('mail::button', ['url' => ''])
-Button Text
+View Booking
 @endcomponent
 
 Thanks,<br>

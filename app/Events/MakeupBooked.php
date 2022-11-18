@@ -22,14 +22,16 @@ class MakeupBooked
     public $town;
     public $book_date;
     public $address;
+    public $name;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($email, $category, $location, $state, $town, $address, $book_date)
+    public function __construct($email, $name, $category, $location, $state, $town, $address, $book_date)
     {
         $this->email = $email;
+        $this->name = $name;
         $this->category = $category;
         $this->location = $location;
         $this->state = $state;
@@ -37,11 +39,6 @@ class MakeupBooked
         $this->address = $address;
         $this->book_date = $book_date;
     }
-
-    // public function __construct()
-    // {
-
-    // }
 
     /**
      * Get the channels the event should broadcast on.

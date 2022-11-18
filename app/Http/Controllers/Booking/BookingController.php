@@ -37,7 +37,7 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        if($request->location == 'personal location'){
+        if ($request->location == 'personal location') {
             $request->validate([
                 'category' => 'required',
                 'location' => 'required',
@@ -46,7 +46,7 @@ class BookingController extends Controller
                 'address' => 'required',
                 'book_date' => 'required|date|after:today'
             ]);
-        }else{
+        } else {
             $request->validate([
                 'category' => 'required',
                 'location' => 'required',
@@ -66,42 +66,26 @@ class BookingController extends Controller
                 'book_date' => $request->book_date
             ]);
 
-            if($createBooking){
+            $name = User::where('email', auth()->user()->email)->value('name');
+            if ($createBooking) {
 
-                MakeupBooked::dispatch(auth()->user()->email,  $request->category, $request->location, $request->state, $request->town, $request->address, $request->book_date);
+                MakeupBooked::dispatch(
+                    auth()->user()->email,
+                    $name,
+                    $request->category,
+                    $request->location,
+                    $request->state,
+                    $request->town,
+                    $request->address,
+                    $request->book_date
+                );
 
                 return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
-                // $this->bookingSuccessfull(auth()->user()->email, $request->category, $request->location, $request->state, $request->town, $request->address, $request->book_date);
-                // $this->notifyBookingAdmin(); 
             }
-
         } catch (\Throwable $th) {
-            throw $th;
-            // return back()->with('err', 'An error occured while processing booking');
+            // throw $th;
+            return back()->with('err', 'An error occured while processing booking');
         }
-       
-    }
-
-    public function bookingSuccessfull($receiver, $cat, $location, $state, $town, $addr, $bookDate)
-    {
-        $data['message'] = "Thank you for booking your make up session with Kweencindy make up services, we are glad to serve you. 
-                            Please payment link will be activated when your booking is accepted by our team";
-
-        // $data['receiver'] = $receiver;
-        $data['cat'] = $cat;
-        $data['location'] = $location;
-        $data['state'] = $state;
-        $data['town'] = $town;
-        $data['addr'] = $addr;
-        $data['bookDate'] = $bookDate;
-
-        Mail::to($receiver)->send(new BookingSuccessfull($data));
-        
-    }
-
-    public function notifyBookingAdmin()
-    {
-
     }
 
     //get all bookings a user has made
@@ -109,9 +93,9 @@ class BookingController extends Controller
     {
         $data['booked'] = auth()->user()->booking()->orderBy('id', 'DESC')->paginate(15);
 
-        if (auth()->user()->is_admin){
+        if (auth()->user()->is_admin) {
             return view('admin.bookings.mybooking', $data);
-        }else{
+        } else {
             return view('bookings.mybooking', $data);
         }
     }
@@ -120,9 +104,9 @@ class BookingController extends Controller
     {
         $data['booking'] = $booked->orderBy('id', 'DESC')->paginate(15);
 
-        if(auth()->user()->is_admin){
+        if (auth()->user()->is_admin) {
             return view('admin.bookings.all_booking', $data);
-        }else{
+        } else {
             return view('bookings.all_booking', $data);
         }
     }
@@ -131,7 +115,7 @@ class BookingController extends Controller
     public function categoryDetails($id)
     {
         $categoryDetails = Category::where('id', $id)->first();
-        if(!$categoryDetails){
+        if (!$categoryDetails) {
             return response()->json([
                 'error' => 'category was not found'
             ]);
@@ -160,7 +144,7 @@ class BookingController extends Controller
     {
         $book = Booking::find($id);
 
-        if($request->location == 'personal location'){
+        if ($request->location == 'personal location') {
             $request->validate([
                 'category' => 'required',
                 'location' => 'required',
@@ -180,7 +164,7 @@ class BookingController extends Controller
                 'book_status' => false,
                 'book_date' => $request->book_date ?? $book->book_date
             ]);
-        }else{
+        } else {
             $request->validate([
                 'category' => 'required',
                 'book_date' => '' ?? $book->book_date
@@ -198,8 +182,8 @@ class BookingController extends Controller
             ]);
         }
 
-        if($updateBooked){
-            if(!auth()->user()->is_admin){
+        if ($updateBooked) {
+            if (!auth()->user()->is_admin) {
                 return redirect(route('my_booking', $book->id))->with('success', 'You have Updated your booking');
             }
             return redirect(route('already_booked'))->with('success', 'You just updated booking');
@@ -210,7 +194,7 @@ class BookingController extends Controller
     {
         $book = Booking::find($id);
         $deleted = $book->delete();
-        if(!$deleted){
+        if (!$deleted) {
             return response()->json([
                 'message' => 'Booking appointment could not be deleted'
             ]);
@@ -226,7 +210,7 @@ class BookingController extends Controller
         $acceptBooking = Booking::where('id', $id)->update([
             'book_status' => 1
         ]);
-        if(!$acceptBooking){
+        if (!$acceptBooking) {
             return response()->json([
                 'message' => 'Booking has been accepted'
             ]);
@@ -242,7 +226,7 @@ class BookingController extends Controller
         $declineBooking = Booking::where('id', $id)->update([
             'book_status' => 0
         ]);
-        if(!$declineBooking){
+        if (!$declineBooking) {
             return response()->json([
                 'message' => 'Booking has been declined'
             ]);
@@ -267,7 +251,7 @@ class BookingController extends Controller
     {
         $book = Booking::find($id);
         $checkAccepted = $book->book_status === 1;
-        if(!$checkAccepted){
+        if (!$checkAccepted) {
             return back()->with('err', 'Please you need to accept the booking before you can mark as received');
         }
         $book->update([
@@ -289,12 +273,11 @@ class BookingController extends Controller
 
     public function previewBooking($id)
     {
-        $booking = Booking::with('category', 'user')->where('id',$id)->first();
-        if($booking){
+        $booking = Booking::with('category', 'user')->where('id', $id)->first();
+        if ($booking) {
             return response()->json([
                 'data' => $booking
             ]);
         }
     }
-
 }
