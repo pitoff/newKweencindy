@@ -38,7 +38,7 @@
                         </div>
 
                     <!-- section for admin to see all booking made -->
-                    @if (auth()->user()->is_admin)
+                    
                         <div class="categories-table table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>

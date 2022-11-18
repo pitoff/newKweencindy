@@ -2,8 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\BookingAccepted;
+use App\Events\BookingDeclined;
 use App\Events\MakeupBooked;
+use App\Events\PaymentMaid;
 use App\Listeners\BookingSuccess;
+use App\Listeners\SendBookingAcceptedMsg;
+use App\Listeners\SendBookingDeclinedMsg;
+use App\Listeners\SendPaymentMaidMsg;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +28,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         MakeupBooked::class => [
             BookingSuccess::class
+        ],
+        BookingAccepted::class => [
+            SendBookingAcceptedMsg::class
+        ],
+        BookingDeclined::class => [
+            SendBookingDeclinedMsg::class
+        ],
+        PaymentMaid::class => [
+            SendPaymentMaidMsg::class
         ]
     ];
 

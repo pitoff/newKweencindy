@@ -102,7 +102,7 @@ class BookingController extends Controller
 
     public function alreadyBooked(Booking $booked)
     {
-        $data['booking'] = $booked->orderBy('id', 'DESC')->paginate(15);
+        $data['bookings'] = $booked->orderBy('id', 'DESC')->paginate(15);
 
         if (auth()->user()->is_admin) {
             return view('admin.bookings.all_booking', $data);
