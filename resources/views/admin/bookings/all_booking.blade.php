@@ -46,11 +46,11 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Category</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Date Booked</th>
-                                        <th scope="col">State</th>
+                                        {{-- <th scope="col">Price</th> --}}
+                                        <th scope="col">Date</th>
+                                        {{-- <th scope="col">State</th>
                                         <th scope="col">Town</th>
-                                        <th scope="col">Address</th>
+                                        <th scope="col">Address</th> --}}
                                         <th scope="col" colspan="2">Payment</th>
                                         <th scope="col">Accept/Decline</th>
                                         <th scope="col" colspan="3" class="text-center">Actions</th>
@@ -63,15 +63,15 @@
                                             <td>{{$book->user->email}}</td>
                                             {{-- <td>{{ $key + 1 }}</td> --}}
                                             <td>{{ $book->category->category }}</td>
-                                            <td>#{{ number_format($book->category->price, 2) }}</td>
+                                            {{-- <td>#{{ number_format($book->category->price, 2) }}</td> --}}
                                             <td>{{ $book->book_date }}</td>
-                                            @if ($book->location === 'personal location')
+                                            {{-- @if ($book->location === 'personal location')
                                                 <td>{{ $book->state }}</td>
                                                 <td>{{ $book->town }}</td>
                                                 <td>{{ $book->address }}</td>
                                             @else
                                                 <td colspan="3" class="text-center">Office location</td>
-                                            @endif
+                                            @endif --}}
 
                                             @if ($book->payment_status === 2)
                                                 <td><em>Received</em></td>

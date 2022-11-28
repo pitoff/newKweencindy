@@ -14,14 +14,14 @@ class GalleryController extends Controller
     public function index()
     {
         $images = Gallery::paginate(3);
-        return view('gallery.viewGallery', [
+        return view('admin.gallery.viewGallery', [
             'images' => $images
         ]);
     }
 
     public function create()
     {
-        return view('gallery.create');
+        return view('admin.gallery.create');
     }
 
     public function store(GalleryRequest $request)
@@ -51,13 +51,13 @@ class GalleryController extends Controller
 
     public function show($id)
     {
-        return view('gallery.show');
+        return view('admin.gallery.show');
     }
 
     public function edit($id)
     {
         $image = Gallery::find($id);
-        return view('gallery.edit', compact('image'));
+        return view('admin.gallery.edit', compact('image'));
     }
 
     public function update(Request $request, $id)

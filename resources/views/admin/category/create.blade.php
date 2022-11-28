@@ -16,7 +16,7 @@
                 <h3 class="ml-1">Create Category</h3>
 
                 <form method="post" action="{{route('categories.store')}}">
-                    @include('category.category_form')
+                    @include('admin.category.category_form')
                 </form>
             </div>
         </div>
