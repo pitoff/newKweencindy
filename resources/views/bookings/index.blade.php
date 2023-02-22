@@ -2,14 +2,15 @@
 @section('pageContent')
 
 <!-- Services -->
-@if (auth()->user()->is_admin)
+@if (admin())
 
 <section id="services" class="section-padding bg-grey" data-scroll-index="2">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="title mb-30"> <span>book for</span>
-                    <h2>Makeup Services</h2>
+                <div class="title mb-30"> 
+                    {{-- <span>book for</span> --}}
+                    <h3>Makeup Services</h3>
                     <hr class="line line-hr-secondary">
                 </div>
             </div>

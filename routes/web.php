@@ -95,7 +95,7 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     });
 
     //admin routes
-    Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'isAdmin'], function(){
+    Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'admin'], function(){
         
         Route::resource('categories', CategoryController::class);
         Route::resource('payment', PaymentMethodController::class);

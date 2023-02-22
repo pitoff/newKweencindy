@@ -5,8 +5,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="title mb-30"> <span>bookings</span>
-                    <h4>My Booked</h4>
+                <div class="title mb-30"> 
+                    {{-- <span>bookings</span> --}}
+                    <h3>My Bookings</h3>
                     <hr class="line line-hr-secondary">
                 </div>
                 <div class="col-md-8">
@@ -16,7 +17,7 @@
         </div>
         <div class="row">
             <div class="col-md-10 offset-1">
-                <h5>Dates you have booked</h5>
+                {{-- <h5>Dates you have booked</h5> --}}
                 <div class="text-right">
                     <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
                         <strong><em>Click here to Book Session</em></strong> </a>
@@ -31,7 +32,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Price</th>
-                                <th scope="col">Booked For</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">State</th>
                                 <th scope="col">Town</th>
                                 <th scope="col">Address</th>
@@ -112,7 +113,11 @@
                             </tr>
                             @empty
                                 
-                                <div class="alert alert-warning">No booked dates found</div>
+                                <tr>
+                                    <td class="alert alert-warning text-center" colspan="10">
+                                        No booked dates found...
+                                    </td>
+                                </tr>
                                 
                             @endforelse
 

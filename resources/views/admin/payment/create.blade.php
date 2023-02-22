@@ -47,12 +47,14 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <button class="btn fl-btn btn-sm" type="submit">Save</button>
-
-                            <a href="{{route('payment.index')}}" class="btn fl-btn float-right" type="submit">Back to Payment methods</a>
+                        
+                            <div class="text-right pt-4">
+                                <a href="{{route('payment.index')}}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                                    <strong><em>Back</em></strong> </a>
+                            </div>
                         </div>
 
-                        <div class="form-group pull-right">
-                        </div>
+                        
                     </div>
 
                 </form>

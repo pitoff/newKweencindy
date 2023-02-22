@@ -25,6 +25,11 @@ class CategorySeeder extends Seeder
                 'description' => 'make overs for traditional',
                 'price' => 200000
             ],
+            [
+                'category' => 'birthday make-up',
+                'description' => 'birthday make up',
+                'price' => 30000
+            ],
         ];
 
         foreach ($categories as $cat){

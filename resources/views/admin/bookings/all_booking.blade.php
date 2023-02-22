@@ -16,8 +16,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="title mb-30"> <span>bookings</span>
-                        <h4>All Bookings</h4>
+                    <div class="title mb-30"> 
+                        {{-- <span>bookings</span> --}}
+                        <h4>All Booked appointments</h4>
                         <hr class="line line-hr-secondary">
                     </div>
                 </div>
@@ -29,7 +30,7 @@
                 <div class="col-md-12">
                     
                         <div class="text-left">
-                            <h5>All booked appointment</h5>
+                            {{-- <h5>All booked appointment</h5> --}}
                         </div>
 
                         <div class="text-right">

@@ -53,6 +53,7 @@ class PaymentController extends Controller
                 'payment_status' => 1
             ]);
             
+            //trigger event of payment maid
             return redirect(route('my_booking', $bookingId))->with('success', 'Transaction was successfull');
 
         } catch (\Throwable $th) {

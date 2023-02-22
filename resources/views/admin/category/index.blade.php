@@ -5,7 +5,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="title mb-30"> <span>categories</span>
+                <div class="title mb-30"> 
+                    {{-- <span>categories</span> --}}
                     <h4>Makeup Categories</h4>
                     <hr class="line line-hr-secondary">
                 </div>

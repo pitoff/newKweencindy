@@ -5,15 +5,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="title mb-30"> <span>categories</span>
-                    <h2>Makeup Categories</h2>
+                <div class="title mb-30"> 
+                    <h3>Create Category</h3>
                     <hr class="line line-hr-secondary">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <h3 class="ml-1">Create Category</h3>
 
                 <form method="post" action="{{route('categories.store')}}">
                     @include('admin.category.category_form')

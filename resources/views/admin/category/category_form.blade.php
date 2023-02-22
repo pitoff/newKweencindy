@@ -35,3 +35,8 @@
         <button class="btn fl-btn" type="submit">Save</button>
     </div>
 </div>
+
+<div class="text-right pt-4">
+    <a href="{{ route('categories.index') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+        <strong><em>view categories</em></strong> </a>
+    </div>

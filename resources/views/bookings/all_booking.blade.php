@@ -5,8 +5,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="title mb-30"> <span>bookings</span>
-                        <h4>All Bookings</h4>
+                    <div class="title mb-30"> 
+                        {{-- <span>bookings</span> --}}
+                        <h3>All Booked and Accepted Dates</h3>
                         <hr class="line line-hr-secondary">
                     </div>
                 </div>
@@ -17,7 +18,7 @@
                 </div>
                 <div class="col-md-12">
                    
-                        <h5>All booked and accepted</h5>
+                        {{-- <h5>All booked and accepted</h5> --}}
 
                         <div class="text-right">
                             <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
@@ -64,7 +65,11 @@
                                             </tr>
                                         @endif
                                     @empty
-                                        <div class="alert alert-warning">No booked dates found</div>
+                                    <tr>
+                                        <td class="alert alert-warning text-center" colspan="10">
+                                            No booked dates found...
+                                        </td>
+                                    </tr>
                                     @endforelse
 
                                 </tbody>

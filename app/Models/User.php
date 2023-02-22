@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var string[]
      */
     protected $fillable = [
-        'is_admin',
+        'role',
         'name',
         'email',
         'phone',
@@ -27,6 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
     ];
 
+    public const ADMIN = "admin";
+    public const DEFAULT = "default";
     /**
      * The attributes that should be hidden for serialization.
      *

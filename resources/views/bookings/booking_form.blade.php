@@ -31,13 +31,8 @@
 <div class="col-sm-8">
     <div class="form-group">
         <select name="location" id="location" class="form-control">
-            <option value="">@isset($book)
-                {{$book->location}}
-                @else
-                --Make up Location--
-            @endisset </option>
-            <option value="office location">Office location</option>
-            <option value="personal location">Personal location</option>
+            <option value="office location" @isset($book) {{($book) && ($book->location == 'office location') ? 'selected' : ''}} @endisset>Office location</option>
+            <option value="personal location" @isset($book) {{ ($book) && ($book->location == 'personal location') ? 'selected' : ''}} @endisset>Personal location</option>
         </select>
     </div>
 </div>

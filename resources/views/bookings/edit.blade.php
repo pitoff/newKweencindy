@@ -5,17 +5,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="title mb-30"> <span>booking</span>
-                    <h2>Edit booking</h2>
+                <div class="title mb-30"> 
+                    <h3>Edit Booking</h3>
                     <hr class="line line-hr-secondary">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <h3 class="ml-1">Booked for @isset($book)
-                    {{date('d-M-Y', strtotime($book->book_date))}}
-                @endisset</h3>
+                <h6 class="ml-1"> <em> Update booking for @isset($book)
+                    {{-- {{date('d-M-Y', strtotime($book->book_date))}} --}}
+                    {{$book->getBookDateAttribute($book->book_date)}}
+                @endisset </em></h6>
                 <x-auth-errors />
                 <form method="post" action="{{route('edit_booking', $book->id)}}">
                     @method('PUT')
@@ -33,6 +34,10 @@
     $(document).ready(function(){
         $('#locationInfo').hide()
         $('#categoryInfo').hide()
+
+        if($('#location').val() == 'personal location'){
+            $('#locationInfo').show()
+        }
 
         $('#category').change(function(){
             let catId = $(this).val()
@@ -52,7 +57,7 @@
             let location = $(this).val()
             if(location == 'personal location'){
                 $('#locationInfo').show()
-            }else if(location == 'office'){
+            }else if(location == 'office location'){
                 $('#locationInfo').hide()
             }
 

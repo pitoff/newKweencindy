@@ -631,7 +631,7 @@ td {
     margin: 10px 0 0 0;
     padding: 0 0 10px 0;
     list-style: none;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: 3px;
 }
 #ovon-aside .ovon-main-menu > ul > li > a:hover,

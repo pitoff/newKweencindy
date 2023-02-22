@@ -7,15 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kween cindy</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Didact+Gothic&amp;family=Oswald:wght@300;400;500;600;700&amp;display=swap">
-    <link rel="stylesheet" href="{{asset('main/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('main/css/animate.css')}}">
-    <link rel="stylesheet" href="{{asset('main/css/themify-icons.css')}}">
-    <link rel="stylesheet" href="{{asset('main/css/flaticon.css')}}">
-    <link rel="stylesheet" href="{{asset('main/css/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{asset('main/css/owl.carousel.css')}}">
-    <link rel="stylesheet" href="{{asset('main/css/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="{{asset('main/css/style.css')}}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Didact+Gothic&amp;family=Oswald:wght@300;400;500;600;700&amp;display=swap">
+    <link rel="stylesheet" href="{{ asset('main/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('main/css/style.css') }}">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144098545-1"></script>
     <script>
@@ -55,67 +56,68 @@
         <!-- Menu -->
         <nav class="ovon-main-menu">
             @guest
-            <ul>
-                <li><a href='index.html#home'>Home</a></li>
-                <li><a href='index.html#about'>About</a></li>
-                <li><a href='index.html#services'>Services</a></li>
-                <li><a href='index.html#pricing'>Pricing</a></li>
-                <li><a href='index.html#contact'>Contact</a></li>
-                <li><a href="{{route('login')}}">Login</a></li>
-                <!--
-                <li class="ovon-sub"><a href="#0">Dropmenu</a>
-                    <ul>
-                        <li><a href="#0">Submenu</a></li>
-                        <li><a href="#0">Submenu</a></li>
-                        <li class="ovon-sub"><a href="#0">Dropmenu</a>
-                            <ul>
-                                <li><a href="#0">Submenu</a></li>
-                                <li><a href="#0">Submenu</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                -->
-            </ul>
+                <ul>
+                    <li><a href='index.html#home'>Home</a></li>
+                    <li><a href='index.html#about'>About</a></li>
+                    <li><a href='index.html#services'>Services</a></li>
+                    <li><a href='index.html#pricing'>Pricing</a></li>
+                    <li><a href='index.html#contact'>Contact</a></li>
+                    <li><a href="{{ route('login') }}">Login</a></li>
+                    <!--
+                    <li class="ovon-sub"><a href="#0">Dropmenu</a>
+                        <ul>
+                            <li><a href="#0">Submenu</a></li>
+                            <li><a href="#0">Submenu</a></li>
+                            <li class="ovon-sub"><a href="#0">Dropmenu</a>
+                                <ul>
+                                    <li><a href="#0">Submenu</a></li>
+                                    <li><a href="#0">Submenu</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    -->
+                </ul>
             @endguest
 
             @auth
-            @if (auth()->user()->is_admin)
-            <ul>
-                <li><a href="{{route('booking')}}">Bookings</a></li>
-                <li><a href="{{route('image-gallery.index')}}">Gallery</a></li>
-                <li><a href="#">MakeUp Class</a></li>
-                <li>
-                    <form action="{{route('logout')}}" method="post">
-                        @csrf
-                        <button type="submit" class="btn">LogOut</button>
-                    </form>
-                </li>
-            </ul>
-            @else
-            <ul>
-                <li><a href="{{route('booking')}}">Book Make Up</a></li>
-                <li><a href="{{route('users.learn-make-up')}}">Learn make up</a></li>
-                <li>
-                    <form action="{{route('logout')}}" method="post">
-                        @csrf
-                        <button type="submit" class="btn">LogOut</button>
-                    </form>
-                </li>
-            </ul>
-            @endif
+                <ul>
+                    @if (admin())
+                        <p>{{ auth()->user()->role }}</p>
+                        <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ route('already_booked') }}">Bookings</a></li>
+                        <li><a href="{{route('my_booking', auth()->user()->id)}}">My Bookings</a></li>
+                        <li><a href="{{route('categories.index')}}">Categories</a></li>
+                        <li><a href="{{route('payment.index')}}">Payment</a></li>
+                        <li><a href="{{ route('image-gallery.index') }}">Gallery</a></li>
+                        <li><a href="#">MakeUp Class</a></li>
+                    @endif
+
+                    @if (defaultUser())
+                        <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ route('already_booked') }}">Bookings</a></li>
+                        <li><a href="{{ route('users.learn-make-up') }}">Learn make up</a></li>
+                        
+                    @endif
+                    <li>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn"> LogOut</button>
+                        </form>
+                    </li>
+                </ul>
             @endauth
 
         </nav>
         <!-- Sidebar Footer -->
         <div class="ovon-footer">
             <div class="separator"></div>
-            <ul>
+            {{-- <ul>
                 <li><a href="#"><i class="ti-instagram"></i></a></li>
                 <li><a href="#"><i class="ti-twitter"></i></a></li>
                 <li><a href="#"><i class="ti-facebook"></i></a></li>
                 <li><a href="#"><i class="ti-pinterest"></i></a></li>
-            </ul>
+            </ul> --}}
             <p>&copy; {{ date('Y') }}.</p>
 
         </div>
@@ -132,8 +134,12 @@
                 <div class="row">
                     <div class="col-md-4 mb-30">
                         <a href="index.html"> <img src="img/logo-dark.png" alt=""> </a>
-                        <p>Hi, I'm Olivia a Professional Makeup Artist. Quisque luctus tincidunt enim daibus miss neuenete ultrie ectus.</p>
-                        <div class="social-icon"> <a href="index.html"><i class="ti-facebook"></i></a> <a href="index.html"><i class="ti-twitter"></i></a> <a href="index.html"><i class="ti-instagram"></i></a> <a href="index.html"><i class="ti-pinterest"></i></a> </div>
+                        <p>Hi, I'm Olivia a Professional Makeup Artist. Quisque luctus tincidunt enim daibus miss
+                            neuenete ultrie ectus.</p>
+                        <div class="social-icon"> <a href="index.html"><i class="ti-facebook"></i></a> <a
+                                href="index.html"><i class="ti-twitter"></i></a> <a href="index.html"><i
+                                    class="ti-instagram"></i></a> <a href="index.html"><i class="ti-pinterest"></i></a>
+                        </div>
                     </div>
                     <div class="col-md-4 mb-30">
                         <h6>Get in touch</h6>
@@ -192,22 +198,22 @@
                         <div class="col-md-6">
                             <p class="right"><a href="#">Terms &amp; Conditions</a></p>
                         </div>
-                </div>
+                    </div>
                 </div>
             </div>
         </footer>
     </div>
     <!-- jQuery -->
-    <script src="{{asset('main/js/jquery-1.12.4.min.js')}}"></script>
-    <script src="{{asset('main/js/modernizr-2.6.2.min.js')}}"></script>
-    <script src="{{asset('main/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('main/js/jquery.waypoints.min.js')}}"></script>
-    <script src="{{asset('main/js/scrollIt.min.js')}}"></script>
-    <script src="{{asset('main/js/imagesloaded.pkgd.min.js')}}"></script>
-    <script src="{{asset('main/js/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('main/js/jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{asset('main/js/smooth-scroll.min.js')}}"></script>
-    <script src="{{asset('main/js/main.js')}}"></script>
+    <script src="{{ asset('main/js/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ asset('main/js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ asset('main/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('main/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('main/js/scrollIt.min.js') }}"></script>
+    <script src="{{ asset('main/js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ asset('main/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('main/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('main/js/smooth-scroll.min.js') }}"></script>
+    <script src="{{ asset('main/js/main.js') }}"></script>
 </body>
 
 </html>

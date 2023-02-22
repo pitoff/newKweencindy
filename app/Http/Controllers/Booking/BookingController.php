@@ -93,7 +93,7 @@ class BookingController extends Controller
     {
         $data['booked'] = auth()->user()->booking()->orderBy('id', 'DESC')->paginate(15);
 
-        if (auth()->user()->is_admin) {
+        if (admin()) {
             return view('admin.bookings.mybooking', $data);
         } else {
             return view('bookings.mybooking', $data);
@@ -102,7 +102,7 @@ class BookingController extends Controller
 
     public function alreadyBooked(Booking $booked)
     {
-        if (auth()->user()->is_admin) {
+        if (admin()) {
             $data['bookings'] = $booked->with(['user', 'category'])->orderBy('id', 'DESC')->paginate(15);
             return view('admin.bookings.all_booking', $data);
         } else {
@@ -183,7 +183,7 @@ class BookingController extends Controller
         }
 
         if ($updateBooked) {
-            if (!auth()->user()->is_admin) {
+            if (!admin()) {
                 return redirect(route('my_booking', $book->id))->with('success', 'You have Updated your booking');
             }
             return redirect(route('already_booked'))->with('success', 'You just updated booking');
@@ -210,14 +210,18 @@ class BookingController extends Controller
         $acceptBooking = Booking::where('id', $id)->update([
             'book_status' => 1
         ]);
-        if (!$acceptBooking) {
+        if ($acceptBooking) {
+            //trigger booking accepted event
+
             return response()->json([
                 'message' => 'Booking has been accepted'
             ]);
+        }else{
+            return response()->json([
+                'message' => 'Booking could not be accepted'
+            ]);
         }
-        return response()->json([
-            'message' => 'Booking could not be accepted'
-        ]);
+        
     }
 
     //admin declines booking
@@ -226,14 +230,17 @@ class BookingController extends Controller
         $declineBooking = Booking::where('id', $id)->update([
             'book_status' => 0
         ]);
-        if (!$declineBooking) {
+        if ($declineBooking) {
+            //trigger booking declined event
             return response()->json([
                 'message' => 'Booking has been declined'
             ]);
+        }else{
+            return response()->json([
+                'message' => 'Booking could not be declined at the moment'
+            ]);
         }
-        return response()->json([
-            'message' => 'Booking could not be declined at the moment'
-        ]);
+        
     }
 
     //mark booking as paid
