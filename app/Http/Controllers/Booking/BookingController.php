@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Booking;
 
+use App\Events\BookingAccepted;
+use App\Events\BookingDeclined;
 use App\Events\MakeupBooked;
+use App\Events\MakeupBookedAdmin;
+use App\Events\PaymentMaid;
 use App\Http\Controllers\Controller;
 use App\Mail\BookingSuccessfull;
 use App\Models\Booking;
@@ -35,7 +39,7 @@ class BookingController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Booking $booking, Request $request)
     {
         if ($request->location == 'personal location') {
             $request->validate([
@@ -65,13 +69,11 @@ class BookingController extends Controller
                 'book_status' => false,
                 'book_date' => $request->book_date
             ]);
-
-            $name = User::where('email', auth()->user()->email)->value('name');
+            $user = User::where('id', $createBooking->user_id)->first(['name', 'email']);
             if ($createBooking) {
-
                 MakeupBooked::dispatch(
-                    auth()->user()->email,
-                    $name,
+                    $user->email,
+                    $user->name,
                     $request->category,
                     $request->location,
                     $request->state,
@@ -79,12 +81,21 @@ class BookingController extends Controller
                     $request->address,
                     $request->book_date
                 );
-
+                MakeupBookedAdmin::dispatch(
+                    $user->name,
+                    $request->category,
+                    $request->location,
+                    $request->state,
+                    $request->town,
+                    $request->address,
+                    $request->book_date
+                );
                 return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
             }
         } catch (\Throwable $th) {
             // throw $th;
-            return back()->with('err', 'An error occured while processing booking');
+            dd($th->getMessage());
+            // return back()->with('err', 'An error occured while processing booking');
         }
     }
 
@@ -123,11 +134,6 @@ class BookingController extends Controller
         return response()->json([
             'data' => $categoryDetails
         ]);
-    }
-
-    public function show()
-    {
-
     }
 
     public function edit(Booking $booking, $id)
@@ -204,6 +210,13 @@ class BookingController extends Controller
         ]);
     }
 
+    private function userEmail($id)
+    {
+        $user = Booking::with('user')->where('bookings.id', $id)->first();
+        $email = $user->user->email;
+        return $email;
+    }
+
     //admin accepts booking
     public function accept($id)
     {
@@ -212,9 +225,10 @@ class BookingController extends Controller
         ]);
         if ($acceptBooking) {
             //trigger booking accepted event
-
+            BookingAccepted::dispatch($this->userEmail($id));
             return response()->json([
-                'message' => 'Booking has been accepted'
+                'message' => 'Booking has been accepted',
+                // 'email' => $email
             ]);
         }else{
             return response()->json([
@@ -232,6 +246,7 @@ class BookingController extends Controller
         ]);
         if ($declineBooking) {
             //trigger booking declined event
+            BookingDeclined::dispatch($this->userEmail($id));
             return response()->json([
                 'message' => 'Booking has been declined'
             ]);
@@ -247,6 +262,8 @@ class BookingController extends Controller
     public function markPaid($id)
     {
         $book = Booking::find($id);
+        //trigger marked as paid event
+        PaymentMaid::dispatch($this->userEmail($id));
         $book->update([
             'payment_status' => 1
         ]);

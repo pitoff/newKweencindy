@@ -16,9 +16,10 @@ class BookingDeclined extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $msg;
+    public function __construct($data)
     {
-        //
+        $this->msg = $data['message'];
     }
 
     /**
@@ -28,6 +29,8 @@ class BookingDeclined extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.bookingDeclined');
+        return $this->subject('Booking Declined')->markdown('emails.bookingDeclined', [
+            'message' => $this->msg
+        ]);
     }
 }

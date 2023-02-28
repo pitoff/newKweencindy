@@ -44,7 +44,7 @@
                 dataType: "json",
                 success: function (response) {
                     $('#categoryInfo').show()
-                    $('#description').val(response.data.description)
+                    // $('#description').val(response.data.description)
                     let price = $('#price').val(response.data.price)
                 }
             });

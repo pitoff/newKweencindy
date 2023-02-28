@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class BookingDeclined
+class MakeupBookedAdmin
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,10 +19,23 @@ class BookingDeclined
      *
      * @return void
      */
-    public $email;
-    public function __construct($email)
+    public $name;
+    public $category;
+    public $location;
+    public $state;
+    public $town;
+    public $address;
+    public $book_date;
+
+    public function __construct($name, $category, $location, $state, $town, $address, $book_date)
     {
-        $this->email = $email;
+        $this->name = $name;
+        $this->category = $category;
+        $this->location = $location;
+        $this->state = $state;
+        $this->town = $town;
+        $this->address = $address;
+        $this->book_date = $book_date;
     }
 
     /**

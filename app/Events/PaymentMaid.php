@@ -19,9 +19,11 @@ class PaymentMaid
      *
      * @return void
      */
-    public function __construct()
+    public $email;
+
+    public function __construct($email)
     {
-        //
+        $this->email = $email;
     }
 
     /**

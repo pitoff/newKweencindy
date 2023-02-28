@@ -1,10 +1,10 @@
 @component('mail::message')
-# Introduction
+# Declined
 
-The body of your message.
+{{$msg}}.
 
 @component('mail::button', ['url' => ''])
-Button Text
+View Booking
 @endcomponent
 
 Thanks,<br>

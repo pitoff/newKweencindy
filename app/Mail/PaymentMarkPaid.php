@@ -16,9 +16,10 @@ class PaymentMarkPaid extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $message;
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -28,6 +29,8 @@ class PaymentMarkPaid extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.paymentMarkPaid');
+        return $this->subject('Payment Marked Paid')->markdown('emails.paymentMarkPaid', [
+            'message' => $this->message
+        ]);
     }
 }

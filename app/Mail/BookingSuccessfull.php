@@ -16,6 +16,14 @@ class BookingSuccessfull extends Mailable
      *
      * @return void
      */
+    private $message;
+    private $state;
+    private $addr;
+    private $cat;
+    private $location;
+    private $town;
+    private $bookDate;
+
 
     public function __construct($data)
     {

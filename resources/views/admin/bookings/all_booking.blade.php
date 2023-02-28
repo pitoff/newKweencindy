@@ -406,12 +406,13 @@
             })
 
             $(document).on('click', '#acceptBooking', function(e) {
+                $('#acceptBooking').text("Processing...")
                 e.preventDefault()
                 $.ajax({
                     type: "PUT",
                     url: `/admin/accept-booking/${id}`,
                     success: function(response) {
-                        console.log(response.message)
+                        console.log(response)
                         // jQuery('#acceptModal').modal('hide')
 
                         location.reload(true)
@@ -435,6 +436,7 @@
             })
 
             $(document).on('click', '#declineBooking', function(e) {
+                $('#declineBooking').text("Processing...")
                 e.preventDefault()
                 $.ajax({
                     type: "PUT",

@@ -9,7 +9,7 @@
 
     <div class="col-md-8 mt-5 mb-2">
         <h3 class="ml-1">SIGN UP</h3>
-        <p><span class="ti-pencil"></span> Create an accout with {{config('app.name')}}</p>
+        <p><span class="ti-pencil"></span> Create an account with {{config('app.name')}}</p>
 
         <x-auth-errors/>
         <div class="col-md-8">

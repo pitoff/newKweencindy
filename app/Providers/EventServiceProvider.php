@@ -5,10 +5,12 @@ namespace App\Providers;
 use App\Events\BookingAccepted;
 use App\Events\BookingDeclined;
 use App\Events\MakeupBooked;
+use App\Events\MakeupBookedAdmin;
 use App\Events\PaymentMaid;
 use App\Listeners\BookingSuccess;
 use App\Listeners\SendBookingAcceptedMsg;
 use App\Listeners\SendBookingDeclinedMsg;
+use App\Listeners\SendMakeupBookedAdmin;
 use App\Listeners\SendPaymentMaidMsg;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         MakeupBooked::class => [
             BookingSuccess::class
+        ],
+        MakeupBookedAdmin::class => [
+            SendMakeupBookedAdmin::class
         ],
         BookingAccepted::class => [
             SendBookingAcceptedMsg::class

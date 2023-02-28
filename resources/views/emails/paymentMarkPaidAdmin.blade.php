@@ -1,7 +1,7 @@
 @component('mail::message')
-# Accepted
+# Payment status
 
-{{$msg}}.
+{{ $msg }}
 
 @component('mail::button', ['url' => ''])
 View Booking

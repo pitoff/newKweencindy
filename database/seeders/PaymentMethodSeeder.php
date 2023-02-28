@@ -18,12 +18,14 @@ class PaymentMethodSeeder extends Seeder
             [
                 'bank' => 'Access bank',
                 'acc_name' => 'Beauty by cindy',
-                'acc_number' => 129873910
+                'acc_number' => 129873910,
+                'is_active' => 1
             ],
             [
                 'bank' => 'UBA',
                 'acc_name' => 'Beauty kwenn',
-                'acc_number' => 104792382
+                'acc_number' => 104792382,
+                'is_active' => 1
             ],
 
         ];

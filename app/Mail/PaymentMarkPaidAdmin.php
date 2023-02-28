@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class BookingAccepted extends Mailable
+class PaymentMarkPaidAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,10 +16,10 @@ class BookingAccepted extends Mailable
      *
      * @return void
      */
-    public $msg;
-    public function __construct($data)
+    public $message;
+    public function __construct($messageAdmin)
     {
-        $this->msg = $data['message'];
+        $this->message = $messageAdmin;
     }
 
     /**
@@ -29,8 +29,8 @@ class BookingAccepted extends Mailable
      */
     public function build()
     {
-        return $this->subject("Booking Accepted")->markdown('emails.bookingAccepted', [
-            'message' => $this->msg
+        return $this->subject('Payment Marked Paid')->markdown('emails.paymentMarkPaidAdmin', [
+            'msg' => $this->message
         ]);
     }
 }

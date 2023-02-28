@@ -16,11 +16,11 @@
 </div>
 
 <div id="categoryInfo">
-    <div class="col-sm-8">
+    {{-- <div class="col-sm-8">
         <div class="form-group">
             <input type="text" class="form-control" value="" id="description">
         </div>
-    </div>
+    </div> --}}
     <div class="col-sm-8">
         <div class="form-group">
             <input type="text" class="form-control" value="" id="price">

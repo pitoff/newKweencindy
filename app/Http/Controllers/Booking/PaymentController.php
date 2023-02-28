@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Booking;
 
+use App\Events\PaymentMaid;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Payment;
@@ -54,6 +55,7 @@ class PaymentController extends Controller
             ]);
             
             //trigger event of payment maid
+            PaymentMaid::dispatch($createPayment->email);
             return redirect(route('my_booking', $bookingId))->with('success', 'Transaction was successfull');
 
         } catch (\Throwable $th) {
