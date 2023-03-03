@@ -7,6 +7,8 @@ use App\Events\BookingDeclined;
 use App\Events\MakeupBooked;
 use App\Events\MakeupBookedAdmin;
 use App\Events\PaymentMaid;
+use App\Events\PaymentNotReceived;
+use App\Events\PaymentReceived;
 use App\Http\Controllers\Controller;
 use App\Mail\BookingSuccessfull;
 use App\Models\Booking;
@@ -274,6 +276,8 @@ class BookingController extends Controller
     public function markReceived($id)
     {
         $book = Booking::find($id);
+        //trigger payment received received event
+        PaymentReceived::dispatch($this->userEmail($id));
         $checkAccepted = $book->book_status === 1;
         if (!$checkAccepted) {
             return back()->with('err', 'Please you need to accept the booking before you can mark as received');
@@ -289,6 +293,8 @@ class BookingController extends Controller
     public function markNotReceived($id)
     {
         $book = Booking::find($id);
+        //trigger mark not received event
+        PaymentNotReceived::dispatch($this->userEmail($id));
         $book->update([
             'payment_status' => 0
         ]);

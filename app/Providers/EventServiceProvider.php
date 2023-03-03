@@ -7,11 +7,15 @@ use App\Events\BookingDeclined;
 use App\Events\MakeupBooked;
 use App\Events\MakeupBookedAdmin;
 use App\Events\PaymentMaid;
+use App\Events\PaymentNotReceived;
+use App\Events\PaymentReceived;
 use App\Listeners\BookingSuccess;
 use App\Listeners\SendBookingAcceptedMsg;
 use App\Listeners\SendBookingDeclinedMsg;
 use App\Listeners\SendMakeupBookedAdmin;
 use App\Listeners\SendPaymentMaidMsg;
+use App\Listeners\SendPaymentNotReceivedMsg;
+use App\Listeners\SendPaymentReceivedMsg;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -42,6 +46,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         PaymentMaid::class => [
             SendPaymentMaidMsg::class
+        ],
+        PaymentReceived::class => [
+            SendPaymentReceivedMsg::class
+        ],
+        PaymentNotReceived::class => [
+            SendPaymentNotReceivedMsg::class
         ]
     ];
 

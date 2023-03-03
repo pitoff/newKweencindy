@@ -34,7 +34,9 @@ class SendPaymentMaidMsg implements ShouldQueue
 
         $messageAdmin = "$event->email has notified us for payment maid, Please confirm and mark as paid";
 
-        Mail::to($event->email)->send(new PaymentMarkPaid($message));
+        // if($message !== ''){
+            Mail::to($event->email)->send(new PaymentMarkPaid($message));
+        // }
 
         $allAdmin = User::where('role', User::ADMIN)->get();
         foreach($allAdmin as $admin){

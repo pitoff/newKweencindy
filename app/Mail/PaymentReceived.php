@@ -16,9 +16,10 @@ class PaymentReceived extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $message;
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -28,6 +29,8 @@ class PaymentReceived extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.paymentReceived');
+        return $this->subject('Payment Confirmation')->markdown('emails.paymentReceived', [
+            'message' => $this->message
+        ]);
     }
 }

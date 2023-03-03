@@ -1,7 +1,7 @@
 @component('mail::message')
-# Introduction
+# Payment Confirmation
 
-The body of your message.
+{{$message}}
 
 @component('mail::button', ['url' => ''])
 Button Text

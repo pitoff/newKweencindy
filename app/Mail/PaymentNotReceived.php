@@ -16,9 +16,10 @@ class PaymentNotReceived extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $message;
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -28,6 +29,8 @@ class PaymentNotReceived extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.paymentNotReceived');
+        return $this->subject('Payment Not Received')->markdown('emails.paymentNotReceived', [
+            'message' => $this->message
+        ]);
     }
 }

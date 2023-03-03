@@ -1,5 +1,5 @@
 @component('mail::message')
-# Payment status please user text msg does not show
+# Payment status
 
 {{ $message }}
 

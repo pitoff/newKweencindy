@@ -1,11 +1,7 @@
 @component('mail::message')
-# Introduction
+# Payment not Confirmed
 
-The body of your message.
-
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
+{{ $message }}
 
 Thanks,<br>
 {{ config('app.name') }}

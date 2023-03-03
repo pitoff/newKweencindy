@@ -25,7 +25,7 @@ class PaymentMethodSeeder extends Seeder
                 'bank' => 'UBA',
                 'acc_name' => 'Beauty kwenn',
                 'acc_number' => 104792382,
-                'is_active' => 1
+                'is_active' => 0
             ],
 
         ];
