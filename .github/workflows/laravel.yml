@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
-        php-version: '7.4'
+        php-version: '7.4.2'
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -28,4 +28,7 @@ jobs:
       env:
         TESTING_DB_CONNECTION: mysql_testing
         TESTING_DB_DATABASE: kweencindy_testing
+        TESTING_DB_PORT: 3306
+        TESTING_DB_USERNAME: root
+        TESTING_DB_PASSWORD: 
       run: vendor/bin/phpunit
