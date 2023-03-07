@@ -31,5 +31,5 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql_testing
-        DB_DATABASE: kweencindy_testing
+        DB_DATABASE: database/database.mysql
       run: vendor/bin/phpunit
