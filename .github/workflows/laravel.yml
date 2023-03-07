@@ -30,6 +30,6 @@ jobs:
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: mysql_testing
-        DB_DATABASE: database/database.mysql
+        TESTING_DB_CONNECTION: mysql_testing
+        TESTING_DB_DATABASE: kweencindy_testing
       run: vendor/bin/phpunit

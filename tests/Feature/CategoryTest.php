@@ -28,18 +28,18 @@ class CategoryTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_index_has_no_category()
-    {
+    // public function test_index_has_no_category()
+    // {
 
-    }
+    // }
 
-    public function test_can_update_category()
-    {
+    // public function test_can_update_category()
+    // {
 
-    }
+    // }
 
-    public function test_can_delete_category()
-    {
+    // public function test_can_delete_category()
+    // {
 
-    }
+    // }
 }

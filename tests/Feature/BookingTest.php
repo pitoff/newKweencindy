@@ -20,23 +20,23 @@ class BookingTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_index_has_no_bookings()
-    {
+    // public function test_index_has_no_bookings()
+    // {
 
-    }
+    // }
 
-    public function test_user_can_create_booking()
-    {
+    // public function test_user_can_create_booking()
+    // {
 
-    }
+    // }
 
-    public function test_user_can_update_booking()
-    {
+    // public function test_user_can_update_booking()
+    // {
 
-    }
+    // }
 
-    public function test_user_can_delete_booking()
-    {
+    // public function test_user_can_delete_booking()
+    // {
         
-    }
+    // }
 }
