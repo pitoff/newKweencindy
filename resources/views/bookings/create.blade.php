@@ -6,19 +6,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title mb-30"> 
-                    {{-- <span>booking</span> --}}
                     <h3>Create booking</h3>
                     <hr class="line line-hr-secondary">
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-2">
-                <h6 class="ml-1"> <i> Book Make up session </i></h6>
+            <div class="col-md-12">
                 <x-auth-errors />
-                <div class="col-md-8">
-                    @include('includes.sessionMsg')
-                </div>
+                @include('includes.sessionMsg')
                 <form method="post" action="{{route('create_booking')}}">
                     @include('bookings.booking_form')
                 </form>

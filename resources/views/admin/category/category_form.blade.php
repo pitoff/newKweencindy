@@ -1,5 +1,5 @@
 @csrf
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <input type="text" class="form-control" name="category"
             value="@isset($category) {{ $category->category }} @endisset"
@@ -9,7 +9,7 @@
         @enderror
     </div>
 </div>
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <input type="text" class="form-control" name="description"
             value="@isset($category) {{ $category->description }} @endisset"
@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <input type="text" class="form-control" name="price"
             value="@isset($category) {{ $category->price }} @endisset" placeholder="Price tag *">
@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <button class="btn fl-btn" type="submit">Save</button>
     </div>

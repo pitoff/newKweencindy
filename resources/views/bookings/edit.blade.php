@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-2">
+            <div class="col-md-12">
                 <h6 class="ml-1"> <em> Update booking for @isset($book)
                     {{-- {{date('d-M-Y', strtotime($book->book_date))}} --}}
                     {{$book->getBookDateAttribute($book->book_date)}}

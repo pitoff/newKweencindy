@@ -13,13 +13,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    @include('includes.sessionMsg')
-                </div>
                 <div class="col-md-12">
-                   
-                        {{-- <h5>All booked and accepted</h5> --}}
-
+                    @include('includes.sessionMsg')
                         <div class="text-right">
                             <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
                                 <strong><em>Click here to Book Session</em></strong> </a>
@@ -78,9 +73,10 @@
                     
                     <!-- end section for user to see all booking made -->
 
-                    <div class="col-md-4 mt-2">
+                    <div class="mt-2">
                         {{ $bookings->links() }}
                     </div>
+                    
                     <a href="{{ route('my_booking', auth()->user()->id) }}" class="btn fl-btn" type="submit">GoTo My
                         Bookings</a>
 

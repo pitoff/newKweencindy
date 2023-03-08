@@ -122,7 +122,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Book A Session</h5>
-                                <p class="card-text">Book and secure a make up session.</p>
+                                <p class="card-text">Book a date and secure a make up session.</p>
                             </div>
                         </div>
                         </a>

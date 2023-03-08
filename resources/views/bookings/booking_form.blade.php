@@ -2,7 +2,7 @@
     Use Illuminate\Support\Carbon;
 ?>
 @csrf
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <select name="category" id="category" class="form-control">
             <option value=""> --Choose category-- </option>
@@ -16,19 +16,19 @@
 </div>
 
 <div id="categoryInfo">
-    {{-- <div class="col-sm-8">
+    {{-- <div class="">
         <div class="form-group">
             <input type="text" class="form-control" value="" id="description">
         </div>
     </div> --}}
-    <div class="col-sm-8">
+    <div class="">
         <div class="form-group">
             <input type="text" class="form-control" value="" id="price">
         </div>
     </div>
 </div>
 
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <select name="location" id="location" class="form-control">
             <option value="office location" @isset($book) {{($book) && ($book->location == 'office location') ? 'selected' : ''}} @endisset>Office location</option>
@@ -38,21 +38,21 @@
 </div>
 
 <div id="locationInfo">
-    <div class="col-sm-8">
+    <div class="">
         <div class="form-group">
             <input type="text" class="form-control" name="state" value="@isset($book)
                 {{$book->state}}
             @endisset" placeholder="State *">
         </div>
     </div>
-    <div class="col-sm-8">
+    <div class="">
         <div class="form-group">
             <input type="text" class="form-control" name="town" value="@isset($book)
                 {{$book->town}}
             @endisset" placeholder="Town *">
         </div>
     </div>
-    <div class="col-sm-8">
+    <div class="">
         <div class="form-group">
             <input type="text" class="form-control" name="address" value="@isset($book)
                 {{$book->address}}
@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <input type="date" class="form-control" name="book_date" value="@isset($book)
             {{ $book->book_date }}
@@ -69,7 +69,7 @@
     </div>
 </div>
 
-<div class="col-sm-8">
+<div class="">
     <div class="form-group">
         <button class="btn fl-btn" type="submit">Save</button>
     </div>

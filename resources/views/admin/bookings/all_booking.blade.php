@@ -24,14 +24,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    @include('includes.sessionMsg')
-                </div>
                 <div class="col-md-12">
                     
-                        <div class="text-left">
-                            {{-- <h5>All booked appointment</h5> --}}
-                        </div>
+                    @include('includes.sessionMsg')
 
                         <div class="text-right">
                         <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
@@ -251,7 +246,7 @@
                         </div>
                         <!-- end section for admin to see all booking made -->
 
-                    <div class="col-md-4 mt-2">
+                    <div class="mt-2">
                         {{ $bookings->links() }}
                     </div>
                     <a href="{{ route('my_booking', auth()->user()->id) }}" class="btn fl-btn" type="submit">GoTo My

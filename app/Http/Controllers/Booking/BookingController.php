@@ -73,25 +73,25 @@ class BookingController extends Controller
             ]);
             $user = User::where('id', $createBooking->user_id)->first(['name', 'email']);
             if ($createBooking) {
-                MakeupBooked::dispatch(
-                    $user->email,
-                    $user->name,
-                    $request->category,
-                    $request->location,
-                    $request->state,
-                    $request->town,
-                    $request->address,
-                    $request->book_date
-                );
-                MakeupBookedAdmin::dispatch(
-                    $user->name,
-                    $request->category,
-                    $request->location,
-                    $request->state,
-                    $request->town,
-                    $request->address,
-                    $request->book_date
-                );
+                // MakeupBooked::dispatch(
+                //     $user->email,
+                //     $user->name,
+                //     $request->category,
+                //     $request->location,
+                //     $request->state,
+                //     $request->town,
+                //     $request->address,
+                //     $request->book_date
+                // );
+                // MakeupBookedAdmin::dispatch(
+                //     $user->name,
+                //     $request->category,
+                //     $request->location,
+                //     $request->state,
+                //     $request->town,
+                //     $request->address,
+                //     $request->book_date
+                // );
                 return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
             }
         } catch (\Throwable $th) {

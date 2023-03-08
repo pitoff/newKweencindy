@@ -12,30 +12,29 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-2">
-                <h3 class="ml-1">Upload</h3>
+            <div class="col-md-12">
                 <x-auth-errors/>
                 <form method="post" action="{{route('image-gallery.store')}}" enctype="multipart/form-data">
                     @csrf
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="imageName" placeholder="Image name *">
                         </div>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="description" placeholder="Description *">
                             
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="file" class="form-control" name="imageFile" placeholder="Image File *">   
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <button class="btn fl-btn" type="submit">Save</button>
                         </div>

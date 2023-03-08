@@ -9,13 +9,11 @@
                     <h4>My Booked</h4>
                     <hr class="line line-hr-secondary">
                 </div>
-                <div class="col-md-8">
-                    @include('includes.sessionMsg')
-                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-10 offset-1">
+            <div class="col-md-12">
+                @include('includes.sessionMsg')
                 <h5>Dates you have booked</h5>
                 <div class="text-right">
                     <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
@@ -87,7 +85,9 @@
                 </div>
                 <!-- end section for admin to see dates he has booked -->
 
-                <div class="col-md-4 mt-2">
+                <div class="
+                {{-- col-md-4  --}}
+                mt-2">
                     {{$booked->links()}}
                 </div>
                 <a href="{{route('already_booked')}}" class="btn fl-btn" type="submit">Already Booked</a>

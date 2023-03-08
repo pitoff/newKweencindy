@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-2">
+            <div class="col-md-12">
                 <div class="col-md-4 gallery-item">
                     <a href="{{asset('imageGallery/'.$image->imageFile)}}" title="{{$image->imageName}}" class="img-zoom">
                         <div class="gallery-box">
@@ -24,25 +24,25 @@
                 <x-auth-errors />
                 <form method="post" action="{{route('image-gallery.update', $image->id)}}" enctype="multipart/form-data">
                     @csrf @method('PUT')
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="imageName" value="{{$image->imageName}}">
                         </div>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="description" value="{{$image->description}}">
 
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="file" class="form-control" name="imageFile" placeholder="Image File *">
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <button class="btn fl-btn" type="submit">Update</button>
                         </div>
