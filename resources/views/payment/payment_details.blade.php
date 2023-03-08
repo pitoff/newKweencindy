@@ -14,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h3 class="ml-1">By card</h3>
+                <h3 class="text-center">By card</h3>
                 <form method="POST" action="{{route('pay')}}">
                     @csrf
                     <div class="form-group">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="col-md-6">
-                <h3 class="">Bank transfer</h3>
+                <h3 class="text-center">Bank transfer</h3>
                 <div>
                     <input type="text" style="background:inherit;" class="form-control" id="" value="{{ucfirst($details->bank)}}" readonly>
                     <input type="text" style="background:inherit;" class="form-control" id="" value="{{ucfirst($details->acc_name)}}" readonly>
