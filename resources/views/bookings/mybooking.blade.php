@@ -46,7 +46,7 @@
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
-                                @if ($book->location === 'personal location')
+                                @if ($book->location == 'personal location')
                                     <td>{{$book->state}}</td>
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>
@@ -54,10 +54,10 @@
                                     <td colspan="3" class="text-center">Office location</td>
                                 @endif
 
-                                @if($book->book_status === 1)
-                                    @if ($book->payment_status === 1)
+                                @if($book->book_status == 1)
+                                    @if ($book->payment_status == 1)
                                         <td><em>Awaiting confirmation</em></td>
-                                    @elseif($book->payment_status === 2)
+                                    @elseif($book->payment_status == 2)
                                         <td><em>Payment Received</em></td>
                                     @else
                                         <td>
@@ -97,14 +97,14 @@
                                     <td colspan="2">Not yet accepted</td>
                                 @endif
                                 
-                                @if($book->book_status === 0)
+                                @if($book->book_status == 0)
                                     <td>
                                         <a href="{{route('edit_booking', $book->id)}}"><button type="button" class="btn-sm btn-warning"><span class="ti-pencil">Edit</span></button></a>
                                     </td>
                                     <td>
                                         <button type="button" class="btn-sm btn-danger" id="removeBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#exampleModal"> <span class="ti-trash"></span> </button>
                                     </td>
-                                @elseif($book->book_status === 1)
+                                @elseif($book->book_status == 1)
                                     <td colspan="2"></td>
                                 @endif
                             </tr>

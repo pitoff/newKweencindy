@@ -45,12 +45,12 @@
                                                 {{-- <td>{{ $key++ }}</td> --}}
                                                 <td>{{ $book->category->category }}</td>
                                                 <td>#{{ number_format($book->category->price, 2) }}</td>
-                                                @if ($book->location === 'personal location')
+                                                @if ($book->location == 'personal location')
                                                     <td>{{ $book->state }}</td>
                                                     <td>{{ $book->town }}</td>
                                                     <td>{{ $book->address }}</td>
                                                 @else
-                                                    {{-- ($book->location === 'office') --}}
+                                                    {{-- ($book->location == 'office') --}}
                                                     <td colspan="3" class="text-center">Office location</td>
                                                 @endif
                                                 <td>
@@ -76,7 +76,7 @@
                     <div class="mt-2">
                         {{ $bookings->links() }}
                     </div>
-                    
+
                     <a href="{{ route('my_booking', auth()->user()->id) }}" class="btn fl-btn" type="submit">GoTo My
                         Bookings</a>
 

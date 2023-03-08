@@ -47,7 +47,7 @@
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
 
-                                @if ($book->location === 'personal location')
+                                @if ($book->location == 'personal location')
                                     <td>{{$book->state}}</td>
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>

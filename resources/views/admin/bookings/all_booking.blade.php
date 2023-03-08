@@ -61,7 +61,7 @@
                                             <td>{{ $book->category->category }}</td>
                                             {{-- <td>#{{ number_format($book->category->price, 2) }}</td> --}}
                                             <td>{{ $book->book_date }}</td>
-                                            {{-- @if ($book->location === 'personal location')
+                                            {{-- @if ($book->location == 'personal location')
                                                 <td>{{ $book->state }}</td>
                                                 <td>{{ $book->town }}</td>
                                                 <td>{{ $book->address }}</td>
@@ -69,7 +69,7 @@
                                                 <td colspan="3" class="text-center">Office location</td>
                                             @endif --}}
 
-                                            @if ($book->payment_status === 2)
+                                            @if ($book->payment_status == 2)
                                                 <td><em>Received</em></td>
                                                 <td>
                                                     <button type="button" class="btn-sm btn-info" id="markNotReceivedBtn"
@@ -119,7 +119,7 @@
                                                         data-id="{{ $book->id }}" data-toggle="modal"
                                                         data-target="#markAsReceivedModal{{ $book->id }}">
                                                         <span class="ti-">Mark as Received</span>
-                                                        @if ($book->payment_status === 1)
+                                                        @if ($book->payment_status == 1)
                                                             <div class="blink"><span class="badge badge-danger">!</span>
                                                             </div>
                                                         @endif
