@@ -47,10 +47,9 @@
     <a href="#" class="js-ovon-nav-toggle ovon-nav-toggle"><i></i></a>
     <aside id="ovon-aside">
         <!-- Logo -->
-        <div class="ovon-logo">
-            <a href="index.html">
-                <!-- <img src="../main/img/logo-dark.png" alt="">  -->
-                BBKC
+        <div class="">
+            <a href="/">
+                <img src="{{ asset('main/img/kweencindyLogo.png') }}" alt="" style="height: 80px;">
             </a>
         </div>
         <!-- Menu -->
