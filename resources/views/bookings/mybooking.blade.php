@@ -66,7 +66,7 @@
                                             <!-- modal to confirm that user has made payment -->
                                             <form method="post" action="{{route('userMarkPaid', $book->id)}}">
                                             @csrf @method('PUT')
-                                            <div class="modal fade" id="markAsPaidModal{{$book->id}}" aria-labelledby="markAsPaidModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="markAsPaidModal{{$book->id}}" style="position: absolute;" tabindex="-1" aria-labelledby="markAsPaidModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
