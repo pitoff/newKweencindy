@@ -62,32 +62,6 @@
                                     @else
                                         <td>
                                             <button type="button" class="btn-sm btn-success" id="markAsPaidBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markAsPaidModal{{$book->id}}"> <span class="ti-">Mark as Paid</span> </button>
-                                        
-                                            <!-- modal to confirm that user has made payment -->
-                                            <form method="post" action="{{route('userMarkPaid', $book->id)}}">
-                                            @csrf @method('PUT')
-                                            <div class="modal fade" id="markAsPaidModal{{$book->id}}" style="position: absolute;" tabindex="-1" aria-labelledby="markAsPaidModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="markAsPaidModalLabel">Payment Made</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p style="font-size: large;">You are notifying the system that you have made payment, are you sure of this {{$book->id}}?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn-success">Yes <span class="ti-check"></span></button>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </form>
-                                            <!-- end modal -->
-                                        
                                         </td>
                                     @endif
                                     <td>
@@ -107,6 +81,31 @@
                                 @elseif($book->book_status == 1)
                                     <td colspan="2"></td>
                                 @endif
+
+                                <!-- modal to confirm that user has made payment -->
+                                <form method="post" action="{{route('userMarkPaid', $book->id)}}">
+                                    @csrf @method('PUT')
+                                    <div class="modal fade" id="markAsPaidModal{{$book->id}}" style="position: absolute;" tabindex="-1" aria-labelledby="markAsPaidModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="markAsPaidModalLabel">Payment Made</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p style="font-size: large;">You are notifying the system that you have made payment, are you sure of this {{$book->id}}?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn-success">Yes <span class="ti-check"></span></button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                    <!-- end modal -->
                             </tr>
                             @empty
                                 
