@@ -61,7 +61,7 @@
                                         <td><em>Payment Received</em></td>
                                     @else
                                         <td>
-                                            <button type="button" class="btn-sm btn-success" id="markAsPaidBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markAsPaidModal{{$book->id}}"> <span class="ti-">Mark as Paid</span> </button>
+                                            <a href="#"><button type="button" class="btn-sm btn-success" id="markAsPaidBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markAsPaidModal{{$book->id}}"> <span class="ti-">Mark as Paid</span> </button></a>
                                         </td>
                                     @endif
                                     <td>
@@ -85,7 +85,7 @@
                                 <!-- modal to confirm that user has made payment -->
                                 <form method="post" action="{{route('userMarkPaid', $book->id)}}">
                                     @csrf @method('PUT')
-                                    <div class="modal hide" id="markAsPaidModal{{$book->id}}" style="position: absolute;" tabindex="-1" aria-labelledby="" aria-hidden="true">
+                                    <div class="modal fade" id="markAsPaidModal{{$book->id}}" style="position: absolute;" tabindex="-1" aria-labelledby="" aria-hidden="true">
                                         <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
