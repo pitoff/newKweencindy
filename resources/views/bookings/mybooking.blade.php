@@ -14,7 +14,6 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                {{-- <h5>Dates you have booked</h5> --}}
                 <div class="text-right">
                     <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
                         <strong><em>Click here to Book Session</em></strong> </a>

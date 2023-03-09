@@ -266,9 +266,7 @@ class BookingController extends Controller
         $book = Booking::find($id);
         //trigger marked as paid event
         PaymentMaid::dispatch($this->userEmail($id));
-        $mark = $book->update([
-            'payment_status' => 1
-        ]);
+        $mark = $book->update(['payment_status' => 1]);
         if (!$mark) {
             return response()->json([
                 'message' => 'Booking appointment could not be marked as paid'
@@ -277,7 +275,6 @@ class BookingController extends Controller
         return response()->json([
             'message' => 'Booking was successfully marked as paid'
         ]);
-        // return back();
     }
 
     //mark booking as payment received
@@ -286,7 +283,7 @@ class BookingController extends Controller
         $book = Booking::find($id);
         //trigger payment received received event
         PaymentReceived::dispatch($this->userEmail($id));
-        $checkAccepted = $book->book_status === 1;
+        $checkAccepted = $book->book_status == 1;
         if (!$checkAccepted) {
             return back()->with('err', 'Please you need to accept the booking before you can mark as received');
         }

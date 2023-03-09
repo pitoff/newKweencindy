@@ -17,7 +17,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="title mb-30"> 
-                        {{-- <span>bookings</span> --}}
                         <h4>All Booked appointments</h4>
                         <hr class="line line-hr-secondary">
                     </div>
