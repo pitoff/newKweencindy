@@ -266,10 +266,18 @@ class BookingController extends Controller
         $book = Booking::find($id);
         //trigger marked as paid event
         PaymentMaid::dispatch($this->userEmail($id));
-        $book->update([
+        $mark = $book->update([
             'payment_status' => 1
         ]);
-        return back();
+        if (!$mark) {
+            return response()->json([
+                'message' => 'Booking appointment could not be marked as paid'
+            ]);
+        }
+        return response()->json([
+            'message' => 'Booking was successfully marked as paid'
+        ]);
+        // return back();
     }
 
     //mark booking as payment received
