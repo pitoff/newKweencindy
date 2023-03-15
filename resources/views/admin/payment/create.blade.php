@@ -12,12 +12,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8 offset-2">
+            <div class="col-md-12">
                 <h3 class="ml-1">Create Payment Method</h3>
 
                 <form method="post" action="{{route('payment.store')}}">
                     @csrf
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="bank" value="@isset($payment) {{ $payment->bank }} @endisset" placeholder="Bank Name *">
                             @error('bank')
@@ -26,7 +26,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="accNo" value="@isset($payment) {{ $payment->acc_number }} @endisset" placeholder="Account Number *">
                             @error('accNo')
@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="accName" value="@isset($payment) {{ $payment->acc_name }} @endisset" placeholder="Account Name *">
                             @error('accName')
@@ -44,7 +44,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="">
                         <div class="form-group">
                             <button class="btn fl-btn btn-sm" type="submit">Save</button>
                         

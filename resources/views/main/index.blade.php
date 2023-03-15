@@ -29,14 +29,14 @@
     <div id="about" class="about section-padding" data-scroll-index="1">
         <div class="container">
             <div class="row">
-                <div class="col-md-5">
+                {{-- <div class="col-md-5">
                     <div class="about-img mb-30 img-fluid animate-box" data-animate-effect="fadeInUp"
                         style="background-image: url('../main/img/about.jpg');">
                         <div class="about-img-2 signature" style="background-image: url('../main/img/signature.png');">
                         </div>
                     </div>
-                </div>
-                <div class="col-md-7 animate-box" data-animate-effect="fadeInUp">
+                </div> --}}
+                <div class="col-md-12 animate-box" data-animate-effect="fadeInUp">
                     <div class="title"> <span>About</span>
                         <h2>{{ config('app.name') }}</h2>
                         <hr class="line line-hr-secondary">
@@ -60,10 +60,10 @@
     <section class="services-banner-wrap" id="services">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+                {{-- <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
                     <img src="{{ asset('main/img/banner2.jpg') }}" class="img-fluid" alt="">
-                </div>
-                <div class="col-md-6 animate-box" data-animate-effect="fadeInRight">
+                </div> --}}
+                <div class="col-md-12 animate-box" data-animate-effect="fadeInRight">
                     <div class="cont">
                         <div class="row gx-0">
                             <div class="col-6 col-md-4 services-banner">
