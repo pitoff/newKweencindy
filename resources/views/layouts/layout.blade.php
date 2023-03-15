@@ -56,14 +56,14 @@
         <nav class="ovon-main-menu">
             @guest
                 <ul>
-                    <li><a href='index.html#home'>Home</a></li>
-                    <li><a href='index.html#about'>About</a></li>
-                    <li><a href='index.html#services'>Services</a></li>
-                    <li><a href='index.html#pricing'>Pricing</a></li>
-                    <li><a href='index.html#contact'>Contact</a></li>
+                    <li><a href='#home'>Home</a></li>
+                    <li><a href='#about'>About</a></li>
+                    <li><a href='#services'>Services</a></li>
+                    <li><a href='#pricing'>Pricing</a></li>
+                    <li><a href='#contact'>Contact</a></li>
                     <li><a href="{{ route('login') }}">Login</a></li>
-                    <!--
-                    <li class="ovon-sub"><a href="#0">Dropmenu</a>
+                    
+                    {{-- <li class="ovon-sub"><a href="#0">Dropmenu <span class="ti-arrow-down"></span> </a>
                         <ul>
                             <li><a href="#0">Submenu</a></li>
                             <li><a href="#0">Submenu</a></li>
@@ -74,29 +74,37 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    -->
+                    </li> --}}
                 </ul>
             @endguest
 
             @auth
                 <ul>
                     @if (admin())
-                        <p>{{ auth()->user()->role }}</p>
+                        {{-- <p>{{ auth()->user()->role }}</p> --}}
                         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li><a href="{{ route('already_booked') }}">Bookings</a></li>
-                        <li><a href="{{route('my_booking', auth()->user()->id)}}">My Bookings</a></li>
+                        <li><a href="#">Users</a></li>
+                        <li class="ovon-sub"><a href="#0">Booking</a>
+                            <ul>
+                                <li><a href="{{ route('already_booked') }}">Bookings</a></li>
+                                <li><a href="{{route('my_booking', auth()->user()->id)}}">My Bookings</a></li>
+                            </ul>
+                        </li>
                         <li><a href="{{route('categories.index')}}">Categories</a></li>
                         <li><a href="{{route('payment.index')}}">Payment</a></li>
                         <li><a href="{{ route('image-gallery.index') }}">Gallery</a></li>
-                        <li><a href="#">MakeUp Class</a></li>
                     @endif
 
                     @if (defaultUser())
                         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li><a href="{{ route('already_booked') }}">Bookings</a></li>
-                        <li><a href="{{ route('users.learn-make-up') }}">Learn make up</a></li>
-                        
+                        <li class="ovon-sub"><a href="#0">Booking <span class="ti-arrow-down"></span> </a>
+                            <ul>
+                                <li><a href="{{ route('already_booked') }}">Bookings</a></li>
+                                <li><a href="{{route('my_booking', auth()->user()->id)}}">My Bookings</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Pricing List</a></li>
+                        <li><a href="#">Gallery</a></li>
                     @endif
                     <li>
                         <form action="{{ route('logout') }}" method="post">
@@ -133,7 +141,7 @@
                 <div class="row">
                     <div class="col-md-4 mb-30">
                         <a href="index.html"> <img src="img/logo-dark.png" alt=""> </a>
-                        <p>Hi, I'm Olivia a Professional Makeup Artist. Quisque luctus tincidunt enim daibus miss
+                        <p>Hi, I'm {{config('app.name')}} a Professional Makeup Artist. Quisque luctus tincidunt enim daibus miss
                             neuenete ultrie ectus.</p>
                         <div class="social-icon"> <a href="index.html"><i class="ti-facebook"></i></a> <a
                                 href="index.html"><i class="ti-twitter"></i></a> <a href="index.html"><i
@@ -146,13 +154,13 @@
                             <li>
                                 <div class="icon"><i class="ti-headphone-alt"></i></div>
                                 <div class="text">
-                                    <p><a href="tel:+1-650-444-0000">+1 650-444-0000</a></p>
+                                    <p><a href="tel:+1-650-444-0000">+234-8077994011</a></p>
                                 </div>
                             </li>
                             <li>
                                 <div class="icon"> <i class="ti-email"></i> </div>
                                 <div class="text">
-                                    <p><a href="mailto:makeup@ovon.com">makeup@ovon.com</a></p>
+                                    <p><a href="#">{{contactEmail()}}</a></p>
                                 </div>
                             </li>
                             <li>

@@ -30,7 +30,7 @@
             </div>
             @endif
 
-            <div class="col-md-8 offset-2">
+            <div class="col-md-12">
                 <!-- <h5>Payment methods</h5> -->
 
                 <div class="align-left mb-3">

@@ -11,3 +11,9 @@ if(!function_exists('supportEmail')){
         return "kweencindysupport@gmail.com";
     }
 }
+
+if(!function_exists('contactEmail')){
+    function contactEmail() {
+        return "contact@kweencindy.com";
+    }
+}

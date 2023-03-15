@@ -25,9 +25,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('main.index');
-});
+Route::get('/', [DashboardController::class, 'homePage']);
 
 //auth routes
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
