@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Booking;
 
+use App\Enums\BookingStatusEnum;
 use App\Events\PaymentMaid;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
@@ -31,7 +32,7 @@ class PaymentController extends Controller
 
         // dd($paymentDetails);
         //on successfull payment
-        //store in payment table, update bookings.payment_status to 1
+        //store in payment table, update bookings.payment_status to AwaitingConfirmation
         //notify payment success to user and admin
         //return redirect to my bookings
         $bookingId = $paymentDetails['data']['metadata']['booking_id'];
@@ -51,7 +52,7 @@ class PaymentController extends Controller
             }
 
             $bookedPaymentStatus = Booking::where('id', $bookingId)->update([
-                'payment_status' => 1
+                'payment_status' => BookingStatusEnum::AwaitingConfirmation
             ]);
             
             //trigger event of payment maid

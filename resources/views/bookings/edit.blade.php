@@ -13,10 +13,10 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h6 class="ml-1"> <em> Update booking for @isset($book)
+                <h6 class="ml-1"> Update booking for @isset($book)
                     {{-- {{date('d-M-Y', strtotime($book->book_date))}} --}}
                     {{$book->getBookDateAttribute($book->book_date)}}
-                @endisset </em></h6>
+                @endisset </h6>
                 <x-auth-errors />
                 <form method="post" action="{{route('edit_booking', $book->id)}}">
                     @method('PUT')

@@ -2025,7 +2025,7 @@ ol.comment-list li .children li {
     appearance: none;
     -webkit-box-shadow: none;
     box-shadow: none;
-    background: transparent;
+    /* background: transparent; */
     border: none;
     border-bottom: 1px solid #dedede;
     -webkit-border-radius: 0;
@@ -2044,7 +2044,7 @@ ol.comment-list li .children li {
     -webkit-box-shadow: none;
     box-shadow: none;
     border-bottom: 2px solid #DD6E8B;
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 #message {
     background-color: transparent;

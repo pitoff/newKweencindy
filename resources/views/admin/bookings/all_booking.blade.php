@@ -41,11 +41,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Category</th>
-                                        {{-- <th scope="col">Price</th> --}}
                                         <th scope="col">Date</th>
-                                        {{-- <th scope="col">State</th>
-                                        <th scope="col">Town</th>
-                                        <th scope="col">Address</th> --}}
                                         <th scope="col" colspan="2">Payment</th>
                                         <th scope="col">Accept/Decline</th>
                                         <th scope="col" colspan="3" class="text-center">Actions</th>
@@ -56,20 +52,10 @@
                                         <tr>
                                             <td>{{ ($bookings->currentpage()-1) * $bookings->perpage() + (1+$key ++) }}</td>
                                             <td>{{$book->user->email}}</td>
-                                            {{-- <td>{{ $key + 1 }}</td> --}}
                                             <td>{{ $book->category->category }}</td>
-                                            {{-- <td>#{{ number_format($book->category->price, 2) }}</td> --}}
                                             <td>{{ $book->book_date }}</td>
-                                            {{-- @if ($book->location == 'personal location')
-                                                <td>{{ $book->state }}</td>
-                                                <td>{{ $book->town }}</td>
-                                                <td>{{ $book->address }}</td>
-                                            @else
-                                                <td colspan="3" class="text-center">Office location</td>
-                                            @endif --}}
-
-                                            @if ($book->payment_status == 2)
-                                                <td><em>Received</em></td>
+                                            @if ($book->payment_status == $payConfirmed->value)
+                                                <td><em>{{$book->payment_status}}</em></td>
                                                 <td>
                                                     <button type="button" class="btn-sm btn-info" id="markNotReceivedBtn"
                                                         data-id="{{ $book->id }}" data-toggle="modal"
@@ -118,7 +104,7 @@
                                                         data-id="{{ $book->id }}" data-toggle="modal"
                                                         data-target="#markAsReceivedModal{{ $book->id }}">
                                                         <span class="ti-">Mark as Received</span>
-                                                        @if ($book->payment_status == 1)
+                                                        @if ($book->payment_status == $awaitingConfirmation->value)
                                                             <div class="blink"><span class="badge badge-danger">!</span>
                                                             </div>
                                                         @endif
@@ -208,11 +194,11 @@
                                             @endif
 
                                             <td>
-                                                @if ($book->book_status == 0)
+                                                @if ($book->book_status == $pendingBooking->value || $book->book_status == $declinedBooking->value)
                                                     <button type="button" id="acceptBtn" class="btn-sm btn-success"
                                                         data-date="{{ $book->book_date }}" data-id="{{ $book->id }}"
                                                         data-toggle="modal" data-target="#acceptModal">Accept</button>
-                                                @elseif ($book->book_status == 1)
+                                                @elseif ($book->book_status == $acceptedBooking->value)
                                                     <button type="button" id="declineBtn" class="btn-sm btn-danger"
                                                         data-date="{{ $book->book_date }}" data-id="{{ $book->id }}"
                                                         data-toggle="modal" data-target="#declineModal">Decline</button>
@@ -406,6 +392,7 @@
                     type: "PUT",
                     url: `/admin/accept-booking/${id}`,
                     success: function(response) {
+                        $('#acceptBooking').text("Accepted")
                         console.log(response)
                         // jQuery('#acceptModal').modal('hide')
 
@@ -436,6 +423,7 @@
                     type: "PUT",
                     url: `/admin/decline-booking/${id}`,
                     success: function(response) {
+                        $('#acceptBooking').text("Declined")
                         console.log(response.message)
                         location.reload(true)
                     }
@@ -468,19 +456,8 @@
                         $('.address').text(response.data.address);
                     }
                     $('.location').text(response.data.location);
-                    if (response.data.book_status == 1) {
-                        $('.bookStatus').text('Date accepted');
-                    } else {
-                        $('.bookStatus').text('Date not accepted');
-                    }
-                    if (response.data.payment_status == 1) {
-                        $('.payStatus').text('Marked as Paid');
-                    } else if (response.data.payment_status == 2) {
-                        $('.payStatus').text('Marked as Received');
-                    } else {
-                        $('.payStatus').text('Pending');
-                    }
-
+                    $('.bookStatus').text(response.data.book_status);
+                    $('.payStatus').text(response.data.payment_status);
 
                 }
             });

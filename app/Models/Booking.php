@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BookingStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,11 @@ class Booking extends Model
         'book_status',
         'book_date'
     ];
+
+    // protected $casts = [
+    //     'payment_status' => BookingStatusEnum::class,
+    //     'book_status' => BookingStatusEnum::class
+    // ];
 
     public function user()
     {

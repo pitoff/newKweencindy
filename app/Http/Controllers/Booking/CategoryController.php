@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Booking;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Models\Booking;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -94,6 +95,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $categoryExistInBooking = Booking::where('category_id', $id)->first();
+        if($categoryExistInBooking){
+            return back()->with('err', 'This category is already in use and cannot be deleted');
+        }
         $category = Category::find($id);
         $category->delete();
         return back();

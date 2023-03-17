@@ -16,14 +16,14 @@
 </div>
 
 <div id="categoryInfo">
-    {{-- <div class="">
-        <div class="form-group">
-            <input type="text" class="form-control" value="" id="description">
-        </div>
-    </div> --}}
     <div class="">
         <div class="form-group">
-            <input type="text" class="form-control" value="" id="price">
+            <input type="text" class="form-control" value="" readonly id="description">
+        </div>
+    </div>
+    <div class="">
+        <div class="form-group">
+            <input type="text" class="form-control" value="" readonly id="price">
         </div>
     </div>
 </div>

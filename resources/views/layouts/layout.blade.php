@@ -97,7 +97,7 @@
 
                     @if (defaultUser())
                         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="ovon-sub"><a href="#0">Booking <span class="ti-arrow-down"></span> </a>
+                        <li class="ovon-sub"><a href="#0">Booking </a>
                             <ul>
                                 <li><a href="{{ route('already_booked') }}">Bookings</a></li>
                                 <li><a href="{{route('my_booking', auth()->user()->id)}}">My Bookings</a></li>

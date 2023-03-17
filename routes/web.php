@@ -83,15 +83,6 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback'])->name('payment');
     Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 
-    //users route
-    Route::group(['prefix' => 'users', 'name' => 'users.'], function(){
-
-        Route::get('learn-make-up', function(){ 
-            return view('learning.index');
-        })->name('users.learn-make-up');
-
-    });
-
     //admin routes
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'admin'], function(){
         

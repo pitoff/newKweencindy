@@ -6,7 +6,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="title mb-30"> 
-                    {{-- <span>categories</span> --}}
                     <h4>Makeup Categories</h4>
                     <hr class="line line-hr-secondary">
                 </div>
@@ -14,7 +13,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-
+                @include('includes.sessionMsg')
                 <div class="categories-table table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>

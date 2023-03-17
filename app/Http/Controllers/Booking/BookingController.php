@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Booking;
 
+use App\Enums\BookingStatusEnum;
 use App\Events\BookingAccepted;
 use App\Events\BookingDeclined;
 use App\Events\MakeupBooked;
@@ -16,9 +17,11 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Traits\ResponseTrait;
 
 class BookingController extends Controller
 {
+    use ResponseTrait;
     /*
         initial payment status = 0
         when user marks booking as paid, payment_status = 1
@@ -67,8 +70,8 @@ class BookingController extends Controller
                 'state' => $request->state ?? '',
                 'town' => $request->town ?? '',
                 'address' => $request->address ?? '',
-                'payment_status' => false,
-                'book_status' => false,
+                'payment_status' => BookingStatusEnum::PendingPayment,
+                'book_status' => BookingStatusEnum::PendingBooking,
                 'book_date' => $request->book_date
             ]);
             $user = User::where('id', $createBooking->user_id)->first(['name', 'email']);
@@ -105,6 +108,11 @@ class BookingController extends Controller
     public function myBooking()
     {
         $data['booked'] = auth()->user()->booking()->orderBy('id', 'DESC')->paginate(15);
+        $data['pendingBooking'] = BookingStatusEnum::PendingBooking;
+        $data['bookingDeclined'] = BookingStatusEnum::BookingDeclined;
+        $data['bookingAccepted'] = BookingStatusEnum::BookingAccepted;
+        $data['awaitingConfirmation'] = BookingStatusEnum::AwaitingConfirmation;
+        $data['payConfirmed'] = BookingStatusEnum::PaymentConfirmed;
 
         if (admin()) {
             return view('admin.bookings.mybooking', $data);
@@ -115,11 +123,19 @@ class BookingController extends Controller
 
     public function alreadyBooked(Booking $booked)
     {
+        $data['payConfirmed'] = BookingStatusEnum::PaymentConfirmed;
+        $data['payNotConfirmed'] = BookingStatusEnum::PaymentNotConfirmed;
+        $data['pendingBooking'] = BookingStatusEnum::PendingBooking;
+        $data['declinedBooking'] = BookingStatusEnum::BookingDeclined;
+        $data['acceptedBooking'] = BookingStatusEnum::BookingAccepted;
+        $data['awaitingConfirmation'] = BookingStatusEnum::AwaitingConfirmation;
+
         if (admin()) {
             $data['bookings'] = $booked->with(['user', 'category'])->orderBy('id', 'DESC')->paginate(15);
             return view('admin.bookings.all_booking', $data);
         } else {
             $data['bookings'] = $booked->with(['category'])->orderBy('id', 'DESC')->paginate(15);
+            dd($data['bookings']);
             return view('bookings.all_booking', $data);
         }
     }
@@ -168,8 +184,6 @@ class BookingController extends Controller
                 'state' => $request->state,
                 'town' => $request->town,
                 'address' => $request->address,
-                'payment_status' => false,
-                'book_status' => false,
                 'book_date' => $request->book_date ?? $book->book_date
             ]);
         } else {
@@ -184,8 +198,6 @@ class BookingController extends Controller
                 'state' => null,
                 'town' => null,
                 'address' => null,
-                'payment_status' => false,
-                'book_status' => false,
                 'book_date' => $request->book_date ?? $book->book_date
             ]);
         }
@@ -223,19 +235,14 @@ class BookingController extends Controller
     public function accept($id)
     {
         $acceptBooking = Booking::where('id', $id)->update([
-            'book_status' => 1
+            'book_status' => BookingStatusEnum::BookingAccepted
         ]);
         if ($acceptBooking) {
             //trigger booking accepted event
             BookingAccepted::dispatch($this->userEmail($id));
-            return response()->json([
-                'message' => 'Booking has been accepted',
-                // 'email' => $email
-            ]);
+            return $this->success('Booking has been accepted', 200);
         }else{
-            return response()->json([
-                'message' => 'Booking could not be accepted'
-            ]);
+            return $this->failure('Booking could not be accepted');
         }
         
     }
@@ -244,18 +251,14 @@ class BookingController extends Controller
     public function decline($id)
     {
         $declineBooking = Booking::where('id', $id)->update([
-            'book_status' => 0
+            'book_status' => BookingStatusEnum::BookingDeclined
         ]);
         if ($declineBooking) {
             //trigger booking declined event
             BookingDeclined::dispatch($this->userEmail($id));
-            return response()->json([
-                'message' => 'Booking has been declined'
-            ]);
+            return $this->success('Booking has been declined', 200);
         }else{
-            return response()->json([
-                'message' => 'Booking could not be declined at the moment'
-            ]);
+            return $this->failure('Booking could not be declined at the moment');
         }
         
     }
@@ -266,15 +269,13 @@ class BookingController extends Controller
         $book = Booking::find($id);
         //trigger marked as paid event
         PaymentMaid::dispatch($this->userEmail($id));
-        $mark = $book->update(['payment_status' => 1]);
-        if (!$mark) {
-            return response()->json([
-                'message' => 'Booking appointment could not be marked as paid'
-            ]);
-        }
-        return response()->json([
-            'message' => 'Booking was successfully marked as paid'
+        $mark = $book->update([
+            'payment_status' => BookingStatusEnum::AwaitingConfirmation
         ]);
+        if (!$mark) {
+            return $this->failure('Booking appointment could not be marked as paid');
+        }
+        return $this->success('Booking was successfully marked as paid', 200);
     }
 
     //mark booking as payment received
@@ -283,12 +284,13 @@ class BookingController extends Controller
         $book = Booking::find($id);
         //trigger payment received received event
         PaymentReceived::dispatch($this->userEmail($id));
-        $checkAccepted = $book->book_status == 1;
+        $data['acceptedBooking'] = BookingStatusEnum::BookingAccepted;
+        $checkAccepted = $book->book_status == $data['acceptedBooking']->value;
         if (!$checkAccepted) {
             return back()->with('err', 'Please you need to accept the booking before you can mark as received');
         }
         $book->update([
-            'payment_status' => 2,
+            'payment_status' => BookingStatusEnum::PaymentConfirmed,
 
         ]);
         return back()->with('success', 'You marked payment as received');
@@ -301,7 +303,7 @@ class BookingController extends Controller
         //trigger mark not received event
         PaymentNotReceived::dispatch($this->userEmail($id));
         $book->update([
-            'payment_status' => 0
+            'payment_status' => BookingStatusEnum::PaymentNotConfirmed
         ]);
         return back()->with('success', 'You marked payment as not received');
     }
@@ -310,9 +312,7 @@ class BookingController extends Controller
     {
         $booking = Booking::with('category', 'user')->where('id', $id)->first();
         if ($booking) {
-            return response()->json([
-                'data' => $booking
-            ]);
+            return $this->success('Booking retrieved', 200, $booking);
         }
     }
 }

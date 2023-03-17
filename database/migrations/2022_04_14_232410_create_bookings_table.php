@@ -21,8 +21,8 @@ class CreateBookingsTable extends Migration
             $table->string('state')->nullable();
             $table->string('town')->nullable();
             $table->string('address')->nullable();
-            $table->boolean('payment_status')->default(false)->nullable();
-            $table->boolean('book_status')->default(false)->nullable();
+            $table->string('payment_status')->default('pending payment')->nullable();
+            $table->string('book_status')->default('pending booking')->nullable();
             $table->string('book_date')->nullable();
             $table->string('book_time')->nullable();
             $table->timestamp('created_at');
