@@ -56,9 +56,9 @@
 
                                 @if($book->book_status == $bookingAccepted->value)
                                     @if ($book->payment_status == $awaitingConfirmation->value)
-                                        <td><em>{{$book->payment_status}}</em></td>
+                                        <td class="alert alert-warning"><em>{{$book->payment_status}}</em></td>
                                     @elseif($book->payment_status == $payConfirmed->value)
-                                        <td><em>{{$book->payment_status}}</em></td>
+                                        <td class="alert alert-success"><em>{{$book->payment_status}}</em></td>
                                     @else
                                         <td>
                                             <button type="button" class="btn-sm btn-success" id="markAsPaidBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markAsPaidModal"> <span class="ti-">Mark as Paid</span> </button>
@@ -72,7 +72,7 @@
                                     @endif
 
                                 @else
-                                    <td colspan="2">Not yet accepted</td>
+                                    <td class="alert alert-warning" colspan="2"><em>Not yet accepted</em></td>
                                 @endif
                                 
                                 @if($book->book_status == $pendingBooking->value)

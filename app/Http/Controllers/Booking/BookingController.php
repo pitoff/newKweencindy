@@ -23,15 +23,7 @@ use Illuminate\Support\Str;
 class BookingController extends Controller
 {
     use ResponseTrait;
-    /*
-        initial payment status = 0
-        when user marks booking as paid, payment_status = 1
-        when admin marks booking as received payment_status = 2
-        when admin marks booking as not received payment_status = 0
-        when admin accepts booking, booking_status = 1
-        when admin decline booking, booking_status = 2
-
-    */
+   
     public function index()
     {
         return view('bookings.index');
@@ -123,6 +115,7 @@ class BookingController extends Controller
         }
     }
 
+    //get all bookings for admin and all booking that has payment status of confirmed for users
     public function alreadyBooked(Booking $booked)
     {
         $data['payConfirmed'] = BookingStatusEnum::PaymentConfirmed;
@@ -146,13 +139,9 @@ class BookingController extends Controller
     {
         $categoryDetails = Category::where('id', $id)->first();
         if (!$categoryDetails) {
-            return response()->json([
-                'error' => 'category was not found'
-            ]);
+            return $this->failure('category was not found');
         }
-        return response()->json([
-            'data' => $categoryDetails
-        ]);
+        return $this->success('retrieved categories', 200, $categoryDetails);
     }
 
     public function edit(Booking $booking, $id)
@@ -260,7 +249,7 @@ class BookingController extends Controller
         
     }
 
-    //mark booking as paid
+    //user mark booking as paid
     public function markPaid($id)
     {
         $book = Booking::find($id);
@@ -275,7 +264,7 @@ class BookingController extends Controller
         return $this->success('Booking was successfully marked as paid', 200);
     }
 
-    //mark booking as payment received
+    //admin mark booking as payment received
     public function markReceived($id)
     {
         $book = Booking::find($id);
@@ -290,10 +279,10 @@ class BookingController extends Controller
             'payment_status' => BookingStatusEnum::PaymentConfirmed,
 
         ]);
-        return back()->with('success', 'You marked payment as received');
+        return $this->success('You marked payment as received', 200);
     }
 
-    //mark booking as payment not received
+    //admin mark booking as payment not received
     public function markNotReceived($id)
     {
         $book = Booking::find($id);
@@ -302,7 +291,7 @@ class BookingController extends Controller
         $book->update([
             'payment_status' => BookingStatusEnum::PaymentNotConfirmed
         ]);
-        return back()->with('success', 'You marked payment as not received');
+        return $this->success('You marked payment as not received', 200);
     }
 
     public function previewBooking($id)
