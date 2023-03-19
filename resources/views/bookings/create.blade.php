@@ -33,6 +33,15 @@
         return parts.join(".");
     }
 
+    // var datesForDisable = ["03-30-2022", "03-31-2022", "03-25-2022", "01-01-2022"]
+
+    // $('.datepicker').datepicker({
+    //     format: 'mm-dd-yyyy',
+    //     autoclose: true,
+    //     todayHighlight: true,
+    //     datesDisabled: datesForDisable
+    // });
+
     $(document).ready(function() {
         $('#locationInfo').hide()
         $('#categoryInfo').hide()

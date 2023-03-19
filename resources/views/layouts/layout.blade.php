@@ -104,7 +104,7 @@
                             </ul>
                         </li>
                         <li><a href="{{route('priceTags')}}">Pricing List</a></li>
-                        <li><a href="#">Gallery</a></li>
+                        <li><a href="{{route('image-gallery.index')}}">Gallery</a></li>
                     @endif
                     <li>
                         <form action="{{ route('logout') }}" method="post">

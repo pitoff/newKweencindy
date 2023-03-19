@@ -8,9 +8,12 @@ use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use App\Traits\ResponseTrait;
 
 class GalleryController extends Controller
 {
+    use ResponseTrait;
+
     public function index()
     {
         $images = Gallery::paginate(3);
@@ -62,26 +65,32 @@ class GalleryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $image = Gallery::where('id',$id)->first();
+        // $image = Gallery::where('id',$id)->first();
         $request->validate([
             "imageName" => "required",
             "description" => "required",
-            "imageFile" => ""
         ]);
 
-        // $updateImage = Gallery::where('id', $id)->update([
-        //     'imageName' => $request->imageName,
-        //     'description' => $request->description,
-        //     'imageFile' => $request->imageFile ?? $image->imageFile
-        // ]);
+        $updateImage = Gallery::where('id', $id)->update([
+            'imageName' => $request->imageName,
+            'description' => $request->description,
+        ]);
 
-        if(File::exists('imageGallery/'.$image->imageFile)){
-            dd(true);
+        if(!$updateImage){
+            return back()->with('err', 'Failed to update image details');
         }
+        return redirect(route('image-gallery.index'))->with('success', 'You have successfully updated image details');
     }
 
     public function destroy($id)
     {
-        dd($id);
+        $image = Gallery::where('id',$id)->first();
+        $deleteImage = $image->delete();
+        if($deleteImage){
+            $absolutePath = public_path('imageGallery/'.$image->imageFile);
+            File::delete($absolutePath);
+            return $this->success('You have successfully removed image from gallery', 200);
+        }
+        return $this->failure('Image could not be removed from gallery');
     }
 }

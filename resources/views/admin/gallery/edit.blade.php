@@ -38,17 +38,16 @@
 
                     <div class="">
                         <div class="form-group">
-                            <input type="file" class="form-control" name="imageFile" placeholder="Image File *">
-                        </div>
-                    </div>
-
-                    <div class="">
-                        <div class="form-group">
                             <button class="btn fl-btn" type="submit">Update</button>
                         </div>
                     </div>
 
                 </form>
+
+                <div class="text-right pt-4">
+                    <a href="{{ route('image-gallery.index') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                        <strong><em>Gallery</em></strong> </a>
+                </div>
             </div>
         </div>
 

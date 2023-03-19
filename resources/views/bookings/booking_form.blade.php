@@ -63,7 +63,7 @@
 
 <div class="">
     <div class="form-group">
-        <input type="date" class="form-control" name="book_date" value="@isset($book)
+        <input type="date" class="form-control datepicker" name="book_date" value="@isset($book)
             {{ $book->book_date }}
         @endisset" placeholder="Booking date *">
     </div>

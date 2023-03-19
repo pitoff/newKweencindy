@@ -61,16 +61,16 @@
                                             <td><em>{{ $book->payment_status }}</em></td>
                                             <td>
                                                 <button type="button" class="btn-sm btn-info" id="markNotReceivedBtn"
-                                                    data-id="{{ $book->id }}" data-date="{{ $book->book_date }}" data-toggle="modal"
-                                                    data-target="#markNotReceivedModal">
+                                                    data-id="{{ $book->id }}" data-date="{{ $book->book_date }}"
+                                                    data-toggle="modal" data-target="#markNotReceivedModal">
                                                     <span class="ti-">Mark not Received</span>
                                                 </button>
                                             </td>
                                         @else
                                             <td>
                                                 <button type="button" class="btn-sm btn-info" id="markAsReceivedBtn"
-                                                    data-id="{{ $book->id }}" data-date="{{ $book->book_date }}" data-toggle="modal"
-                                                    data-target="#markAsReceivedModal">
+                                                    data-id="{{ $book->id }}" data-date="{{ $book->book_date }}"
+                                                    data-toggle="modal" data-target="#markAsReceivedModal">
                                                     <span class="ti-">Mark as Received</span>
                                                     @if ($book->payment_status == $awaitingConfirmation->value)
                                                         <div class="blink"><span class="badge badge-danger">!</span>
@@ -82,8 +82,8 @@
                                             <td>
 
                                                 <button type="button" class="btn-sm btn-info" id="markNotReceivedBtn"
-                                                    data-id="{{ $book->id }}" data-date="{{ $book->book_date }}" data-toggle="modal"
-                                                    data-target="#markNotReceivedModal">
+                                                    data-id="{{ $book->id }}" data-date="{{ $book->book_date }}"
+                                                    data-toggle="modal" data-target="#markNotReceivedModal">
                                                     <span class="ti-">Mark not Received</span>
                                                 </button>
 
@@ -246,61 +246,57 @@
     <!-- end view booking -->
 
     <!-- Mark booking as received modal -->
-    <form method="post" action="{{ route('adminMarkReceived', $book->id) }}">
-        @csrf @method('PUT')
-        <div class="modal fade" id="markAsReceivedModal" tabindex="-1"
-            aria-labelledby="markAsReceivedModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="markAsReceivedModal">
-                            Mark payment as received</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p style="font-size: large;">You want to confirm the
-                            payment for <span id="dateForMarkReceived"></span> as received?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn-success" id="yesMarkReceived">Yes <span class="ti-check"></span></button>
-                    </div>
+    <div class="modal fade" id="markAsReceivedModal" tabindex="-1" aria-labelledby="markAsReceivedModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="markAsReceivedModal">
+                        Mark payment as received</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: large;">You want to confirm the
+                        payment for <span id="dateForMarkReceived"></span> as received?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn-success" id="yesMarkReceived">Yes <span
+                            class="ti-check"></span></button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
     <!-- End mark booking as received modal -->
 
     <!-- Mark booking as not received modal -->
-    <form method="post" action="{{ route('adminMarkNotReceived', $book->id) }}">
-        @csrf @method('PUT')
-        <div class="modal fade" id="markNotReceivedModal" tabindex="-1"
-            aria-labelledby="markNotReceivedModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="markNotReceivedModal">
-                            Mark payment as not received</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p style="font-size: large;">You want to mark
-                            payment for <span id="dateForMarkNotReceived"></span> as not
-                            received?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn-success" id="yesMarkNotReceived">Yes <span class="ti-check"></span></button>
-                    </div>
+    <div class="modal fade" id="markNotReceivedModal" tabindex="-1" aria-labelledby="markNotReceivedModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="markNotReceivedModal">
+                        Mark payment as not received</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: large;">You want to mark
+                        payment for <span id="dateForMarkNotReceived"></span> as not
+                        received?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn-success" id="yesMarkNotReceived">Yes <span
+                            class="ti-check"></span></button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
     <!-- End mark booking as not received modal -->
 
 @endsection
