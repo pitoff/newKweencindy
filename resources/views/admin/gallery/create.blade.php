@@ -41,9 +41,14 @@
                     </div>
 
                 </form>
+
+                <div class="text-right pt-4">
+                    <a href="{{ route('image-gallery.index') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                        <strong><em>Gallery</em></strong> </a>
+                </div>
             </div>
         </div>
-
+        
     </div>
 </section>
 

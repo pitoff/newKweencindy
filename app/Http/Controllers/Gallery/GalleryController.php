@@ -43,7 +43,7 @@ class GalleryController extends Controller
         if($save){
             $imagePath = 'imageGallery';
             $img->move($imagePath, $imgFile);
-            return redirect(route('image-gallery.index'))->with('success', 'You have stored an image to gallery');
+            return redirect(route('image-gallery.index'))->with('success', 'You have successfully saved image to gallery');
 
         }
 

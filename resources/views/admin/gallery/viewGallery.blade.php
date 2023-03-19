@@ -18,7 +18,7 @@
                 <!-- <h5>Payment methods</h5> -->
 
                 <div class="align-left">
-                    <a href="{{route('image-gallery.create')}}" class="btn-secondary btn-sm" type="button"> <span class="ti-plus"></span> Add Image to gallery</a>
+                    <a href="{{route('image-gallery.create')}}" class="btn-secondary btn-sm" type="button"> <span class="ti-plus"></span> Add Image </a>
                 </div>
 
             </div>
