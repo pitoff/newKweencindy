@@ -39,6 +39,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Ref No.</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Date</th>
@@ -51,6 +52,7 @@
                                     @forelse ($bookings as $key => $book)
                                         <tr>
                                             <td>{{ ($bookings->currentpage()-1) * $bookings->perpage() + (1+$key ++) }}</td>
+                                            <td>{{$book->ref_no}}</td>
                                             <td>{{$book->user->email}}</td>
                                             <td>{{ $book->category->category }}</td>
                                             <td>{{ $book->book_date }}</td>
@@ -223,7 +225,11 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <div class="alert alert-warning">No booked dates found</div>
+                                        <tr>
+                                            <td colspan="9" class="alert alert-warning text-center">
+                                                No booked dates found...
+                                            </td>
+                                        </tr>
                                     @endforelse
 
                                 </tbody>
@@ -234,7 +240,7 @@
                     <div class="mt-2">
                         {{ $bookings->links() }}
                     </div>
-                    <a href="{{ route('my_booking', auth()->user()->id) }}" class="btn fl-btn" type="submit">GoTo My
+                    <a href="{{ route('my_booking', auth()->user()->id) }}" class="btn fl-btn" type="submit">My
                         Bookings</a>
 
                 </div>

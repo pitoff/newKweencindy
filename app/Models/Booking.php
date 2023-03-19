@@ -10,9 +10,10 @@ class Booking extends Model
 {
     use HasFactory;
 
-    const UPDATED_AT = null;
+    // const UPDATED_AT = null;
     
     public $fillable = [
+        'ref_no',
         'user_id',
         'category_id',
         'location',

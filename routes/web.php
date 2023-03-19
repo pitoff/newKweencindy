@@ -59,10 +59,10 @@ Route::post('/email/verification-notification', function (Request $request) {
 //dashboard routes
 Route::group(['middleware' => ['verified', 'auth']], function(){
 
-    //general dashboard
+    //dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    //bookings home page
+    //booking
     Route::get('/booking-dashboard', [BookingController::class, 'index'])->name('booking');
     Route::get('/booking/create', [BookingController::class, 'create'])->name('create_booking');
     Route::get('/already-booked', [BookingController::class, 'alreadyBooked'])->name('already_booked');
@@ -74,6 +74,7 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     Route::put('/mark-booking-as-paid/{id}', [BookingController::class, 'markPaid'])->name('userMarkPaid');
     Route::delete('/booking/remove/{id}', [BookingController::class, 'delete'])->name('delete_booking');
     Route::get('/booking-categories/{id}', [BookingController::class, 'categoryDetails']);
+    Route::get('/price-tags', [BookingController::class, 'priceTags'])->name('priceTags');
 
     Route::get('payment-details/{id}', [PaymentController::class, 'showPaymentDetails'])->name('payment_details');
 

@@ -26,14 +26,15 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Ref No.</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">State</th>
+                                {{-- <th scope="col">State</th>
                                 <th scope="col">Town</th>
-                                <th scope="col">Address</th>
+                                <th scope="col">Address</th> --}}
                                 <th scope="col" colspan="2" class="text-center">Payment</th>
-                                <th scope="col" colspan="2" class="text-center">Actions</th>
+                                <th scope="col" colspan="3" class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,16 +42,17 @@
 
                             <tr>
                                 <td>{{ ($booked->currentpage()-1) * $booked->perpage() + (1+$key ++) }}</td>
+                                <td>{{$book->ref_no}}</td>
                                 <td>{{$book->category->category}}</td>
                                 <td>#{{number_format($book->category->price, 2)}}</td>
                                 <td>{{$book->book_date}}</td>
-                                @if ($book->location == 'personal location')
+                                {{-- @if ($book->location == 'personal location')
                                     <td>{{$book->state}}</td>
                                     <td>{{$book->town}}</td>
                                     <td>{{$book->address}}</td>
                                 @else
                                     <td colspan="3" class="text-center">Office location</td>
-                                @endif
+                                @endif --}}
 
                                 @if($book->book_status == $bookingAccepted->value)
                                     @if ($book->payment_status == $awaitingConfirmation->value)
@@ -74,6 +76,13 @@
                                 @endif
                                 
                                 @if($book->book_status == $pendingBooking->value)
+                                    <td>
+                                        <button type="button" id="viewBooking" class="btn-sm btn-primary"
+                                                    data-date="{{ $book->book_date }}" data-id="{{ $book->id }}"
+                                                    data-toggle="modal" data-target="#viewBookModal"> <span
+                                                        class="ti-eye"></span>
+                                        </button>
+                                    </td>
                                     <td>
                                         <a href="{{route('edit_booking', $book->id)}}"><button type="button" class="btn-sm btn-warning"><span class="ti-pencil">Edit</span></button></a>
                                     </td>
@@ -110,7 +119,7 @@
                 <div class="mt-2">
                     {{$booked->links()}}
                 </div>
-                <a href="{{route('already_booked')}}" class="btn fl-btn" type="submit">Already Booked</a>
+                <a href="{{route('already_booked')}}" class="btn fl-btn" type="submit">All Booking</a>
             </div>
         </div>
 

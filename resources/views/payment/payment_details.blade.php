@@ -52,6 +52,16 @@
             </div>
         </div>
 
+        <div class="row">
+            <a href="{{ route('my_booking', auth()->user()->id) }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                <strong> 
+                <em>
+                    -- My Bookings
+                </em>
+                </strong>
+            </a>
+        </div>
+
     </div>
 </section>
 

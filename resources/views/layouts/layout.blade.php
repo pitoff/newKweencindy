@@ -103,7 +103,7 @@
                                 <li><a href="{{route('my_booking', auth()->user()->id)}}">My Bookings</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Pricing List</a></li>
+                        <li><a href="{{route('priceTags')}}">Pricing List</a></li>
                         <li><a href="#">Gallery</a></li>
                     @endif
                     <li>

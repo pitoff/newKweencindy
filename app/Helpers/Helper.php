@@ -2,7 +2,7 @@
 
 if(!function_exists('adminEmail')){
     function adminEmail() {
-        return "admin@admin";
+        return "admin@gmail.com";
     }
 }
 

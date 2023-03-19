@@ -5,8 +5,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="title mb-30"> <span>bookings</span>
-                    <h4>My Booked</h4>
+                <div class="title mb-30">
+                    <h4>My Bookings</h4>
                     <hr class="line line-hr-secondary">
                 </div>
             </div>
@@ -14,7 +14,6 @@
         <div class="row">
             <div class="col-md-12">
                 @include('includes.sessionMsg')
-                <h5>Dates you have booked</h5>
                 <div class="text-right">
                     <a href="{{ route('create_booking') }}" style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
                         <strong><em>Click here to Book Session</em></strong> </a>
@@ -77,7 +76,11 @@
                             </tr>
 
                             @empty
-                                <div class="alert alert-warning">No booked dates found</div>
+                                <tr>
+                                    <td colspan="10" class="alert alert-warning text-center">
+                                        No booked dates found...
+                                    </td>
+                                </tr>
                             @endforelse
 
                         </tbody>
@@ -90,7 +93,7 @@
                 mt-2">
                     {{$booked->links()}}
                 </div>
-                <a href="{{route('already_booked')}}" class="btn fl-btn" type="submit">Already Booked</a>
+                <a href="{{route('already_booked')}}" class="btn fl-btn" type="submit">All Bookings</a>
             </div>
         </div>
 

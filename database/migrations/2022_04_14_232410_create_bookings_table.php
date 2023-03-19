@@ -15,6 +15,7 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->string('ref_no');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained();
             $table->string('location')->nullable();
@@ -25,7 +26,7 @@ class CreateBookingsTable extends Migration
             $table->string('book_status')->default('pending booking')->nullable();
             $table->string('book_date')->nullable();
             $table->string('book_time')->nullable();
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 

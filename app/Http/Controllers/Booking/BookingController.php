@@ -18,6 +18,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\ResponseTrait;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -65,6 +66,7 @@ class BookingController extends Controller
 
         try {
             $createBooking = auth()->user()->booking()->create([
+                'ref_no' => 'BBKC-'.Str::random(8),
                 'category_id' => $request->category,
                 'location' => $request->location,
                 'state' => $request->state ?? '',
@@ -134,8 +136,7 @@ class BookingController extends Controller
             $data['bookings'] = $booked->with(['user', 'category'])->orderBy('id', 'DESC')->paginate(15);
             return view('admin.bookings.all_booking', $data);
         } else {
-            $data['bookings'] = $booked->with(['category'])->orderBy('id', 'DESC')->paginate(15);
-            dd($data['bookings']);
+            $data['bookings'] = $booked->where('payment_status', $data['payConfirmed']->value)->with(['category'])->orderBy('id', 'DESC')->paginate(15);
             return view('bookings.all_booking', $data);
         }
     }
@@ -215,13 +216,9 @@ class BookingController extends Controller
         $book = Booking::find($id);
         $deleted = $book->delete();
         if (!$deleted) {
-            return response()->json([
-                'message' => 'Booking appointment could not be deleted'
-            ]);
+            return $this->success('Booking appointment could not be deleted');
         }
-        return response()->json([
-            'message' => 'Booking was deleted successfully'
-        ]);
+        return $this->failure('Booking was deleted successfully');
     }
 
     private function userEmail($id)
@@ -314,5 +311,11 @@ class BookingController extends Controller
         if ($booking) {
             return $this->success('Booking retrieved', 200, $booking);
         }
+    }
+
+    public function priceTags()
+    {
+        $categories = Category::all();
+        return view('bookings.price_tags', compact('categories'));
     }
 }
