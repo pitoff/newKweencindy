@@ -15,4 +15,3 @@ jobs:
         username: ${{secrets.USERNAME}}
         password: ${{secrets.PWD}}
         server-dir: ${{secrets.DIR}}
-        timeout: 600000
