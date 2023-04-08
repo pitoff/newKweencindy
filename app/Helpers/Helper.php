@@ -14,6 +14,6 @@ if(!function_exists('supportEmail')){
 
 if(!function_exists('contactEmail')){
     function contactEmail() {
-        return "contact@kweencindy.com";
+        return "kweencindycontact@global-linksb.com";
     }
 }
