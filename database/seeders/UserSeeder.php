@@ -17,16 +17,15 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'role' => 'admin',
-                'name' => 'admin admin',
+                'fullname' => 'admin admin',
                 'email' => 'admin@gmail.com',
                 'phone' => '08023277889',
-                'address' => 'my address 1',
                 'email_verified_at' => '2023-02-21 15:22:34',
                 'password' => 12345,
             ],
             [
                 'role' => 'default',
-                'name' => 'nadia angel',
+                'fullname' => 'nadia angel',
                 'email' => 'nadia@gmail.com',
                 'phone' => '080232',
                 'address' => 'my address 2',
@@ -35,7 +34,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role' => 'default',
-                'name' => 'steph nneoma',
+                'fullname' => 'steph nneoma',
                 'email' => 'steph@gmail.com',
                 'phone' => '08011178342',
                 'address' => 'address no 2 central arbor',

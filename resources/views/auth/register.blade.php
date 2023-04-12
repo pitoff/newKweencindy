@@ -23,8 +23,14 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="name" value="{{ old('name') }}"
-                            placeholder="Name *">
+                        <input type="text" class="form-control" name="firstname" value="{{ old('firstname') }}"
+                            placeholder="firstName *">
+                    </div>
+                </div>
+                <div class="">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="lastname" value="{{ old('lastname') }}"
+                            placeholder="lastName *">
                     </div>
                 </div>
                 <div class="">
@@ -37,12 +43,6 @@
                     <div class="form-group">
                         <input type="text" class="form-control" name="phone" value="{{ old('phone') }}"
                             placeholder="Phone *">
-                    </div>
-                </div>
-                <div class="">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="address" value="{{ old('address') }}"
-                            placeholder="Address *">
                     </div>
                 </div>
                 <div class="">

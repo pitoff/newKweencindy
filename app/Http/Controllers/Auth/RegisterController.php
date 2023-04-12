@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -20,21 +21,13 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required',
-            'address' => 'required',
-            'password' => 'required|string|confirmed'
-        ]);
-
+        $request->validated();
         $createUser = User::create([
-            'name' => $request->name,
+            'fullname' => $request->lastname.' '.$request->firstname,
             'email' => $request->email,
             'phone' => $request->phone,
-            'address' => $request->address,
             'password' => $request->password
         ]);
 

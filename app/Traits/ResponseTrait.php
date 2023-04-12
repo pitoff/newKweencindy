@@ -10,8 +10,8 @@ trait ResponseTrait
     public function success($message, $code = null, $data = null)
     {
         return response()->json([
+            'status' => "OK",
             'message' => $message,
-            'code' => $code,
             'data' => $data
         ], $code);
     }
@@ -19,8 +19,8 @@ trait ResponseTrait
     public function failure($message, $code = null, $data = null)
     {
         return response()->json([
+            'status' => "FAILURE",
             'message' => $message,
-            'code' => $code,
             'data' => $data
         ], $code);
     }
