@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
@@ -18,12 +19,9 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+        $request->validated();
 
         if(!auth()->attempt($request->only('email', 'password'))){
             return back()->with('err', 'Whoops! Incorrect login details');
