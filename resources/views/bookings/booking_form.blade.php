@@ -68,6 +68,13 @@
         @endisset" placeholder="Booking date *">
     </div>
 </div>
+<div class="">
+    <div class="form-group">
+        <input type="time" class="form-control" name="book_time" value="@isset($book)
+            {{ $book->book_time }}
+        @endisset" placeholder="Booking Time *">
+    </div>
+</div>
 
 <div class="">
     <div class="form-group">

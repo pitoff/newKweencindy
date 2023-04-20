@@ -25,7 +25,7 @@ class CreateBookingsTable extends Migration
             $table->string('payment_status')->default('pending payment')->nullable();
             $table->string('book_status')->default('pending booking')->nullable();
             $table->string('book_date')->nullable();
-            $table->string('book_time')->nullable();
+            $table->string('book_time');
             $table->timestamps();
         });
     }

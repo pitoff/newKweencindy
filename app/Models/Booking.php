@@ -22,7 +22,8 @@ class Booking extends Model
         'address',
         'payment_status',
         'book_status',
-        'book_date'
+        'book_date',
+        'book_time'
     ];
 
     // protected $casts = [

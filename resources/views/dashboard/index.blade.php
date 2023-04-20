@@ -17,7 +17,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-sm-4">
-                                <a href="#" class="btn">
+                                <a href="{{route('users')}}" class="btn">
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title">Users</h5>

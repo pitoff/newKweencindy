@@ -22,6 +22,7 @@ use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
+    //add time when booking
     use ResponseTrait;
    
     public function index()
@@ -39,6 +40,7 @@ class BookingController extends Controller
 
     public function store(Booking $booking, Request $request)
     {
+        dd($request->all());
         if ($request->location == 'personal location') {
             $request->validate([
                 'category' => 'required',
@@ -46,17 +48,25 @@ class BookingController extends Controller
                 'state' => 'required',
                 'town' => 'required',
                 'address' => 'required',
-                'book_date' => 'required|date|after:today'
+                'book_date' => 'required|date|after:today',
+                'book_time' => 'required'
             ]);
         } else {
             $request->validate([
                 'category' => 'required',
                 'location' => 'required',
-                'book_date' => 'required|date|after:today'
+                'book_date' => 'required|date|after:today',
+                'book_time' => 'required'
             ]);
         }
 
         try {
+            $checkConfirmedBooking = Booking::where('book_status', '')
+                ->where('payment_status', )
+                ->where('book_date', )
+                ->where('book_time', )
+                ->first();
+
             $createBooking = auth()->user()->booking()->create([
                 'ref_no' => 'BBKC-'.Str::random(8),
                 'category_id' => $request->category,
@@ -268,7 +278,7 @@ class BookingController extends Controller
     public function markReceived($id)
     {
         $book = Booking::find($id);
-        //trigger payment received received event
+        //trigger payment received event
         PaymentReceived::dispatch($this->userEmail($id));
         $data['acceptedBooking'] = BookingStatusEnum::BookingAccepted;
         $checkAccepted = $book->book_status == $data['acceptedBooking']->value;

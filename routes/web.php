@@ -10,6 +10,7 @@ use App\Http\Controllers\Booking\PaymentController;
 use App\Http\Controllers\Booking\PaymentMethodController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Gallery\GalleryController;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -86,7 +87,7 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
 
     //admin routes
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'admin'], function(){
-        
+        Route::get('users', [UserController::class, 'index'])->name('users');
         Route::resource('categories', CategoryController::class);
         Route::resource('payment', PaymentMethodController::class);
         Route::put('payment-activate/{id}', [PaymentMethodController::class, 'activate'])->name('paymentActivate');

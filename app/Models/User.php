@@ -52,6 +52,11 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->attributes['password'] = Hash::make($password);
     }
 
+    public function getCreatedAtAttribute($createdAt)
+    {
+        return date('d-M-Y', strtotime($createdAt));
+    }
+
     public function booking()
     {
         return $this->hasMany(Booking::class);
