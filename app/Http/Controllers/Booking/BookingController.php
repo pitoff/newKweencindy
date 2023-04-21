@@ -118,11 +118,17 @@ class BookingController extends Controller
         $data['awaitingConfirmation'] = BookingStatusEnum::AwaitingConfirmation;
         $data['payConfirmed'] = BookingStatusEnum::PaymentConfirmed;
 
-        if (admin()) {
-            return view('admin.bookings.mybooking', $data);
-        } else {
-            return view('bookings.mybooking', $data);
+        try {
+            if (admin()) {
+                return view('admin.bookings.mybooking', $data);
+            } else {
+                return view('bookings.mybooking', $data);
+            }
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
         }
+
+        
     }
 
     //get all bookings for admin and all booking that has payment status of confirmed for users
@@ -135,13 +141,19 @@ class BookingController extends Controller
         $data['acceptedBooking'] = BookingStatusEnum::BookingAccepted;
         $data['awaitingConfirmation'] = BookingStatusEnum::AwaitingConfirmation;
 
-        if (admin()) {
-            $data['bookings'] = $booked->with(['user', 'category'])->orderBy('id', 'DESC')->paginate(15);
-            return view('admin.bookings.all_booking', $data);
-        } else {
-            $data['bookings'] = $booked->where('payment_status', $data['payConfirmed']->value)->with(['category'])->orderBy('id', 'DESC')->paginate(15);
-            return view('bookings.all_booking', $data);
+        try {
+            if (admin()) {
+                $data['bookings'] = $booked->with(['user', 'category'])->orderBy('id', 'DESC')->paginate(15);
+                return view('admin.bookings.all_booking', $data);
+            } else {
+                $data['bookings'] = $booked->where('payment_status', $data['payConfirmed']->value)->with(['category'])->orderBy('id', 'DESC')->paginate(15);
+                return view('bookings.all_booking', $data);
+            }
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
         }
+
+        
     }
 
     //get booking category
