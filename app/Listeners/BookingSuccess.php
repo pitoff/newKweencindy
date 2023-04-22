@@ -42,6 +42,7 @@ class BookingSuccess implements ShouldQueue
         $data['town'] = $event->town;
         $data['addr'] = $event->address;
         $data['bookDate'] = $event->book_date;
+        $data['bookTime'] = $event->book_time;
         Mail::to($event->email)->send(new BookingSuccessfull($data));
         
     }

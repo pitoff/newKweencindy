@@ -236,6 +236,8 @@
                     <p style="font-size: large;">Location: <span class="location"></span> </p>
                     <p style="font-size: large;">Book Status: <span class="bookStatus"></span> </p>
                     <p style="font-size: large;">Payment Status: <span class="payStatus"></span> </p>
+                    <p style="font-size: large;">Booked Date: <span class="bookDate"></span> </p>
+                    <p style="font-size: large;">Booked Time: <span class="bookTime"></span> </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" data-dismiss="modal">Close</button>
@@ -261,6 +263,8 @@
                     <p style="font-size: large;">You want to confirm the
                         payment for <span id="dateForMarkReceived"></span> as received?
                     </p>
+
+                    <em class="text-danger" id="failed"></em>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
@@ -397,7 +401,7 @@
                 url: `booking-preview-modal/${id}`,
                 dataType: "json",
                 success: function(response) {
-                    $('.name').text(response.data.user.name);
+                    $('.name').text(response.data.user.fullname);
                     $('.email').text(response.data.user.email);
                     $('.phone').text(response.data.user.phone);
                     $('.category').text(response.data.category.category);
@@ -413,6 +417,8 @@
                     $('.location').text(response.data.location);
                     $('.bookStatus').text(response.data.book_status);
                     $('.payStatus').text(response.data.payment_status);
+                    $('.bookDate').text(response.data.book_date);
+                    $('.bookTime').text(response.data.book_time);
 
                 }
             });
@@ -436,8 +442,17 @@
                     url: `/admin/mark-booking-as-received/${id}`,
                     success: function(response) {
                         $('#yesMarkReceived').text("Done")
-                        console.log(response)
+                        console.log(response.message)
                         location.reload(true)
+                    },
+                    error: function(error){
+                        $('#yesMarkReceived').text("Failed")
+                        $('#yesMarkReceived').css("background-color", "red")
+                        $('#failed').text(error.responseJSON.message)
+                        console.log("err", error.responseJSON.message)
+                        setTimeout(() => {
+                            location.reload(true)  
+                        }, 3000);
                     }
                 });
             })

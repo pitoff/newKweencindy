@@ -39,6 +39,7 @@ class SendMakeupBookedAdmin implements ShouldQueue
         $data['town'] = $event->town;
         $data['addr'] = $event->address;
         $data['bookDate'] = $event->book_date;
+        $data['bookTime'] = $event->book_time;
 
         // notify system admin
         $allAdmin = User::where('role', User::ADMIN)->get();

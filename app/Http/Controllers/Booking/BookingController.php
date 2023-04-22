@@ -24,7 +24,7 @@ class BookingController extends Controller
 {
     //add time when booking
     use ResponseTrait;
-   
+
     public function index()
     {
         return view('bookings.index');
@@ -40,7 +40,6 @@ class BookingController extends Controller
 
     public function store(Booking $booking, Request $request)
     {
-        dd($request->all());
         if ($request->location == 'personal location') {
             $request->validate([
                 'category' => 'required',
@@ -61,14 +60,19 @@ class BookingController extends Controller
         }
 
         try {
-            $checkConfirmedBooking = Booking::where('book_status', '')
-                ->where('payment_status', )
-                ->where('book_date', )
-                ->where('book_time', )
+            // dd($request->all());
+            $checkConfirmedBooking = Booking::where('book_status', BookingStatusEnum::BookingAccepted)
+                ->where('payment_status', BookingStatusEnum::PaymentConfirmed)
+                ->where('book_date', $request->book_date)
+                ->where('book_time', $request->book_time)
                 ->first();
+            
+            if($checkConfirmedBooking){
+                return back()->with('err', 'Whoops!... Date already booked, Please choose a new date');
+            }
 
             $createBooking = auth()->user()->booking()->create([
-                'ref_no' => 'BBKC-'.Str::random(8),
+                'ref_no' => 'BBKC-' . Str::random(8),
                 'category_id' => $request->category,
                 'location' => $request->location,
                 'state' => $request->state ?? '',
@@ -76,28 +80,31 @@ class BookingController extends Controller
                 'address' => $request->address ?? '',
                 'payment_status' => BookingStatusEnum::PendingPayment,
                 'book_status' => BookingStatusEnum::PendingBooking,
-                'book_date' => $request->book_date
+                'book_date' => $request->book_date,
+                'book_time' => $request->book_time
             ]);
-            $user = User::where('id', $createBooking->user_id)->first(['name', 'email']);
+            $user = User::where('id', $createBooking->user_id)->first(['fullname', 'email']);
             if ($createBooking) {
                 MakeupBooked::dispatch(
                     $user->email,
-                    $user->name,
+                    $user->fullname,
                     $request->category,
                     $request->location,
                     $request->state,
                     $request->town,
                     $request->address,
-                    $request->book_date
+                    $request->book_date,
+                    $request->book_time
                 );
                 MakeupBookedAdmin::dispatch(
-                    $user->name,
+                    $user->fullname,
                     $request->category,
                     $request->location,
                     $request->state,
                     $request->town,
                     $request->address,
-                    $request->book_date
+                    $request->book_date,
+                    $request->book_time
                 );
                 return redirect(route('my_booking', auth()->user()->id))->with('success', 'You have successfully booked a date');
             }
@@ -118,17 +125,11 @@ class BookingController extends Controller
         $data['awaitingConfirmation'] = BookingStatusEnum::AwaitingConfirmation;
         $data['payConfirmed'] = BookingStatusEnum::PaymentConfirmed;
 
-        try {
-            if (admin()) {
-                return view('admin.bookings.mybooking', $data);
-            } else {
-                return view('bookings.mybooking', $data);
-            }
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
+        if (admin()) {
+            return view('admin.bookings.mybooking', $data);
+        } else {
+            return view('bookings.mybooking', $data);
         }
-
-        
     }
 
     //get all bookings for admin and all booking that has payment status of confirmed for users
@@ -141,19 +142,13 @@ class BookingController extends Controller
         $data['acceptedBooking'] = BookingStatusEnum::BookingAccepted;
         $data['awaitingConfirmation'] = BookingStatusEnum::AwaitingConfirmation;
 
-        try {
-            if (admin()) {
-                $data['bookings'] = $booked->with(['user', 'category'])->orderBy('id', 'DESC')->paginate(15);
-                return view('admin.bookings.all_booking', $data);
-            } else {
-                $data['bookings'] = $booked->where('payment_status', $data['payConfirmed']->value)->with(['category'])->orderBy('id', 'DESC')->paginate(15);
-                return view('bookings.all_booking', $data);
-            }
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
+        if (admin()) {
+            $data['bookings'] = $booked->with(['user', 'category'])->orderBy('id', 'DESC')->paginate(15);
+            return view('admin.bookings.all_booking', $data);
+        } else {
+            $data['bookings'] = $booked->where('payment_status', $data['payConfirmed']->value)->with(['category'])->orderBy('id', 'DESC')->paginate(15);
+            return view('bookings.all_booking', $data);
         }
-
-        
     }
 
     //get booking category
@@ -179,7 +174,8 @@ class BookingController extends Controller
     public function update(Request $request, $id)
     {
         $book = Booking::find($id);
-
+        $formattedBookDate = date('Y-m-d', strtotime($book->book_date));
+        // dd($formattedBookDate);
         if ($request->location == 'personal location') {
             $request->validate([
                 'category' => 'required',
@@ -187,7 +183,8 @@ class BookingController extends Controller
                 'state' => 'required',
                 'town' => 'required',
                 'address' => 'required',
-                'book_date' => '' ?? $book->book_date
+                'book_date' => '' ?? $formattedBookDate,
+                'book_time' => '' ?? $book->book_time
             ]);
 
             $updateBooked = Booking::where('id', $id)->update([
@@ -196,12 +193,14 @@ class BookingController extends Controller
                 'state' => $request->state,
                 'town' => $request->town,
                 'address' => $request->address,
-                'book_date' => $request->book_date ?? $book->book_date
+                'book_date' => $request->book_date ?? $formattedBookDate,
+                'book_time' => $request->book_time ?? $book->book_time,
             ]);
         } else {
             $request->validate([
                 'category' => 'required',
-                'book_date' => '' ?? $book->book_date
+                'book_date' => '' ?? $formattedBookDate,
+                'book_time' => '' ?? $book->book_time
             ]);
 
             $updateBooked = Booking::where('id', $id)->update([
@@ -210,7 +209,8 @@ class BookingController extends Controller
                 'state' => null,
                 'town' => null,
                 'address' => null,
-                'book_date' => $request->book_date ?? $book->book_date
+                'book_date' => $request->book_date ?? $formattedBookDate,
+                'book_time' => $request->book_time ?? $book->book_time,
             ]);
         }
 
@@ -227,9 +227,9 @@ class BookingController extends Controller
         $book = Booking::find($id);
         $deleted = $book->delete();
         if (!$deleted) {
-            return $this->success('Booking appointment could not be deleted');
+            return $this->failure('Booking was deleted successfully', 404);
         }
-        return $this->failure('Booking was deleted successfully');
+        return $this->success('Booking appointment could not be deleted', 200);
     }
 
     private function userEmail($id)
@@ -249,10 +249,9 @@ class BookingController extends Controller
             //trigger booking accepted event
             BookingAccepted::dispatch($this->userEmail($id));
             return $this->success('Booking has been accepted', 200);
-        }else{
+        } else {
             return $this->failure('Booking could not be accepted');
         }
-        
     }
 
     //admin declines booking
@@ -265,10 +264,9 @@ class BookingController extends Controller
             //trigger booking declined event
             BookingDeclined::dispatch($this->userEmail($id));
             return $this->success('Booking has been declined', 200);
-        }else{
+        } else {
             return $this->failure('Booking could not be declined at the moment');
         }
-        
     }
 
     //user mark booking as paid
@@ -295,13 +293,15 @@ class BookingController extends Controller
         $data['acceptedBooking'] = BookingStatusEnum::BookingAccepted;
         $checkAccepted = $book->book_status == $data['acceptedBooking']->value;
         if (!$checkAccepted) {
-            return back()->with('err', 'Please you need to accept the booking before you can mark as received');
+            return $this->failure('Please you need to accept the booking before you can mark as received', 400);
+        }else{
+            $book->update([
+                'payment_status' => BookingStatusEnum::PaymentConfirmed,
+    
+            ]);
+            return $this->success('You marked payment as received', 200);
         }
-        $book->update([
-            'payment_status' => BookingStatusEnum::PaymentConfirmed,
-
-        ]);
-        return $this->success('You marked payment as received', 200);
+        
     }
 
     //admin mark booking as payment not received

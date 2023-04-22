@@ -83,7 +83,7 @@
                     @if (admin())
                         {{-- <p>{{ auth()->user()->role }}</p> --}}
                         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li><a href="#">Users</a></li>
+                        <li><a href="{{route('users')}}">Users</a></li>
                         <li class="ovon-sub"><a href="#0">Booking</a>
                             <ul>
                                 <li><a href="{{ route('already_booked') }}">Bookings</a></li>

@@ -42,8 +42,8 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->getCreatedAtAttribute($user->created_at) }}</td>
                                         <td>
-                                            <a href="" class="btn-sm btn-info">
-                                                Give Discount
+                                            <a href="{{route('userBookings', $user->id)}}" class="btn-sm btn-info">
+                                                Give Discount   
                                             </a>
                                         </td>
                                         <td>

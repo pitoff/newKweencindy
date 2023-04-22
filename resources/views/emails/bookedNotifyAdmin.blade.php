@@ -22,6 +22,7 @@ Date: **{{$date}}** --}}
 | Address  | **{{$addr ?? $nil }}** |
 | Location | **{{$location}}**      |
 | Date     | **{{$date}}**          |
+| Time     | **{{$time}}**          |
 @endcomponent
 
 @endcomponent

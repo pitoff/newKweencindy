@@ -4,6 +4,7 @@
 @csrf
 <div class="">
     <div class="form-group">
+        <label for="">Category</label>
         <select name="category" id="category" class="form-control">
             <option value=""> --Choose category-- </option>
             @foreach ($categories as $cat)
@@ -18,11 +19,13 @@
 <div id="categoryInfo">
     <div class="">
         <div class="form-group">
+            <label for="">Description</label>
             <input type="text" class="form-control" value="" readonly id="description">
         </div>
     </div>
     <div class="">
         <div class="form-group">
+            <label for="">Price</label>
             <input type="text" class="form-control" value="" readonly id="price">
         </div>
     </div>
@@ -30,6 +33,7 @@
 
 <div class="">
     <div class="form-group">
+        <label for="">Location</label>
         <select name="location" id="location" class="form-control">
             <option value="office location" @isset($book) {{($book) && ($book->location == 'office location') ? 'selected' : ''}} @endisset>Office location</option>
             <option value="personal location" @isset($book) {{ ($book) && ($book->location == 'personal location') ? 'selected' : ''}} @endisset>Personal location</option>
@@ -63,6 +67,7 @@
 
 <div class="">
     <div class="form-group">
+        <label for="">Booking Date</label>
         <input type="date" class="form-control datepicker" name="book_date" value="@isset($book)
             {{ $book->book_date }}
         @endisset" placeholder="Booking date *">
@@ -70,6 +75,7 @@
 </div>
 <div class="">
     <div class="form-group">
+        <label for="">Booking Time</label>
         <input type="time" class="form-control" name="book_time" value="@isset($book)
             {{ $book->book_time }}
         @endisset" placeholder="Booking Time *">

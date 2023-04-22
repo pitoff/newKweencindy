@@ -88,6 +88,9 @@ Route::group(['middleware' => ['verified', 'auth']], function(){
     //admin routes
     Route::group(['prefix' => 'admin', 'name' => 'admin.', 'middleware' => 'admin'], function(){
         Route::get('users', [UserController::class, 'index'])->name('users');
+        Route::get('/bookings/{userId}', [UserController::class, 'userBookings'])->name('userBookings');
+        Route::get('/bookings/{bookingId}', [UserController::class, 'applyDiscount']);
+        Route::post('/bookings/{bookingId}', [UserController::class, 'saveDiscount']);
         Route::resource('categories', CategoryController::class);
         Route::resource('payment', PaymentMethodController::class);
         Route::put('payment-activate/{id}', [PaymentMethodController::class, 'activate'])->name('paymentActivate');

@@ -56,9 +56,9 @@
 
                                 @if($book->book_status == $bookingAccepted->value)
                                     @if ($book->payment_status == $awaitingConfirmation->value)
-                                        <td class="alert alert-warning"><em>{{$book->payment_status}}</em></td>
+                                        <td class="alert alert-warning">{{$book->payment_status}}</td>
                                     @elseif($book->payment_status == $payConfirmed->value)
-                                        <td class="alert alert-success"><em>{{$book->payment_status}}</em></td>
+                                        <td class="alert alert-success">{{$book->payment_status}}</td>
                                     @else
                                         <td>
                                             <button type="button" class="btn-sm btn-success" id="markAsPaidBtn" data-id="{{$book->id}}" data-toggle="modal" data-target="#markAsPaidModal"> <span class="ti-">Mark as Paid</span> </button>
@@ -72,10 +72,10 @@
                                     @endif
 
                                 @else
-                                    <td class="alert alert-warning" colspan="2"><em>Not yet accepted</em></td>
+                                    <td class="alert alert-warning" colspan="2">Not yet accepted</td>
                                 @endif
                                 
-                                @if($book->book_status == $pendingBooking->value)
+                                @if($book->book_status == $pendingBooking->value || $book->book_status == $bookingDeclined->value)
                                     <td>
                                         <button type="button" id="viewBooking" class="btn-sm btn-primary"
                                                     data-date="{{ $book->book_date }}" data-id="{{ $book->id }}"
@@ -164,7 +164,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" id="submitMarkAsPaid" class="btn-success">Yes <span class="ti-check"></span></button>
+                <button type="submit" id="submitMarkAsPaid" class="btn-success">Mark Paid <span class="ti-check"></span></button>
             </div>
         </div>
         </div>
@@ -195,6 +195,8 @@
                 <p style="font-size: large;">Location: <span class="location"></span> </p>
                 <p style="font-size: large;">Book Status: <span class="bookStatus"></span> </p>
                 <p style="font-size: large;">Payment Status: <span class="payStatus"></span> </p>
+                <p style="font-size: large;">Booked Date: <span class="bookDate"></span> </p>
+                <p style="font-size: large;">Booked Time: <span class="bookTime"></span> </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-secondary" data-dismiss="modal">Close</button>
@@ -224,7 +226,8 @@
                     url: `/booking/remove/${id}`,
                     success: function (response) {
                         jQuery('exampleModal').modal('hide')
-                        // console.log(response.message)
+                        console.log(response.message)
+                        $('#removeBooking').text("Processing...")
                         location.reload(true)
                     }
                 });
@@ -249,6 +252,7 @@
                     success: function (response) {
                         jQuery('markAsPaidModal').modal('hide')
                         // console.log(response.message)
+                        $("#submitMarkAsPaid").text("Processing...")
                         location.reload(true)
                     }
                 });
@@ -266,7 +270,7 @@
                 url: `/booking-preview-modal/${id}`,
                 dataType: "json",
                 success: function(response) {
-                    $('.name').text(response.data.user.name);
+                    $('.name').text(response.data.user.fullname);
                     $('.email').text(response.data.user.email);
                     $('.phone').text(response.data.user.phone);
                     $('.category').text(response.data.category.category);
@@ -282,6 +286,8 @@
                     $('.location').text(response.data.location);
                     $('.bookStatus').text(response.data.book_status);
                     $('.payStatus').text(response.data.payment_status);
+                    $('.bookDate').text(response.data.book_date);
+                    $('.bookTime').text(response.data.book_time);
 
                 }
             });

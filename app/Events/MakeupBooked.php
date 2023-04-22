@@ -23,12 +23,13 @@ class MakeupBooked
     public $book_date;
     public $address;
     public $name;
+    public $book_time;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($email, $name, $category, $location, $state, $town, $address, $book_date)
+    public function __construct($email, $name, $category, $location, $state, $town, $address, $book_date, $book_time)
     {
         $this->email = $email;
         $this->name = $name;
@@ -38,6 +39,7 @@ class MakeupBooked
         $this->town = $town;
         $this->address = $address;
         $this->book_date = $book_date;
+        $this->book_time = $book_time;
     }
 
     /**

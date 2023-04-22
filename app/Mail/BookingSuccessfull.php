@@ -23,7 +23,7 @@ class BookingSuccessfull extends Mailable
     private $location;
     private $town;
     private $bookDate;
-
+    private $bookTime;
 
     public function __construct($data)
     {
@@ -34,6 +34,7 @@ class BookingSuccessfull extends Mailable
         $this->location = $data['location'];
         $this->town = $data['town'];
         $this->bookDate = $data['bookDate'];
+        $this->bookTime = $data['bookTime'];
     }
 
     /**
@@ -51,6 +52,7 @@ class BookingSuccessfull extends Mailable
             'location' => $this->location, 
             'town' => $this->town, 
             'date' => $this->bookDate,
+            'time' => $this->bookTime,
             'nil' => "---"
         ]);
     }

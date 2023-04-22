@@ -26,8 +26,9 @@ class MakeupBookedAdmin
     public $town;
     public $address;
     public $book_date;
+    public $book_time;
 
-    public function __construct($name, $category, $location, $state, $town, $address, $book_date)
+    public function __construct($name, $category, $location, $state, $town, $address, $book_date, $book_time)
     {
         $this->name = $name;
         $this->category = $category;
@@ -36,6 +37,7 @@ class MakeupBookedAdmin
         $this->town = $town;
         $this->address = $address;
         $this->book_date = $book_date;
+        $this->book_time = $book_time;
     }
 
     /**
