@@ -28,7 +28,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Ref No.</th>
                                 <th scope="col">Category</th>
-                                <th scope="col">Price</th>
+                                {{-- <th scope="col">Price</th> --}}
                                 <th scope="col">Date</th>
                                 {{-- <th scope="col">State</th>
                                 <th scope="col">Town</th>
@@ -44,7 +44,7 @@
                                 <td>{{ ($booked->currentpage()-1) * $booked->perpage() + (1+$key ++) }}</td>
                                 <td>{{$book->ref_no}}</td>
                                 <td>{{$book->category->category}}</td>
-                                <td>#{{number_format($book->category->price, 2)}}</td>
+                                {{-- <td>#{{number_format($book->category->price, 2)}}</td> --}}
                                 <td>{{$book->book_date}}</td>
                                 {{-- @if ($book->location == 'personal location')
                                     <td>{{$book->state}}</td>

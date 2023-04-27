@@ -15,6 +15,11 @@ class CreateDiscountsTable extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('booking_id')->constrained();
+            $table->foreignId('category_id')->constrained();
+            $table->integer('price');
+            $table->integer('discount_percentage');
+            $table->integer('discounted_price');
             $table->timestamps();
         });
     }

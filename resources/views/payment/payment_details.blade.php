@@ -21,16 +21,16 @@
                         <input type="text" style="background:inherit;" class="form-control" name="email" id="email" value="{{ucfirst($bookingDetails->user->email)}}" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" style="background:inherit;" class="form-control" name="displayAmount" id="displayAmount" value="#{{number_format($bookingDetails->category->price, 2)}}" readonly>
+                        <input type="text" style="background:inherit;" class="form-control" name="displayAmount" id="displayAmount" value="#{{number_format($bookingDetails->discount ? $bookingDetails->discount->discounted_price : $bookingDetails->category->price, 2)}}" readonly>
                     </div>
                     <div class="form-group">
                         <input type="text" style="background:inherit;" class="form-control" name="paymentFor" id="paymentFor" value="{{$bookingDetails->category->category}}" readonly>
                     </div>
                     <input type="hidden" value="{{ Paystack::genTranxRef() }}" name="reference">
-                    <input type="hidden" value="{{$bookingDetails->category->price * 100}}" name="amount">
+                    <input type="hidden" value="{{($bookingDetails->discount ? $bookingDetails->discount->discounted_price : $bookingDetails->category->price) * 100}}" name="amount">
                     <input type="hidden" name="metadata" value="{{ json_encode($array = ['booking_id' => $bookingDetails->id, 'item_name' => $bookingDetails->category->category])}}">
 
-                    @if($bookingDetails->payment_status === 1 || $bookingDetails->payment_status === 2)
+                    @if($bookingDetails->payment_status === $payConfirmed->value)
                         <em><strong> <u> Payment has been made </u> <span class="ti-check"></span> </strong></em>
                     @else
                         <button class="btn fl-btn btn-sm" type="submit">Proceed</button>
@@ -44,7 +44,7 @@
                     <input type="text" style="background:inherit;" class="form-control" id="" value="{{ucfirst($details->bank)}}" readonly>
                     <input type="text" style="background:inherit;" class="form-control" id="" value="{{ucfirst($details->acc_name)}}" readonly>
                     <input type="text" style="background:inherit;" class="form-control" id="acc_num" value="{{ucfirst($details->acc_number)}}" readonly> 
-                    <input type="text" style="background:inherit;" class="form-control" id="" value="#{{number_format($bookingDetails->category->price, 2)}}" readonly>                   
+                    <input type="text" style="background:inherit;" class="form-control" id="" value="#{{number_format($bookingDetails->discount ? $bookingDetails->discount->discounted_price : $bookingDetails->category->price, 2)}}" readonly>                   
                     <button class="btn fl-btn btn-sm" id="copy_acc_num" type="submit">Copy details</button>
                     
                 </div>

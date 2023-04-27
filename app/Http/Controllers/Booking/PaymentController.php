@@ -17,11 +17,11 @@ class PaymentController extends Controller
 {
     public function redirectToGateway(Request $request)
     {
-
         // dd($request->all());
         try{
             return Paystack::getAuthorizationUrl()->redirectNow();
         }catch(\Exception $e) {
+            dd($e->getMessage());
             return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
         } 
     }
@@ -68,8 +68,11 @@ class PaymentController extends Controller
 
     public function showPaymentDetails($id)
     {
-        $bookingDetails = Booking::where('id', $id)->first();
+        $payConfirmed = BookingStatusEnum::PaymentConfirmed;
+
+        $bookingDetails = Booking::with('category', 'discount')->where('id', $id)->first();
+        // dd($bookingDetails);
         $details = PaymentMethod::where('is_active', 1)->first();
-        return view('payment.payment_details', compact('details', 'bookingDetails'));
+        return view('payment.payment_details', compact('details', 'bookingDetails', 'payConfirmed'));
     }
 }

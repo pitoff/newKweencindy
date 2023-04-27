@@ -25,6 +25,8 @@
                                     <th scope="col">Category</th>
                                     <th scope="col">Amount</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Percent</th>
+                                    <th scope="col">Amount</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -37,7 +39,21 @@
                                         <td>#{{ number_format($booking->category->price, 2) }}</td>
                                         <td>{{ $booking->book_date }}</td>
                                         <td>
-                                            <a href="" class="btn-sm btn-info">
+                                            @if ($booking->discount !== null)
+                                                {{$booking->discount->discount_percentage}}%
+                                            @else
+                                                {{"No Discount"}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($booking->discount !== null)
+                                            &#8358; {{number_format($booking->discount->discounted_price)}}
+                                            @else
+                                                {{"No Discount"}}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{route('createDiscount', [$booking->id])}}" class="btn-sm btn-info">
                                                 Apply Discount
                                             </a>
                                         </td>
